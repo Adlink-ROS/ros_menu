@@ -2,7 +2,7 @@
 unset ros_version
 unset ROS_DISTRO
 
-# Set some variables
+# Set some variables #
 shell="bash"
 ros1_distro="melodic"
 ros2_distro="dashing"
@@ -34,7 +34,7 @@ then
     fi
     
     # DDS for ROS2 #
-    export RMW_IMPLEMENTATION=rmw_opensplice_cpp
+    #export RMW_IMPLEMENTATION=rmw_opensplice_cpp
 elif [ "$ros_version" '==' "3" ]; 
 then
     # ROS1 #
@@ -42,6 +42,8 @@ then
     if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
         source /home/${USER}/catkin_ws/devel/setup.$shell
     fi
+    export ROS_IP=$(hostname -I | awk '{print $1}')
+    export ROS_MASTER_URI=http://$ROS_IP:11311
 
     # ROS2 #
     echo "Loading ROS2 $ros2_distro Python3 ..."
@@ -52,7 +54,7 @@ then
     fi
 
     # DDS for ROS2 #
-    export RMW_IMPLEMENTATION=rmw_opensplice_cpp
+    #export RMW_IMPLEMENTATION=rmw_opensplice_cpp
 else
     # for ROS1 #
     echo "Loading ROS1 $ros1_distro Python2 ..."
@@ -60,6 +62,8 @@ else
     if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
         source /home/${USER}/catkin_ws/devel/setup.$shell
     fi
+    export ROS_IP=$(hostname -I | awk '{print $1}')
+    export ROS_MASTER_URI=http://$ROS_IP:11311
 fi
 
 # # # # # # # # # # # # # # # # #
