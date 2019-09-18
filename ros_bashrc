@@ -28,9 +28,9 @@ then
     # for ROS2 #
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell
     echo "Loading ROS2 $ros2_distro Python3 ..."
-    source /opt/ros/$ros2_distro/setup.$shell
-    if [ -f "/home/${USER}/ros2_ws/install/setup.$shell" ]; then
-        source /home/${USER}/ros2_ws/install/setup.$shell
+    source /opt/ros/$ros2_distro/local_setup.$shell
+    if [ -f "/home/${USER}/ros2_ws/install/local_setup.$shell" ]; then
+        source /home/${USER}/ros2_ws/install/local_setup.$shell
     fi
     
     # DDS for ROS2 #
@@ -38,9 +38,9 @@ then
 elif [ "$ros_version" '==' "3" ]; 
 then
     # ROS1 #
-    source /opt/ros/$ros1_distro/setup.$shell
-    if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
-        source /home/${USER}/catkin_ws/devel/setup.$shell
+    source /opt/ros/$ros1_distro/local_setup.$shell
+    if [ -f "/home/${USER}/catkin_ws/devel/local_setup.$shell" ]; then
+        source /home/${USER}/catkin_ws/devel/local_setup.$shell
     fi
     export ROS_IP=$(hostname -I | awk '{print $1}')
     export ROS_MASTER_URI=http://$ROS_IP:11311
@@ -48,7 +48,7 @@ then
     # ROS2 #
     echo "Loading ROS2 $ros2_distro Python3 ..."
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell
-    source /opt/ros/$ros2_distro/setup.$shell
+    source /opt/ros/$ros2_distro/local_setup.$shell
     if [ -f "/home/${USER}/ros2_ws/install/local_setup.$shell" ]; then
         source /home/${USER}/ros2_ws/install/local_setup.$shell
     fi
@@ -58,9 +58,9 @@ then
 else
     # for ROS1 #
     echo "Loading ROS1 $ros1_distro Python2 ..."
-    source /opt/ros/$ros1_distro/setup.$shell
-    if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
-        source /home/${USER}/catkin_ws/devel/setup.$shell
+    source /opt/ros/$ros1_distro/local_setup.$shell
+    if [ -f "/home/${USER}/catkin_ws/devel/local_setup.$shell" ]; then
+        source /home/${USER}/catkin_ws/devel/local_setup.$shell
     fi
     export ROS_IP=$(hostname -I | awk '{print $1}')
     export ROS_MASTER_URI=http://$ROS_IP:11311
