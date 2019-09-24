@@ -16,7 +16,8 @@ if [ -z $ros_version ]; then
     echo "1) ROS1 $ros1_distro Python2 (default)"
     echo "2) ROS2 $ros2_distro Python3"
     echo "3) ROS2-1 Bridge"
-    echo -n "Please choose a ROS version 1, 2, or 3: "
+    echo "4) Do nothing"
+    echo -n "Please choose an option 1-4: "
     read ros_version
 fi
 
@@ -61,7 +62,8 @@ then
     if [ -f $extra_file ]; then
         source $extra_file
     fi
-else
+elif [ "$ros_version" '==' "1" ]; 
+then
     # for ROS1 #
     echo "Loading ROS1 $ros1_distro Python2 ..."
     source /opt/ros/$ros1_distro/local_setup.$shell
@@ -70,6 +72,9 @@ else
     fi
     export ROS_IP=$(hostname -I | awk '{print $1}')
     export ROS_MASTER_URI=http://$ROS_IP:11311
+else
+    # Do nothing #
+    echo "Don't do anything ..."
 fi
 
 # # # # # # # # # # # # # # # # #
