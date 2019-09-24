@@ -6,6 +6,8 @@ unset ROS_DISTRO
 shell="bash"
 ros1_distro="melodic"
 ros2_distro="dashing"
+# You can put your extra ROS2 settings here. #
+extra_file="/home/${USER}/.extra_bashrc"
 
 # If the ros version is not assigned, #
 # prompt user which version should be loaded. #
@@ -32,9 +34,11 @@ then
     if [ -f "/home/${USER}/ros2_ws/install/local_setup.$shell" ]; then
         source /home/${USER}/ros2_ws/install/local_setup.$shell
     fi
-    
-    # DDS for ROS2 #
-    #export RMW_IMPLEMENTATION=rmw_opensplice_cpp
+
+    # for extra ROS2 settings #
+    if [ -f $extra_file ]; then
+        source $extra_file
+    fi
 elif [ "$ros_version" '==' "3" ]; 
 then
     # ROS1 #
@@ -53,8 +57,10 @@ then
         source /home/${USER}/ros2_ws/install/local_setup.$shell
     fi
 
-    # DDS for ROS2 #
-    #export RMW_IMPLEMENTATION=rmw_opensplice_cpp
+    # for extra ROS2 settings #
+    if [ -f $extra_file ]; then
+        source $extra_file
+    fi
 else
     # for ROS1 #
     echo "Loading ROS1 $ros1_distro Python2 ..."

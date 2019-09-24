@@ -1,0 +1,4 @@
+echo "Loading extra settings ..."
+
+# DDS for ROS2 #
+# export RMW_IMPLEMENTATION=rmw_opensplice_cpp
