@@ -13,7 +13,7 @@ extra_file="/home/${USER}/.extra_bashrc"
 # prompt user which version should be loaded. #
 if [ -z $ros_version ]; then
     echo "**** Welcome to ADLINK Neuron ROS environment ****"
-    echo "1) ROS1 $ros1_distro Python2 (default)"
+    echo "1) ROS1 $ros1_distro Python2"
     echo "2) ROS2 $ros2_distro Python3"
     echo "3) ROS2-1 Bridge"
     echo "4) Do nothing"
@@ -43,9 +43,9 @@ then
 elif [ "$ros_version" '==' "3" ]; 
 then
     # ROS1 #
-    source /opt/ros/$ros1_distro/local_setup.$shell
-    if [ -f "/home/${USER}/catkin_ws/devel/local_setup.$shell" ]; then
-        source /home/${USER}/catkin_ws/devel/local_setup.$shell
+    source /opt/ros/$ros1_distro/setup.$shell
+    if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
+        source /home/${USER}/catkin_ws/devel/setup.$shell
     fi
     export ROS_IP=$(hostname -I | awk '{print $1}')
     export ROS_MASTER_URI=http://$ROS_IP:11311
@@ -66,9 +66,9 @@ elif [ "$ros_version" '==' "1" ];
 then
     # for ROS1 #
     echo "Loading ROS1 $ros1_distro Python2 ..."
-    source /opt/ros/$ros1_distro/local_setup.$shell
-    if [ -f "/home/${USER}/catkin_ws/devel/local_setup.$shell" ]; then
-        source /home/${USER}/catkin_ws/devel/local_setup.$shell
+    source /opt/ros/$ros1_distro/setup.$shell
+    if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
+        source /home/${USER}/catkin_ws/devel/setup.$shell
     fi
     export ROS_IP=$(hostname -I | awk '{print $1}')
     export ROS_MASTER_URI=http://$ROS_IP:11311
