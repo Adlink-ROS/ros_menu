@@ -1,4 +1,55 @@
 echo "Loading extra settings ..."
+ 
+# DDS DOMAIN ID for ROS
+export ROS_DOMAIN_ID=30
 
-# DDS for ROS2 #
-# export RMW_IMPLEMENTATION=rmw_opensplice_cpp
+
+# Prompt DDS Menu
+if [ -z $dds_vendor ]; then
+    echo "**** Choose DDS you want to use ****"
+    echo "1) Neuron SDK + OpenSplice EE"
+    echo "2) OpenSplice CE"
+    echo "3) CycloneDDS"
+    echo "4) FastRTPS"
+    echo -n "Please choose an option 1-4: "
+    read dds_vendor
+fi
+
+if [ "$dds_vendor" '==' "1" ]; # NSDK + OpenSplice EE
+then
+
+    if [ -f "/opt/neuron-sdk-HDE/ros2/local_setup.bash" ]; then
+        source /opt/neuron-sdk-HDE/ros2/local_setup.bash
+    fi
+    if [ -f "/opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/release.com" ]; then
+        source /opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/release.com
+    fi
+
+    export RMW_IMPLEMENTATION=rmw_opensplice_cpp
+    export NEURON_SDK_LICENSE_PATH=/opt/neuron-sdk-HDE/neuron.key
+    export OSPL_URI=file:///opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/etc/config/my_ospl.xml
+
+    echo "Source NSDK successfully"
+
+elif [ "$dds_vendor" '==' "2" ]; # OpenSplice CE
+then
+
+    export RMW_IMPLEMENTATION=rmw_opensplice_cpp
+
+    echo "Source OpenSplice successfully"
+
+elif [ "$dds_vendor" '==' "3" ]; # CycloneDDS
+then
+
+    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+
+    echo "Source CycloneDDS successfully"
+
+elif [ "$dds_vendor" '==' "4" ]; # FastRTPS
+then
+
+    export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+	
+    echo "Source FastRTPS successfully"
+fi
+
