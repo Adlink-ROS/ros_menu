@@ -1,8 +1,10 @@
 echo "Loading extra settings ..."
+
+# clear DDS env var #
+unset dds_vendor
  
 # DDS DOMAIN ID for ROS
 export ROS_DOMAIN_ID=30
-
 
 # Prompt DDS Menu
 if [ -z $dds_vendor ]; then
