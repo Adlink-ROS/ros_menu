@@ -20,8 +20,8 @@ fi
 if [ "$dds_vendor" '==' "1" ]; # NSDK + OpenSplice EE
 then
 
-    if [ -f "/opt/neuron-sdk-HDE/ros2/local_setup.$shell" ]; then
-        source /opt/neuron-sdk-HDE/ros2/local_setup.$shell
+    if [ -f "/opt/neuron-sdk-HDE/dashing/local_setup.$shell" ]; then
+        source /opt/neuron-sdk-HDE/dashing/local_setup.$shell
     fi
     if [ -f "/opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/release.com" ]; then
         source /opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/release.com
@@ -29,7 +29,8 @@ then
 
     export RMW_IMPLEMENTATION=rmw_opensplice_cpp
     export NEURON_SDK_LICENSE_PATH=/opt/neuron-sdk-HDE/neuron.key
-    export OSPL_URI=file:///opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/etc/config/my_ospl.xml
+    # You can refer to the xml example from /opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/etc/config/
+    export OSPL_URI=file:///opt/neuron-sdk-HDE/dashing/share/opensplice_cmake_module/config/ros_ospl.xml
 
     echo "Source NSDK successfully"
 
