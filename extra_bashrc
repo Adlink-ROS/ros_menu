@@ -3,15 +3,15 @@ echo "Loading extra settings ..."
 # clear DDS env var #
 unset dds_vendor
  
-# DDS DOMAIN ID for ROS
+# DDS DOMAIN ID for ROS #
 export ROS_DOMAIN_ID=30
 
-# Prompt DDS Menu
+# Prompt DDS Menu #
 if [ -z $dds_vendor ]; then
     echo "**** Choose DDS you want to use ****"
     echo "1) Neuron SDK + OpenSplice EE"
     echo "2) OpenSplice CE"
-    echo "3) CycloneDDS"
+    echo "3) Cyclone DDS"
     echo "4) FastRTPS"
     echo -n "Please choose an option 1-4: "
     read dds_vendor
@@ -40,7 +40,7 @@ then
 
     echo "Source OpenSplice successfully"
 
-elif [ "$dds_vendor" '==' "3" ]; # CycloneDDS
+elif [ "$dds_vendor" '==' "3" ]; # Cyclone DDS
 then
 
     export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
@@ -53,5 +53,6 @@ then
     export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
 	
     echo "Source FastRTPS successfully"
+
 fi
 
