@@ -3,7 +3,7 @@ unset ros_version
 unset ROS_DISTRO
 
 # Set some variables #
-shell="bash"
+shell=`echo $SHELL | awk -F '/' '{print $NF}'`
 ros1_distro="melodic"
 ros2_distro="dashing"
 # You can put your extra ROS2 settings here. #

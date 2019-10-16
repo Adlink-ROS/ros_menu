@@ -20,8 +20,8 @@ fi
 if [ "$dds_vendor" '==' "1" ]; # NSDK + OpenSplice EE
 then
 
-    if [ -f "/opt/neuron-sdk-HDE/ros2/local_setup.bash" ]; then
-        source /opt/neuron-sdk-HDE/ros2/local_setup.bash
+    if [ -f "/opt/neuron-sdk-HDE/ros2/local_setup.$shell" ]; then
+        source /opt/neuron-sdk-HDE/ros2/local_setup.$shell
     fi
     if [ -f "/opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/release.com" ]; then
         source /opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/release.com
