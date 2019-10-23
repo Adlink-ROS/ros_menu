@@ -2,8 +2,8 @@
 
 shell=`echo $SHELL | awk -F '/' '{print $NF}'`
 
-rm ~/.ros_bashrc
-rm ~/.extra_bashrc
+rm -f ~/.ros_bashrc
+rm -f ~/.extra_bashrc
 ln -s `pwd`/ros_bashrc ~/.ros_bashrc
 ln -s `pwd`/extra_bashrc ~/.extra_bashrc
 
