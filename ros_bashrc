@@ -38,7 +38,11 @@ then
     if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
         source /home/${USER}/catkin_ws/devel/setup.$shell
     fi
-    export ROS_IP=$(hostname -I | awk '{print $1}')
+    current_ip=$(hostname -I | awk '{print $1}')
+    if [ -z $current_ip ]; then
+        current_ip="127.0.0.1"
+    fi
+    export ROS_IP=$current_ip
     export ROS_MASTER_URI=http://$ROS_IP:11311
 elif [ "$ros_version" '==' "2" ];
 then
@@ -61,7 +65,11 @@ then
     if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
         source /home/${USER}/catkin_ws/devel/setup.$shell
     fi
-    export ROS_IP=$(hostname -I | awk '{print $1}')
+    current_ip=$(hostname -I | awk '{print $1}')
+    if [ -z $current_ip ]; then
+        current_ip="127.0.0.1"
+    fi
+    export ROS_IP=$current_ip
     export ROS_MASTER_URI=http://$ROS_IP:11311
 
     # ROS2 #
