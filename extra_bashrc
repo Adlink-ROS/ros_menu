@@ -1,3 +1,7 @@
+# # # # # # # # # # # # # # # # #
+# Start of ADLINK Extra Setting #
+# # # # # # # # # # # # # # # # #
+
 echo "Loading extra settings ..."
 
 # clear DDS env var #
@@ -57,3 +61,6 @@ then
 
 fi
 
+# # # # # # # # # # # # # # # # #
+# END of ADLINK Extra Settings  #
+# # # # # # # # # # # # # # # # #
