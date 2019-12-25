@@ -1,0 +1,5 @@
+Product: ros_dotfiles
+---------------------
+
+v1.0.0:
+1. First Release.
