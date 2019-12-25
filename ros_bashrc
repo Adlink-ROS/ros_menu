@@ -26,7 +26,17 @@ echo "Usage: To set ROS env to be auto-loaded,"
 echo "       please assign ros_version in ~/.ros_bashrc"
 echo "**************************************************"
 
-if [ "$ros_version" '==' "2" ]; 
+if [ "$ros_version" '==' "1" ];
+then
+    # for ROS1 #
+    echo "Loading ROS1 $ros1_distro Python2 ..."
+    source /opt/ros/$ros1_distro/setup.$shell
+    if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
+        source /home/${USER}/catkin_ws/devel/setup.$shell
+    fi
+    export ROS_IP=$(hostname -I | awk '{print $1}')
+    export ROS_MASTER_URI=http://$ROS_IP:11311
+elif [ "$ros_version" '==' "2" ];
 then
     # for ROS2 #
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell
@@ -40,7 +50,7 @@ then
     if [ -f $extra_file ]; then
         source $extra_file
     fi
-elif [ "$ros_version" '==' "3" ]; 
+elif [ "$ros_version" '==' "3" ];
 then
     # ROS1 #
     source /opt/ros/$ros1_distro/setup.$shell
@@ -62,16 +72,6 @@ then
     if [ -f $extra_file ]; then
         source $extra_file
     fi
-elif [ "$ros_version" '==' "1" ]; 
-then
-    # for ROS1 #
-    echo "Loading ROS1 $ros1_distro Python2 ..."
-    source /opt/ros/$ros1_distro/setup.$shell
-    if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
-        source /home/${USER}/catkin_ws/devel/setup.$shell
-    fi
-    export ROS_IP=$(hostname -I | awk '{print $1}')
-    export ROS_MASTER_URI=http://$ROS_IP:11311
 else
     # Do nothing #
     echo "Don't do anything ..."
