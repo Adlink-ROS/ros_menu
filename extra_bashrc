@@ -13,28 +13,42 @@ export ROS_DOMAIN_ID=30
 # Prompt DDS Menu #
 if [ -z $dds_vendor ]; then
     echo "**** Choose DDS you want to use ****"
-    echo "1) Neuron SDK + OpenSplice EE"
-    echo "2) OpenSplice CE"
-    echo "3) Cyclone DDS"
-    echo "4) FastRTPS"
-    echo -n "Please choose an option 1-4: "
+    echo "1) Neuron SDK HDE + OpenSplice EE"
+    echo "2) Neuron SDK RTS + OpenSplice EE"
+    echo "3) OpenSplice CE"
+    echo "4) Cyclone DDS"
+    echo "5) FastRTPS"
+    echo -n "Please choose an option 1-5: "
     read dds_vendor
 fi
 
-if [ "$dds_vendor" '==' "1" ]; # NSDK + OpenSplice EE
+# Check System arch. e.g. x86_64 or armv8. This will be used in sourcing OpenSplice release.com
+machine_arch="${uname -m}"
+# Demangle aarch64 to armv8.
+if [ ${machine_arch} = "aarch64" ]; then
+  machine_arch="armv8"
+endif
+
+if [ "$dds_vendor" '==' "1" ] || [ "$dds_vendor" '==' "2" ]; # NSDK HDE + OpenSplice EE or NSDK RTS + OpenSplice EE
 then
 
-    if [ -f "/opt/neuron-sdk-HDE/dashing/local_setup.$shell" ]; then
-        source /opt/neuron-sdk-HDE/dashing/local_setup.$shell
+    if [ "${dds_vendor}" = "1" ]; then
+        sdk_type="HDE"
+    else
+        sdk_type="RTS"
+    endif
+
+    if [ -f "/opt/neuron-sdk-${sdk_type}/ros/dashing/local_setup.$shell" ]; then
+        source /opt/neuron-sdk-${sdk_type}/ros/dashing/local_setup.$shell
     fi
-    if [ -f "/opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/release.com" ]; then
-        source /opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/release.com
+    if [ -f "/opt/neuron-sdk-HDE/opensplice/${sdk_type}/${machine_arch}.linux/release.com" ]; then
+        source /opt/neuron-sdk-HDE/opensplice/${sdk_type}/${machine_arch}.linux/release.com
     fi
 
     export RMW_IMPLEMENTATION=rmw_opensplice_cpp
-    export NEURON_SDK_LICENSE_PATH=/opt/neuron-sdk-HDE/neuron.key
-    # You can refer to the xml example from /opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/etc/config/
-    export OSPL_URI=file:///opt/neuron-sdk-HDE/dashing/share/opensplice_cmake_module/config/ros_ospl.xml
+    export ADLINK_LICENSE=/opt/neuron-sdk-${sdk_type}
+    # You can refer to the xml example from /opt/neuron-sdk-${sdk_type}/ros/opensplice/HDE/${machine_arch}.linux/etc/config/
+    export OSPL_URI=file:///opt/neuron-sdk-${sdk_type}/ros/dashing/share/opensplice_cmake_module/config/ros_ospl.xml
 
     echo "Source NSDK successfully"
 
