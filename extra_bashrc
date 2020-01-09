@@ -23,11 +23,11 @@ if [ -z $dds_vendor ]; then
 fi
 
 # Check System arch. e.g. x86_64 or armv8. This will be used in sourcing OpenSplice release.com
-machine_arch="${uname -m}"
+machine_arch=`uname -m`
 # Demangle aarch64 to armv8.
 if [ ${machine_arch} = "aarch64" ]; then
   machine_arch="armv8"
-endif
+fi
 
 if [ "$dds_vendor" '==' "1" ] || [ "$dds_vendor" '==' "2" ]; # NSDK HDE + OpenSplice EE or NSDK RTS + OpenSplice EE
 then
@@ -46,7 +46,7 @@ then
     fi
 
     export RMW_IMPLEMENTATION=rmw_opensplice_cpp
-    export ADLINK_LICENSE=/opt/neuron-sdk-${sdk_type}
+    export ADLINK_LICENSE=/opt/neuron-sdk-${sdk_type}/lic
     # You can refer to the xml example from /opt/neuron-sdk-${sdk_type}/ros/opensplice/HDE/${machine_arch}.linux/etc/config/
     export OSPL_URI=file:///opt/neuron-sdk-${sdk_type}/ros/dashing/share/opensplice_cmake_module/config/ros_ospl.xml
 
