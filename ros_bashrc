@@ -50,9 +50,9 @@ then
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell
     echo "Loading ROS2 $ros2_distro Python3 ..."
     source /opt/ros/$ros2_distro/local_setup.$shell
-    if [ -f "/home/${USER}/ros2_ws/install/local_setup.$shell" ]; then
-        source /home/${USER}/ros2_ws/install/local_setup.$shell
-    fi
+    # if [ -f "/home/${USER}/ros2_ws/install/local_setup.$shell" ]; then
+        # source /home/${USER}/ros2_ws/install/local_setup.$shell
+    # fi
 
     # for extra ROS2 settings #
     if [ -f $extra_file ]; then
