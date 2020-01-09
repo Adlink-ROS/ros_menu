@@ -36,7 +36,7 @@ then
         sdk_type="HDE"
     else
         sdk_type="RTS"
-    endif
+    fi
 
     if [ -f "/opt/neuron-sdk-${sdk_type}/ros/dashing/local_setup.$shell" ]; then
         source /opt/neuron-sdk-${sdk_type}/ros/dashing/local_setup.$shell
