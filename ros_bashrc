@@ -6,12 +6,17 @@
 unset ros_version
 unset ROS_DISTRO
 
-# Set some variables #
+# -------- Here is your settings ---------- #
+## Get your shell automaitcally
 shell=`echo $SHELL | awk -F '/' '{print $NF}'`
+## Uncomment if you want to set ros_version automatically
+#ros_version="2"
+## Select ros distro
 ros1_distro="melodic"
 ros2_distro="dashing"
-# You can put your extra ROS2 settings here. #
+## You can put your extra ROS2 settings here.
 extra_file="/home/${USER}/.extra_bashrc"
+# --------- End of your settings ---------- #
 
 # If the ros version is not assigned, #
 # prompt user which version should be loaded. #
