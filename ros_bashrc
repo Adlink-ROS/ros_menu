@@ -21,7 +21,10 @@ extra_file="/home/${USER}/.extra_bashrc"
 # If the ros version is not assigned, #
 # prompt user which version should be loaded. #
 if [ -z $ros_version ]; then
-    echo "**** Welcome to ADLINK Neuron ROS environment ****"
+    echo "**** Welcome to ADLINK Neuron ROS environment *******"
+    echo "* Usage: To set ROS env to be auto-loaded,          *"
+    echo "*        please assign ros_version in ~/.ros_bashrc *"
+    echo "*****************************************************"
     echo "1) ROS1 $ros1_distro Python2"
     echo "2) ROS2 $ros2_distro Python3"
     echo "3) ROS2-1 Bridge"
@@ -29,11 +32,7 @@ if [ -z $ros_version ]; then
     echo -n "Please choose an option 1-4: "
     read ros_version
 fi
-
-echo "**************************************************"
-echo "Usage: To set ROS env to be auto-loaded,"
-echo "       please assign ros_version in ~/.ros_bashrc"
-echo "**************************************************"
+echo "-------------------------------"
 
 if [ "$ros_version" '==' "1" ];
 then
