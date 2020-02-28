@@ -1,8 +1,6 @@
-# # # # # # # # # # # # # # # # #
-# Start of ADLINK Extra Setting #
-# # # # # # # # # # # # # # # # #
-
-echo "Loading extra settings ..."
+# # # # # # # # # # # # # # # #
+# Start of ADLINK DDS Setting #
+# # # # # # # # # # # # # # # #
 
 # clear DDS env var #
 unset dds_vendor
@@ -61,6 +59,6 @@ then
 
 fi
 
-# # # # # # # # # # # # # # # # #
-# END of ADLINK Extra Settings  #
-# # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # #
+# END of ADLINK DDS Settings  #
+# # # # # # # # # # # # # # # #

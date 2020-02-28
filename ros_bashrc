@@ -6,21 +6,13 @@
 unset ros_version
 unset ROS_DISTRO
 
-# -------- Here is your settings ---------- #
-## Get your shell automaitcally
-shell=`echo $SHELL | awk -F '/' '{print $NF}'`
-## Uncomment if you want to set ros_version automatically
-#ros_version="2"
-## Select ros distro
-ros1_distro="melodic"
-ros2_distro="dashing"
-## You can put your extra ROS2 settings here.
-extra_file="${HOME}/.ros_dotfiles/extra_bashrc"
-# --------- End of your settings ---------- #
+# Get user's config
+source ${HOME}/.ros_dotfiles/config_bashrc
 
 # If the ros version is not assigned, #
 # prompt user which version should be loaded. #
 if [ -z $ros_version ]; then
+    echo ""
     echo "**** Welcome to ADLINK Neuron ROS environment *******"
     echo "* Usage: To set ROS env to be auto-loaded,          *"
     echo "*        please assign ros_version in ~/.ros_bashrc *"
@@ -39,15 +31,24 @@ function source_ros1()
     # for ROS1 #
     echo "Loading ROS1 $ros1_distro Python2 ..."
     source /opt/ros/$ros1_distro/setup.$shell
-    if [ -f "${HOME}/catkin_ws/devel/setup.$shell" ]; then
-        source ${HOME}/catkin_ws/devel/setup.$shell
-    fi
     current_ip=$(hostname -I | awk '{print $1}')
     if [ -z $current_ip ]; then
         current_ip="127.0.0.1"
     fi
     export ROS_IP=$current_ip
     export ROS_MASTER_URI=http://$ROS_IP:11311
+
+    for i in "${ros1_plugins[@]}"; do
+        if [[ "$DIR" = /* ]]; then
+            plugin="$i"
+        else
+            plugin="$plugins_path/$i"
+        fi
+        if [ -f $plugin ]; then
+            echo "Loading $plugin"
+            source $plugin
+        fi
+    done
 }
 
 function source_ros2()
@@ -56,14 +57,18 @@ function source_ros2()
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell
     echo "Loading ROS2 $ros2_distro Python3 ..."
     source /opt/ros/$ros2_distro/local_setup.$shell
-    if [ -f "${HOME}/ros2_ws/install/local_setup.$shell" ]; then
-        source ${HOME}/ros2_ws/install/local_setup.$shell
-    fi
 
-    # for extra ROS2 settings #
-    if [ -f $extra_file ]; then
-        source $extra_file
-    fi
+    for i in "${ros2_plugins[@]}"; do
+        if [[ "$DIR" = /* ]]; then
+            plugin="$i"
+        else
+            plugin="$plugins_path/$i"
+        fi
+        if [ -f $plugin ]; then
+            echo "Loading $plugin"
+            source $plugin
+        fi
+    done
 }
 
 if [ "$ros_version" '==' "1" ];

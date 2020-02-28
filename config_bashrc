@@ -1,0 +1,34 @@
+# # # # # # # # # # # # # # # # #
+# Start of User's Config Files  #
+# # # # # # # # # # # # # # # # #
+
+## Get your shell automaitcally
+shell=`echo $SHELL | awk -F '/' '{print $NF}'`
+
+## Uncomment if you want to set ros_version automatically
+#ros_version="2"
+
+## Select ros distro
+ros1_distro="melodic"
+ros2_distro="dashing"
+
+## You can put your extra ROS2 settings here.
+extra_file="${HOME}/.ros_dotfiles/extra_bashrc"
+
+## Plugins bashrc
+## You can use absolute path or relative path is under $plugins_path.
+plugins_path="${HOME}/.ros_dotfiles/plugins_bashrc"
+ros1_plugins=(
+    "${HOME}/catkin_ws/devel/setup.$shell"
+#   "openvino"
+#   "your_config"
+)
+ros2_plugins=(
+    "${HOME}/ros2_ws/install/local_setup.$shell"
+    "dds_bashrc"
+#   "your_config"
+)
+
+# # # # # # # # # # # # # # # #
+# END of User's Config Files  #
+# # # # # # # # # # # # # # # #
