@@ -15,7 +15,7 @@ shell=`echo $SHELL | awk -F '/' '{print $NF}'`
 ros1_distro="melodic"
 ros2_distro="dashing"
 ## You can put your extra ROS2 settings here.
-extra_file="${HOME}/.extra_bashrc"
+extra_file="${HOME}/.ros_dotfiles/extra_bashrc"
 # --------- End of your settings ---------- #
 
 # If the ros version is not assigned, #
