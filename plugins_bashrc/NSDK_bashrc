@@ -1,0 +1,78 @@
+# # # # # # # # # # # # # # # #
+# Start of ADLINK DDS Setting #
+# # # # # # # # # # # # # # # #
+
+# clear DDS env var #
+unset dds_vendor
+ 
+# DDS DOMAIN ID for ROS #
+export ROS_DOMAIN_ID=30
+
+# Prompt DDS Menu #
+if [ -z $dds_vendor ]; then
+    echo "**** Choose DDS you want to use ****"
+    echo "1) Neuron SDK HDE + OpenSplice EE"
+    echo "2) Neuron SDK RTS + OpenSplice EE"
+    echo "3) OpenSplice CE"
+    echo "4) Cyclone DDS"
+    echo "5) FastRTPS"
+    echo -n "Please choose an option 1-5: "
+    read dds_vendor
+fi
+
+# Check System arch. e.g. x86_64 or armv8. This will be used in sourcing OpenSplice release.com
+machine_arch=`uname -m`
+# Demangle aarch64 to armv8.
+if [ ${machine_arch} = "aarch64" ]; then
+  machine_arch="armv8"
+fi
+
+if [ "$dds_vendor" '==' "1" ] || [ "$dds_vendor" '==' "2" ]; # NSDK HDE + OpenSplice EE or NSDK RTS + OpenSplice EE
+then
+
+    if [ "${dds_vendor}" = "1" ]; then
+        sdk_type="HDE"
+    else
+        sdk_type="RTS"
+    fi
+
+    if [ -f "/opt/neuron-sdk-${sdk_type}/ros/dashing/local_setup.$shell" ]; then
+        source /opt/neuron-sdk-${sdk_type}/ros/dashing/local_setup.$shell
+    fi
+    if [ -f "/opt/neuron-sdk-HDE/opensplice/${sdk_type}/${machine_arch}.linux/release.com" ]; then
+        source /opt/neuron-sdk-HDE/opensplice/${sdk_type}/${machine_arch}.linux/release.com
+    fi
+
+    export RMW_IMPLEMENTATION=rmw_opensplice_cpp
+    export ADLINK_LICENSE=/opt/neuron-sdk-${sdk_type}/lic
+    # You can refer to the xml example from /opt/neuron-sdk-${sdk_type}/ros/opensplice/HDE/${machine_arch}.linux/etc/config/
+    export OSPL_URI=file:///opt/neuron-sdk-${sdk_type}/ros/dashing/share/opensplice_cmake_module/config/ros_ospl.xml
+
+    echo "Source NSDK successfully"
+
+elif [ "$dds_vendor" '==' "3" ]; # OpenSplice CE
+then
+
+    export RMW_IMPLEMENTATION=rmw_opensplice_cpp
+
+    echo "Source OpenSplice successfully"
+
+elif [ "$dds_vendor" '==' "4" ]; # Cyclone DDS
+then
+
+    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+
+    echo "Source CycloneDDS successfully"
+
+elif [ "$dds_vendor" '==' "5" ]; # FastRTPS
+then
+
+    export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+	
+    echo "Source FastRTPS successfully"
+
+fi
+
+# # # # # # # # # # # # # # # #
+# END of ADLINK DDS Settings  #
+# # # # # # # # # # # # # # # #
