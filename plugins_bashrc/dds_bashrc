@@ -11,30 +11,19 @@ export ROS_DOMAIN_ID=30
 # Prompt DDS Menu #
 if [ -z $dds_vendor ]; then
     echo "**** Choose DDS you want to use ****"
-    echo "1) Neuron SDK + OpenSplice EE"
+    echo "1) Cyclone DDS"
     echo "2) OpenSplice CE"
-    echo "3) Cyclone DDS"
-    echo "4) FastRTPS"
-    echo -n "Please choose an option 1-4: "
+    echo "3) FastRTPS"
+    echo -n "Please choose an option 1-3: "
     read dds_vendor
 fi
 
-if [ "$dds_vendor" '==' "1" ]; # NSDK + OpenSplice EE
+if [ "$dds_vendor" '==' "1" ]; # Cyclone DDS
 then
 
-    if [ -f "/opt/neuron-sdk-HDE/dashing/local_setup.$shell" ]; then
-        source /opt/neuron-sdk-HDE/dashing/local_setup.$shell
-    fi
-    if [ -f "/opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/release.com" ]; then
-        source /opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/release.com
-    fi
+    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
-    export RMW_IMPLEMENTATION=rmw_opensplice_cpp
-    export NEURON_SDK_LICENSE_PATH=/opt/neuron-sdk-HDE/neuron.key
-    # You can refer to the xml example from /opt/neuron-sdk-HDE/opensplice/HDE/x86_64.linux/etc/config/
-    export OSPL_URI=file:///opt/neuron-sdk-HDE/dashing/share/opensplice_cmake_module/config/ros_ospl.xml
-
-    echo "Source NSDK successfully"
+    echo "Source CycloneDDS successfully"
 
 elif [ "$dds_vendor" '==' "2" ]; # OpenSplice CE
 then
@@ -43,14 +32,7 @@ then
 
     echo "Source OpenSplice successfully"
 
-elif [ "$dds_vendor" '==' "3" ]; # Cyclone DDS
-then
-
-    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-
-    echo "Source CycloneDDS successfully"
-
-elif [ "$dds_vendor" '==' "4" ]; # FastRTPS
+elif [ "$dds_vendor" '==' "3" ]; # FastRTPS
 then
 
     export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
