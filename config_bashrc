@@ -12,9 +12,6 @@ shell=`echo $SHELL | awk -F '/' '{print $NF}'`
 ros1_distro="melodic"
 ros2_distro="dashing"
 
-## You can put your extra ROS2 settings here.
-extra_file="${HOME}/.ros_dotfiles/extra_bashrc"
-
 ## Plugins bashrc
 ## You can use absolute path or relative path is under $plugins_path.
 plugins_path="${HOME}/.ros_dotfiles/plugins_bashrc"
