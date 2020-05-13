@@ -12,7 +12,6 @@ source ${HOME}/.ros_dotfiles/config_bashrc
 # If the ros version is not assigned, #
 # prompt user which version should be loaded. #
 if [ -z $ros_version ]; then
-    echo ""
     echo "**** Welcome to ADLINK Neuron ROS environment *******"
     echo "* Usage: To set ROS env to be auto-loaded,          *"
     echo "*        please assign ros_version in ~/.ros_bashrc *"
