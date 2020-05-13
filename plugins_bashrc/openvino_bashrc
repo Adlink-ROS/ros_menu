@@ -1,0 +1,4 @@
+source /opt/intel/openvino/bin/setupvars.sh
+export CPU_EXTENSION_LIB=/opt/intel/openvino/deployment_tools/inference_engine/samples/build/intel64/Release/lib/libcpu_extension.so
+export GFLAGS_LIB=/opt/intel/openvino/deployment_tools/inference_engine/samples/build/intel64/Release/lib/libgflags_nothreads.a
+export OpenCV_DIR=/opt/intel/openvino/opencv

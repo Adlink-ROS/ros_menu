@@ -17,13 +17,14 @@ ros2_distro="dashing"
 plugins_path="${HOME}/.ros_dotfiles/plugins_bashrc"
 ros1_plugins=(
     "${HOME}/catkin_ws/devel/setup.$shell"
-#   "openvino"
+#   "openvino_bashrc"
 #   "your_config"
 )
 ros2_plugins=(
     "${HOME}/ros2_ws/install/local_setup.$shell"
     "dds_bashrc"
 #   "NSDK_bashrc"
+#   "openvino_bashrc"
 #   "your_config"
 )
 
