@@ -1,94 +1,104 @@
-# # # # # # # # # # # # # # # # # #
-# Start of ADLINK Neuron Settings #
-# # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # #
+# Start of Neuron Startup Menu Settings #
+# # # # # # # # # # # # # # # # # # # # #
 
 # clear ROS env var for resolving warning #
-unset ros_version
+unset ros_option
 unset ROS_DISTRO
+unset ROS_HOSTNAME
 
-# Set some variables #
-shell=`echo $SHELL | awk -F '/' '{print $NF}'`
-ros1_distro="melodic"
-ros2_distro="dashing"
-# You can put your extra ROS2 settings here. #
-extra_file="/home/${USER}/.extra_bashrc"
+# Get user's config
+source ${HOME}/.ros_dotfiles/config_bashrc
+
+# Enable Menu or not
+if [ "$menu_enable" != "y" ]; then
+    return
+fi
 
 # If the ros version is not assigned, #
 # prompt user which version should be loaded. #
-if [ -z $ros_version ]; then
-    echo "**** Welcome to ADLINK Neuron ROS environment ****"
+if [ -z $ros_option ]; then
+    echo "************ Neuron Startup Menu for ROS ************"
+    echo "* Usage: To set ROS env to be auto-loaded,          *"
+    echo "*        please assign ros_option in config_bashrc  *"
+    echo "*****************************************************"
     echo "1) ROS1 $ros1_distro Python2"
     echo "2) ROS2 $ros2_distro Python3"
     echo "3) ROS2-1 Bridge"
     echo "4) Do nothing"
     echo -n "Please choose an option 1-4: "
-    read ros_version
+    read ros_option
 fi
+echo "-------------------------------"
 
-echo "**************************************************"
-echo "Usage: To set ROS env to be auto-loaded,"
-echo "       please assign ros_version in ~/.ros_bashrc"
-echo "**************************************************"
-
-if [ "$ros_version" '==' "1" ];
-then
-    # for ROS1 #
-    echo "Loading ROS1 $ros1_distro Python2 ..."
-    source /opt/ros/$ros1_distro/setup.$shell
-    if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
-        source /home/${USER}/catkin_ws/devel/setup.$shell
+function source_ros1()
+{
+    # Setup argument #
+    ros_path=$1
+    if [[ "$ros_path" != /* ]]; then
+        ros_path="/opt/ros/$ros_path"
     fi
-    current_ip=$(hostname -I | awk '{print $1}')
-    if [ -z $current_ip ]; then
-        current_ip="127.0.0.1"
-    fi
+    master_ip=$2
+    # Setup ROS1 environment #
+    source $ros_path/setup.$shell
+    # ROS_IP and ROS_MASTER_URI #
     export ROS_IP=$current_ip
-    export ROS_MASTER_URI=http://$ROS_IP:11311
-elif [ "$ros_version" '==' "2" ];
-then
-    # for ROS2 #
+    export ROS_MASTER_URI=http://$master_ip:11311
+}
+
+function source_ros2()
+{
+    # Setup argument #
+    ros_path=$1
+    if [[ "$ros_path" != /* ]]; then
+        ros_path="/opt/ros/$ros_path"
+    fi
+    ros_domain_id=$2
+    # Setup ROS2 environment #
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell
-    echo "Loading ROS2 $ros2_distro Python3 ..."
-    source /opt/ros/$ros2_distro/local_setup.$shell
-    if [ -f "/home/${USER}/ros2_ws/install/local_setup.$shell" ]; then
-        source /home/${USER}/ros2_ws/install/local_setup.$shell
-    fi
+    source $ros_path/local_setup.$shell
+    # ROS DOMAIN ID #
+    export ROS_DOMAIN_ID=$ros_domain_id
+}
 
-    # for extra ROS2 settings #
-    if [ -f $extra_file ]; then
-        source $extra_file
+function source_plugin()
+{
+    plugin=$1
+    if [[ "$plugin" != /* ]]; then
+        plugin="$plugins_path/$plugin"
     fi
-elif [ "$ros_version" '==' "3" ];
+    if [ -f $plugin ]; then
+        echo "Loading $plugin"
+        source $plugin
+    fi
+}
+
+function source_plugin_list()
+{
+    plugin_list=("$@")
+    for i in "${plugin_list[@]}"; do
+        source_plugin $i
+    done
+}
+
+if [ "$ros_option" '==' "1" ];
 then
-    # ROS1 #
-    source /opt/ros/$ros1_distro/setup.$shell
-    if [ -f "/home/${USER}/catkin_ws/devel/setup.$shell" ]; then
-        source /home/${USER}/catkin_ws/devel/setup.$shell
-    fi
-    current_ip=$(hostname -I | awk '{print $1}')
-    if [ -z $current_ip ]; then
-        current_ip="127.0.0.1"
-    fi
-    export ROS_IP=$current_ip
-    export ROS_MASTER_URI=http://$ROS_IP:11311
-
-    # ROS2 #
-    echo "Loading ROS2 $ros2_distro Python3 ..."
-    source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell
-    source /opt/ros/$ros2_distro/local_setup.$shell
-    if [ -f "/home/${USER}/ros2_ws/install/local_setup.$shell" ]; then
-        source /home/${USER}/ros2_ws/install/local_setup.$shell
-    fi
-
-    # for extra ROS2 settings #
-    if [ -f $extra_file ]; then
-        source $extra_file
-    fi
+    source_ros1 $ros1_distro $ros_default_master_uri
+    source_plugin_list "${ros1_plugins[@]}"
+elif [ "$ros_option" '==' "2" ];
+then
+    source_ros2 $ros2_distro $ros_default_domain_id
+    source_plugin_list "${ros2_plugins[@]}"
+elif [ "$ros_option" '==' "3" ];
+then
+    source_ros1 $ros1_distro $ros_default_master_uri
+    source_ros2 $ros2_distro $ros_default_domain_id
+    source_plugin "dds_bashrc"
 else
     # Do nothing #
     echo "Don't do anything ..."
 fi
 
-# # # # # # # # # # # # # # # # #
-# END of ADLINK Neuron Settings #
-# # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # #
+# END of Neuron Startup Menu Settings #
+# # # # # # # # # # # # # # # # # # # #

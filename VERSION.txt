@@ -1,5 +1,10 @@
-Product: ros_dotfiles
----------------------
+Product: Neuron Startup Menu
+----------------------------
+
+v1.1.0:
+1. Rename to Neuron Startup Menu.
+2. Support plugins.
+3. Split config_bashrc and ros_bashrc.
 
 v1.0.0:
 1. First Release.
