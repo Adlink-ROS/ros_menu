@@ -5,9 +5,6 @@
 # clear DDS env var #
 unset dds_vendor
  
-# DDS DOMAIN ID for ROS #
-export ROS_DOMAIN_ID=30
-
 # Prompt DDS Menu #
 if [ -z $dds_vendor ]; then
     echo "**** Choose DDS you want to use ****"

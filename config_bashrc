@@ -28,6 +28,16 @@ ros2_plugins=(
 #   "your_config"
 )
 
+# Default ROS Master URI
+current_ip=$(hostname -I | awk '{print $1}')
+if [ -z $current_ip ]; then
+    current_ip="127.0.0.1"
+fi
+ros_default_master_uri=$current_ip
+
+# Default ROS Domain ID
+ros_default_domain_id=30
+
 # # # # # # # # # # # # # # # #
 # END of User's Config Files  #
 # # # # # # # # # # # # # # # #

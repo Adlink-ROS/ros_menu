@@ -28,15 +28,13 @@ echo "-------------------------------"
 
 function source_ros1()
 {
+    # Setup argument #
+    ros_distro=$1
+    master_ip=$2
     # for ROS1 #
-    echo "Loading ROS1 $ros1_distro Python2 ..."
-    source /opt/ros/$ros1_distro/setup.$shell
-    current_ip=$(hostname -I | awk '{print $1}')
-    if [ -z $current_ip ]; then
-        current_ip="127.0.0.1"
-    fi
+    source /opt/ros/$ros_distro/setup.$shell
     export ROS_IP=$current_ip
-    export ROS_MASTER_URI=http://$ROS_IP:11311
+    export ROS_MASTER_URI=http://$master_ip:11311
 
     for i in "${ros1_plugins[@]}"; do
         if [[ "$DIR" = /* ]]; then
@@ -53,10 +51,15 @@ function source_ros1()
 
 function source_ros2()
 {
+    # Setup argument #
+    ros_distro=$1
+    ros_domain_id=$2
     # for ROS2 #
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell
-    echo "Loading ROS2 $ros2_distro Python3 ..."
-    source /opt/ros/$ros2_distro/local_setup.$shell
+    source /opt/ros/$ros_distro/local_setup.$shell
+    # ROS DOMAIN ID #
+    export ROS_DOMAIN_ID=$ros_domain_id
+
 
     for i in "${ros2_plugins[@]}"; do
         if [[ "$DIR" = /* ]]; then
@@ -73,14 +76,14 @@ function source_ros2()
 
 if [ "$ros_version" '==' "1" ];
 then
-    source_ros1
+    source_ros1 $ros1_distro $ros_default_master_uri
 elif [ "$ros_version" '==' "2" ];
 then
-    source_ros2
+    source_ros2 $ros2_distro $ros_default_domain_id
 elif [ "$ros_version" '==' "3" ];
 then
-    source_ros1
-    source_ros2
+    source_ros1 $ros1_distro $ros_default_master_uri
+    source_ros2 $ros2_distro $ros_default_domain_id
 else
     # Do nothing #
     echo "Don't do anything ..."
