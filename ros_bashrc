@@ -35,18 +35,6 @@ function source_ros1()
     source /opt/ros/$ros_distro/setup.$shell
     export ROS_IP=$current_ip
     export ROS_MASTER_URI=http://$master_ip:11311
-
-    for i in "${ros1_plugins[@]}"; do
-        if [[ "$DIR" = /* ]]; then
-            plugin="$i"
-        else
-            plugin="$plugins_path/$i"
-        fi
-        if [ -f $plugin ]; then
-            echo "Loading $plugin"
-            source $plugin
-        fi
-    done
 }
 
 function source_ros2()
@@ -59,9 +47,12 @@ function source_ros2()
     source /opt/ros/$ros_distro/local_setup.$shell
     # ROS DOMAIN ID #
     export ROS_DOMAIN_ID=$ros_domain_id
+}
 
-
-    for i in "${ros2_plugins[@]}"; do
+function source_plugin()
+{
+    plugin_list=("$@")
+    for i in "${plugin_list[@]}"; do
         if [[ "$DIR" = /* ]]; then
             plugin="$i"
         else
@@ -77,9 +68,11 @@ function source_ros2()
 if [ "$ros_option" '==' "1" ];
 then
     source_ros1 $ros1_distro $ros_default_master_uri
+    source_plugin "${ros1_plugins[@]}"
 elif [ "$ros_option" '==' "2" ];
 then
     source_ros2 $ros2_distro $ros_default_domain_id
+    source_plugin "${ros2_plugins[@]}"
 elif [ "$ros_option" '==' "3" ];
 then
     source_ros1 $ros1_distro $ros_default_master_uri
