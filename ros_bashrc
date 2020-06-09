@@ -1,6 +1,6 @@
-# # # # # # # # # # # # # # # # # #
-# Start of ADLINK Neuron Settings #
-# # # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # # #
+# Start of Neuron Startup Menu Settings #
+# # # # # # # # # # # # # # # # # # # # #
 
 # clear ROS env var for resolving warning #
 unset ros_version
@@ -13,9 +13,9 @@ source ${HOME}/.ros_dotfiles/config_bashrc
 # If the ros version is not assigned, #
 # prompt user which version should be loaded. #
 if [ -z $ros_version ]; then
-    echo "**** Welcome to ADLINK Neuron ROS environment *******"
+    echo "************ Neuron Startup Menu for ROS ************"
     echo "* Usage: To set ROS env to be auto-loaded,          *"
-    echo "*        please assign ros_version in ~/.ros_bashrc *"
+    echo "*        please assign ros_version in config_bashrc *"
     echo "*****************************************************"
     echo "1) ROS1 $ros1_distro Python2"
     echo "2) ROS2 $ros2_distro Python3"
@@ -86,6 +86,6 @@ else
     echo "Don't do anything ..."
 fi
 
-# # # # # # # # # # # # # # # # #
-# END of ADLINK Neuron Settings #
-# # # # # # # # # # # # # # # # #
+# # # # # # # # # # # # # # # # # # # #
+# END of Neuron Startup Menu Settings #
+# # # # # # # # # # # # # # # # # # # #
