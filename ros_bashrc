@@ -29,10 +29,14 @@ echo "-------------------------------"
 function source_ros1()
 {
     # Setup argument #
-    ros_distro=$1
+    ros_path=$1
+    if [[ "$ros_path" != /* ]]; then
+        ros_path="/opt/ros/$ros_path"
+    fi
     master_ip=$2
-    # for ROS1 #
-    source /opt/ros/$ros_distro/setup.$shell
+    # Setup ROS1 environment #
+    source $ros_path/setup.$shell
+    # ROS_IP and ROS_MASTER_URI #
     export ROS_IP=$current_ip
     export ROS_MASTER_URI=http://$master_ip:11311
 }
@@ -40,11 +44,14 @@ function source_ros1()
 function source_ros2()
 {
     # Setup argument #
-    ros_distro=$1
+    ros_path=$1
+    if [[ "$ros_path" != /* ]]; then
+        ros_path="/opt/ros/$ros_path"
+    fi
     ros_domain_id=$2
-    # for ROS2 #
+    # Setup ROS2 environment #
     source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell
-    source /opt/ros/$ros_distro/local_setup.$shell
+    source $ros_path/local_setup.$shell
     # ROS DOMAIN ID #
     export ROS_DOMAIN_ID=$ros_domain_id
 }
