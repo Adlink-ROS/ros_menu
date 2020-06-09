@@ -3,7 +3,7 @@
 # # # # # # # # # # # # # # # # # # # # #
 
 # clear ROS env var for resolving warning #
-unset ros_version
+unset ros_option
 unset ROS_DISTRO
 unset ROS_HOSTNAME
 
@@ -12,17 +12,17 @@ source ${HOME}/.ros_dotfiles/config_bashrc
 
 # If the ros version is not assigned, #
 # prompt user which version should be loaded. #
-if [ -z $ros_version ]; then
+if [ -z $ros_option ]; then
     echo "************ Neuron Startup Menu for ROS ************"
     echo "* Usage: To set ROS env to be auto-loaded,          *"
-    echo "*        please assign ros_version in config_bashrc *"
+    echo "*        please assign ros_option in config_bashrc  *"
     echo "*****************************************************"
     echo "1) ROS1 $ros1_distro Python2"
     echo "2) ROS2 $ros2_distro Python3"
     echo "3) ROS2-1 Bridge"
     echo "4) Do nothing"
     echo -n "Please choose an option 1-4: "
-    read ros_version
+    read ros_option
 fi
 echo "-------------------------------"
 
@@ -74,13 +74,13 @@ function source_ros2()
     done
 }
 
-if [ "$ros_version" '==' "1" ];
+if [ "$ros_option" '==' "1" ];
 then
     source_ros1 $ros1_distro $ros_default_master_uri
-elif [ "$ros_version" '==' "2" ];
+elif [ "$ros_option" '==' "2" ];
 then
     source_ros2 $ros2_distro $ros_default_domain_id
-elif [ "$ros_version" '==' "3" ];
+elif [ "$ros_option" '==' "3" ];
 then
     source_ros1 $ros1_distro $ros_default_master_uri
     source_ros2 $ros2_distro $ros_default_domain_id

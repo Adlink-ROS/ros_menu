@@ -5,8 +5,8 @@
 ## Get your shell automaitcally
 shell=`echo $SHELL | awk -F '/' '{print $NF}'`
 
-## Uncomment if you want to set ros_version automatically
-#ros_version="2"
+## Uncomment if you want to set ros_option automatically
+#ros_option="2"
 
 ## Select ros distro
 ros1_distro="melodic"
