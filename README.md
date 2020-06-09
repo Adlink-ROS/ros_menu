@@ -1,7 +1,7 @@
-# ROS dotfiles
+# Neuron Startup Menu
 
 Setting ROS environment every time is an annoying job.
-ADLINK provides ROS dotfiles to make your life easier.
+ADLINK provides Neuron Startup Menu to make your life easier.
 
 # Install
 
@@ -12,18 +12,21 @@ cd ~
 git clone https://github.com/Adlink-ROS/ros_dotfiles.git
 ```
 
-* Install the dotfiles
+* Installation
 
 ```sh
 cd ros_dotfiles
-git checkout v1.0.0
+git checkout v1.1.0
 ./install.sh
 ```
 
 * Next time you open the shell, the terminal will show the following menu.
 
 ```
-**** Welcome to ADLINK Neuron ROS environment ****
+************ Neuron Startup Menu for ROS ************
+* Usage: To set ROS env to be auto-loaded,          *
+*        please assign ros_option in config_bashrc  *
+*****************************************************
 1) ROS1 melodic Python2
 2) ROS2 dashing Python3
 3) ROS2-1 Bridge
@@ -40,24 +43,31 @@ Please choose an option 1-4:
     - `ROS2 dashing Python3`:
         * Setup ROS2 environment.
         * Setup your package environment which is in `~/ros2_ws`.
-        * Setup extra settings and select which DDS you want to use.
+        * Load DDS settings and select which DDS you want to use.
     - `ROS2-1 Bridge`:
         * Do all the thing for ROS1 and ROS2.
     - `Do nothing`:
         * Don't setup any environment.
 
-* If you want to add your own settings, you can add it in extra_bashrc.
+# Configuration
 
-    - ADLINK provides a menu for choosing DDS in default, which shows the following menu.
+You can configure the menu in a very easy way.
+All you need to modify is in `~/.ros_dotfiles/config_bashrc`.
+The following is the config you can control.
 
-```
-**** Choose DDS you want to use ****
-1) Neuron SDK + OpenSplice EE
-2) OpenSplice CE
-3) Cyclone DDS
-4) FastRTPS
-Please choose an option 1-4: 
-```
+* Enable Menu:
+  - menu_enable: "y" to enable the menu, otherwise do nothing.
+* ROS distribution:
+  - Decide which ROS distribution you want to use.
+  - ros1_distro: ROS 1 version
+  - ros2_distro: ROS 2 version
+* Plugins:
+  - You can put your own plugin under `~/.ros_dotfiles/plugins_bashrc/`. Neuron Startup Menu will load it automatically.
+  - ros1_plugins: Plugin for ROS1
+  - ros1_plugins: Plugin for ROS2
+* ROS Environmental Variables:
+  - ros_default_master_uri: Default config for ROS_MASTER_URI in ROS1.
+  - ros_default_domain_id: Default config for ROS_DOMAIN_ID in ROS2. 
 
 # Upgrade
 
@@ -84,8 +94,7 @@ git checkout <new_version>
 
 ```
 rm -rf ~/ros_dotfiles
-rm -f ~/.ros_bashrc
-rm -f ~/.extra_bashrc
+rm -rf ~/.ros_dotfiles
 ```
 
 * Also remember to remove `source ~/.ros_bashrc` in your `~/.bashrc`.
