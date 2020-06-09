@@ -5,6 +5,7 @@
 # clear ROS env var for resolving warning #
 unset ros_version
 unset ROS_DISTRO
+unset ROS_HOSTNAME
 
 # Get user's config
 source ${HOME}/.ros_dotfiles/config_bashrc
