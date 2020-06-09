@@ -10,6 +10,11 @@ unset ROS_HOSTNAME
 # Get user's config
 source ${HOME}/.ros_dotfiles/config_bashrc
 
+# Enable Menu or not
+if [ "$menu_enable" != "y" ]; then
+    return
+fi
+
 # If the ros version is not assigned, #
 # prompt user which version should be loaded. #
 if [ -z $ros_option ]; then
