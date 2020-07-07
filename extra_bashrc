@@ -52,21 +52,21 @@ then
 
     echo "Source NSDK successfully"
 
-elif [ "$dds_vendor" '==' "2" ]; # OpenSplice CE
+elif [ "$dds_vendor" '==' "3" ]; # OpenSplice CE
 then
 
     export RMW_IMPLEMENTATION=rmw_opensplice_cpp
 
     echo "Source OpenSplice successfully"
 
-elif [ "$dds_vendor" '==' "3" ]; # Cyclone DDS
+elif [ "$dds_vendor" '==' "4" ]; # Cyclone DDS
 then
 
     export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
     echo "Source CycloneDDS successfully"
 
-elif [ "$dds_vendor" '==' "4" ]; # FastRTPS
+elif [ "$dds_vendor" '==' "5" ]; # FastRTPS
 then
 
     export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
