@@ -46,6 +46,7 @@ Please choose an option 1-4:
         * Load DDS settings and select which DDS you want to use.
     - `ROS2-1 Bridge`:
         * Do all the thing for ROS1 and ROS2.
+        * Run ROS bridge automatically.
     - `Do nothing`:
         * Don't setup any environment.
 

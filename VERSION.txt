@@ -1,6 +1,10 @@
 Product: Neuron Startup Menu
 ----------------------------
 
+v1.2.0: (WIP)
+1. Run ROS bridge automatically while choosing bridge.
+2. Rename CycloneDDS to Eclipse Cyclone DDS.
+
 v1.1.0:
 1. Rename to Neuron Startup Menu.
 2. Support plugins.
