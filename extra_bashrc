@@ -16,7 +16,7 @@ if [ -z $dds_vendor ]; then
     echo "1) Neuron SDK HDE + OpenSplice EE"
     echo "2) Neuron SDK RTS + OpenSplice EE"
     echo "3) OpenSplice CE"
-    echo "4) Cyclone DDS"
+    echo "4) Eclipse Cyclone DDS"
     echo "5) FastRTPS"
     echo -n "Please choose an option 1-5: "
     read dds_vendor
@@ -64,7 +64,7 @@ then
 
     export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
 
-    echo "Source CycloneDDS successfully"
+    echo "Source Eclipse Cyclone DDS successfully"
 
 elif [ "$dds_vendor" '==' "5" ]; # FastRTPS
 then
