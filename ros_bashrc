@@ -94,7 +94,14 @@ then
     source_ros1 $ros1_distro $ros_default_master_uri
     source_ros2 $ros2_distro $ros_default_domain_id
     source_plugin "dds_bashrc"
-    ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
+    if [ $(ros2 pkg list | grep ros1_bridge) ];
+    then
+        echo "Start to bridge all topics ..."
+        ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
+    else
+        echo "You need to install ros1_bridge first."
+        echo "Installation command: sudo apt install ros-$ROS_DISTRO-ros1-bridge"
+    fi
 else
     # Do nothing #
     echo "Don't do anything ..."
