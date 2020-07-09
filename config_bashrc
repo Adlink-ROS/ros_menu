@@ -12,8 +12,13 @@ shell=`echo $SHELL | awk -F '/' '{print $NF}'`
 #ros_option="2"
 
 ## Select ros distro
-ros1_distro="melodic"
-ros2_distro="dashing"
+if [[ $(grep 20.04 /etc/issue) ]]; then
+    ros1_distro="noetic"
+    ros2_distro="foxy"
+else
+    ros1_distro="melodic"
+    ros2_distro="dashing"
+fi
 
 ## Plugins bashrc
 ## You can use absolute path or relative path is under $plugins_path.
