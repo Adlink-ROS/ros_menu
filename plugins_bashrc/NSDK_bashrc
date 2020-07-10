@@ -5,8 +5,17 @@
 # clear DDS env var #
 unset dds_vendor
  
-# DDS DOMAIN ID for ROS #
-export ROS_DOMAIN_ID=30
+function check_dds_installation()
+{
+    if [ $(ros2 pkg list | grep $1) ];
+    then
+        echo "Source $2 successfully!"
+    else
+        pkg_name="ros-$ROS_DISTRO-`echo $1 | sed 's/_/-/g'`"
+        echo "You need to install $pkg_name first."
+        echo "Installation command: sudo apt install $pkg_name"
+    fi
+}
 
 # Prompt DDS Menu #
 if [ -z $dds_vendor ]; then
@@ -54,22 +63,19 @@ elif [ "$dds_vendor" '==' "3" ]; # OpenSplice CE
 then
 
     export RMW_IMPLEMENTATION=rmw_opensplice_cpp
-
-    echo "Source OpenSplice successfully"
+    check_dds_installation "rmw_opensplice_cpp" "OpenSplice"
 
 elif [ "$dds_vendor" '==' "4" ]; # Eclipse Cyclone DDS
 then
 
     export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-
-    echo "Source Eclipse Cyclone DDS successfully"
+    check_dds_installation "rmw_cyclonedds_cpp" "Eclipse Cyclone DDS"
 
 elif [ "$dds_vendor" '==' "5" ]; # FastRTPS
 then
 
     export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-	
-    echo "Source FastRTPS successfully"
+    check_dds_installation "rmw_fastrtps_cpp" "FastRTPS"
 
 fi
 
