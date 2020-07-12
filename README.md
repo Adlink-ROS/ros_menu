@@ -16,7 +16,7 @@ git clone https://github.com/Adlink-ROS/ros_dotfiles.git
 
 ```sh
 cd ros_dotfiles
-git checkout v1.1.0
+git checkout v1.2.0
 ./install.sh
 ```
 
@@ -46,6 +46,7 @@ Please choose an option 1-4:
         * Load DDS settings and select which DDS you want to use.
     - `ROS2-1 Bridge`:
         * Do all the thing for ROS1 and ROS2.
+        * Run ROS bridge automatically.
     - `Do nothing`:
         * Don't setup any environment.
 
