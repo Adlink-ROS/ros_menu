@@ -16,7 +16,7 @@ git clone https://github.com/Adlink-ROS/ros_dotfiles.git
 
 ```sh
 cd ros_dotfiles
-git checkout v1.1.0
+git checkout v1.2.0
 ./install.sh
 ```
 
