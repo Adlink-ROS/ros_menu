@@ -22,11 +22,12 @@ if [ -z $ros_option ]; then
     echo "* Usage: To set ROS env to be auto-loaded,          *"
     echo "*        please assign ros_option in config_bashrc  *"
     echo "*****************************************************"
-    echo "1) ROS1 $ros1_distro Python2"
-    echo "2) ROS2 $ros2_distro Python3"
-    echo "3) ROS2-1 Bridge"
-    echo "4) Do nothing"
-    echo -n "Please choose an option 1-4: "
+    echo "1) ROS 1 $ros1_distro"
+    echo "2) ROS 2 $ros2_distro"
+    echo "3) ROS 2-1 Bridge"
+    echo "4) ROS 2 Foxy & Neuron APP"
+    echo "5) Do nothing"
+    echo -n "Please choose an option 1-5: "
     read ros_option
 fi
 echo "-------------------------------"
@@ -102,6 +103,11 @@ then
         echo "You need to install ros1_bridge first."
         echo "Installation command: sudo apt install ros-$ROS_DISTRO-ros1-bridge"
     fi
+elif [ "$ros_option" '==' "4" ];
+then
+    # Source ROS 2 Foxy & Neuron APP
+    source_ros2 /opt/adlink/ros/foxy/ $ros_default_domain_id
+    source_plugin_list "${ros2_plugins[@]}"
 else
     # Do nothing #
     echo "Don't do anything ..."
