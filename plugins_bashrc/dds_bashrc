@@ -21,9 +21,13 @@ function check_dds_installation()
 if [ -z $dds_vendor ]; then
     echo "**** Choose DDS you want to use ****"
     echo "1) Eclipse Cyclone DDS"
-    echo "2) OpenSplice CE"
-    echo "3) FastRTPS"
-    echo -n "Please choose an option 1-3: "
+    echo "2) FastRTPS"
+    if [[ $ROS_DISTRO = "dashing" || $ROS_DISTRO = "eloquent" ]]; then
+        echo "3) OpenSplice CE"
+        echo -n "Please choose an option 1-3: "
+    else
+        echo -n "Please choose an option 1-2: "
+    fi
     read dds_vendor
 fi
 
@@ -33,17 +37,17 @@ then
     export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
     check_dds_installation "rmw_cyclonedds_cpp" "Eclipse Cyclone DDS"
 
-elif [ "$dds_vendor" '==' "2" ]; # OpenSplice CE
-then
-
-    export RMW_IMPLEMENTATION=rmw_opensplice_cpp
-    check_dds_installation "rmw_opensplice_cpp" "OpenSplice"
-
-elif [ "$dds_vendor" '==' "3" ]; # FastRTPS
+elif [ "$dds_vendor" '==' "2" ]; # FastRTPS
 then
 
     export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
     check_dds_installation "rmw_fastrtps_cpp" "FastRTPS"
+
+elif [ "$dds_vendor" '==' "3" ]; # OpenSplice CE
+then
+
+    export RMW_IMPLEMENTATION=rmw_opensplice_cpp
+    check_dds_installation "rmw_opensplice_cpp" "OpenSplice"
 
 fi
 
