@@ -9,13 +9,13 @@ ADLINK provides Neuron Startup Menu to make your life easier.
 
 ```sh
 cd ~
-git clone https://github.com/Adlink-ROS/ros_dotfiles.git
+git clone https://github.com/Adlink-ROS/ros_menu.git
 ```
 
 * Installation
 
 ```sh
-cd ros_dotfiles
+cd ros_menu
 git checkout v1.2.0
 ./install.sh
 ```
@@ -53,7 +53,7 @@ Please choose an option 1-4:
 # Configuration
 
 You can configure the menu in a very easy way.
-All you need to modify is in `~/.ros_dotfiles/config_bashrc`.
+All you need to modify is in `~/.ros_menu/config_bashrc`.
 The following is the config you can control.
 
 * Enable Menu:
@@ -63,7 +63,7 @@ The following is the config you can control.
   - ros1_distro: ROS 1 version
   - ros2_distro: ROS 2 version
 * Plugins:
-  - You can put your own plugin under `~/.ros_dotfiles/plugins_bashrc/`. Neuron Startup Menu will load it automatically.
+  - You can put your own plugin under `~/.ros_menu/plugins_bashrc/`. Neuron Startup Menu will load it automatically.
   - ros1_plugins: Plugin for ROS1
   - ros1_plugins: Plugin for ROS2
 * ROS Environmental Variables:
@@ -72,16 +72,16 @@ The following is the config you can control.
 
 # Upgrade
 
-It's very easy to upgrade the dotfiles.
+It's very easy to upgrade the menu.
 
-* Update the repository of ros_dotfiles.
+* Update the repository of ros_menu.
 
 ```sh
-cd ros_dotfiles
+cd ros_menu
 git pull
 ```
 
-* Select the ros_dotfiles version you want.
+* Select the ros_menu version you want.
 
 ```sh
 git checkout <new_version>
@@ -91,11 +91,11 @@ git checkout <new_version>
 
 # Uninstall
 
-* If you don't want the ros_dotfiles anymore, you can just remove these files.
+* If you don't want the ros_menu anymore, you can just remove these files.
 
 ```
-rm -rf ~/ros_dotfiles
-rm -rf ~/.ros_dotfiles
+rm -rf ~/ros_menu
+rm -rf ~/.ros_menu
 ```
 
 * Also remember to remove `source ~/.ros_bashrc` in your `~/.bashrc`.
@@ -104,4 +104,4 @@ rm -rf ~/.ros_dotfiles
 
 If you find any problems or have any suggestions, feel free to open issues on GitHub.
 
-Issue URL: https://github.com/Adlink-ROS/ros_dotfiles/issues
+Issue URL: https://github.com/Adlink-ROS/ros_menu/issues

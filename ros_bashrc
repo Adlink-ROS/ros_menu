@@ -8,7 +8,7 @@ unset ROS_DISTRO
 unset ROS_HOSTNAME
 
 # Get user's config
-source ${HOME}/.ros_dotfiles/config_bashrc
+source ${HOME}/.ros_menu/config_bashrc
 
 # Enable Menu or not
 if [ "$menu_enable" != "y" ]; then

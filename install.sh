@@ -2,11 +2,11 @@
 
 shell=`echo $SHELL | awk -F '/' '{print $NF}'`
 
-rm -f ~/.ros_dotfiles
-ln -s `pwd` ~/.ros_dotfiles
+rm -f ~/.ros_menu
+ln -s `pwd` ~/.ros_menu
 
-if ! grep -q ros_dotfiles ~/.${shell}rc; then
-    echo "source ~/.ros_dotfiles/ros_bashrc" >> ~/.${shell}rc
+if ! grep -q ros_menu ~/.${shell}rc; then
+    echo "source ~/.ros_menu/ros_bashrc" >> ~/.${shell}rc
 fi
 
 echo "Installation done!"
