@@ -29,7 +29,7 @@ if [ -z $ros_option ]; then
     echo -n "Please choose an option 1-4: "
     read ros_option
 fi
-echo "-------------------------------"
+echo "----------------------------------------------"
 
 function source_ros1()
 {
@@ -44,6 +44,10 @@ function source_ros1()
     # ROS_IP and ROS_MASTER_URI #
     export ROS_IP=$current_ip
     export ROS_MASTER_URI=http://$master_ip:11311
+    echo "* ROS_IP="$ROS_IP
+    echo "* ROS_MASTER_URI="$ROS_MASTER_URI
+    echo "----------------------------------------------"
+
 }
 
 function source_ros2()
@@ -59,6 +63,8 @@ function source_ros2()
     source $ros_path/local_setup.$shell
     # ROS DOMAIN ID #
     export ROS_DOMAIN_ID=$ros_domain_id
+    echo "* ROS_DOMAIN_ID="$ROS_DOMAIN_ID
+    echo "----------------------------------------------"
 }
 
 function source_plugin()
