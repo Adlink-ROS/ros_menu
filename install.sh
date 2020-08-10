@@ -58,7 +58,8 @@ then
 	    openssh-server \
 	    byobu \
 	    wget
-
+else
+    echo "Skip installing ROS"
 fi
 
 rm -f ~/.ros_menu
@@ -68,4 +69,4 @@ if ! grep -q ros_menu ~/.${shell}rc; then
     echo "source ~/.ros_menu/ros_bashrc" >> ~/.${shell}rc
 fi
 
-echo "Installation done!"
+echo "ROS Menu installed successfully"
