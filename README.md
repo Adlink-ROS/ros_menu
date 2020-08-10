@@ -5,6 +5,12 @@ ADLINK provides Neuron Startup Menu to make your life easier.
 
 # Install
 
+* Get Git tools if you haven't installed yet
+
+```sh
+sudo apt install -y git
+```
+
 * Clone the repository
 
 ```sh
