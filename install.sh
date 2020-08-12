@@ -65,6 +65,11 @@ then
 	    openssh-server \
 	    byobu \
 	    wget
+
+    # Initialize and update rosdep
+    sudo rosdep init
+    rosdep update
+
 else
     echo "Skip installing ROS"
 fi
