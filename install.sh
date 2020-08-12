@@ -27,6 +27,13 @@ then
     sudo apt update
     sudo apt install -y ros-$ros2_distro-desktop
     sudo apt install -y python3-argcomplete
+    
+    # Install ROS 2 RQT
+    sudo apt install -y ros-$ros2_distro-rqt
+    
+    # Install turtlesim for verification
+    sudo apt install -y ros-$ros2_distro-turtlesim
+    
     # Install ROS 2 build tools
     sudo apt install -y python3-colcon-common-extensions python3-vcstool
 
