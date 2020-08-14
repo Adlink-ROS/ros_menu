@@ -23,7 +23,6 @@ git clone https://github.com/Adlink-ROS/ros_menu.git
 
 ```sh
 cd ros_menu
-git checkout v1.2.0
 ./install.sh
 ```
 
