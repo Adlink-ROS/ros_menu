@@ -121,9 +121,9 @@ function source_plugin()
     if [[ "$plugin" != /* ]]; then
         plugin="$plugins_path/$plugin"
     fi
-    if [ -f $plugin ]; then
-        echo "Loading $plugin"
-        source $plugin
+    if [ -f $(echo $plugin | cut -d' ' -f 1) ]; then
+        echo "source $plugin"
+        eval "source $plugin"
     fi
 }
 

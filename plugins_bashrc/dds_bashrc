@@ -2,8 +2,18 @@
 # Start of ADLINK DDS Setting #
 # # # # # # # # # # # # # # # #
 
-# clear DDS env var #
-unset dds_vendor
+# You can bring the following argument while source.
+# 0: Show Menu
+# 1: Eclipse Cyclone DDS
+# 2: OpenSplice
+# 3: FastRTPS
+
+if [ "$1" '==' "0"  ]; then
+    # clear DDS env var #
+    unset dds_vendor
+else
+    dds_vendor=$1
+fi
  
 function check_dds_installation()
 {
