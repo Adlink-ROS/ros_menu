@@ -26,6 +26,7 @@ if [ -z $ros_option ]; then
     echo "1) ROS $ros1_distro"
     echo "2) ROS 2 $ros2_distro"
     echo "3) ROS 2 Bridge"
+    echo "4) ROS 2 foxy Neuron SDK"
     echo "n) Do nothing"
     echo -n "Please choose an option: "
     read ros_option
@@ -156,6 +157,10 @@ then
         echo "You need to install ros1_bridge first."
         echo "Installation command: sudo apt install ros-$ROS_DISTRO-ros1-bridge"
     fi
+elif [ "$ros_option" '==' "4" ];
+then
+    source_ros2 $ros2_distro $ros_default_domain_id
+    source_plugin "NSDK2_bashrc"
 else
     # Do nothing #
     echo "Don't do anything ..."
