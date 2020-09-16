@@ -25,7 +25,14 @@ rm -f ~/.ros_menu
 ln -s `pwd` ~/.ros_menu
 
 if ! grep -q ros_menu ~/.${shell}rc; then
-    echo "source ~/.ros_menu/ros_bashrc" >> ~/.${shell}rc
+    cat <<EOF >> ~/.${shell}rc
+# Neuron Startup Menu #
+ros_menu_path=~/.ros_menu/ros_bashrc
+if [ -f \$ros_menu_path ]; then
+    source \$ros_menu_path
+fi
+# End of Neuron Startup Menu #
+EOF
 fi
 
 echo "ROS Menu installed successfully"
