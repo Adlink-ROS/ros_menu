@@ -31,8 +31,26 @@ if [ -z $ros_option ]; then
 fi
 echo "----------------------------------------------"
 
+function ros_menu_env()
+{
+    if [[ $ros_version == "1" ]]; then
+        echo "* ROS codename=$ros1_distro"
+        echo "* ROS_IP=$ROS_IP"
+        echo "* ROS_MASTER_URI=$ROS_MASTER_URI"
+    else
+        echo "* ROS codename=$ROS_DISTRO"
+        echo "* ROS_DOMAIN_ID=$ROS_DOMAIN_ID"
+        echo "* RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION"
+        echo "* CYCLONEDDS_URI=$CYCLONEDDS_URI"
+        echo "* Workspace Layer:"
+        echo "  - ${AMENT_PREFIX_PATH//:/\n  - }"
+    fi
+}
+
 function source_ros1()
 {
+    # Assign ros_version #
+    ros_version="1"
     # Setup argument #
     ros_path=$1
     if [[ "$ros_path" != /* ]]; then
@@ -52,6 +70,8 @@ function source_ros1()
 
 function source_ros2()
 {
+    # Assign ros_version #
+    ros_version="2"
     # Setup argument #
     ros_path=$1
     if [[ "$ros_path" != /* ]]; then
