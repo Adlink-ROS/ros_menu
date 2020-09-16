@@ -31,6 +31,28 @@ if [ -z $ros_option ]; then
 fi
 echo "----------------------------------------------"
 
+function ros_menu_version()
+{
+    pushd ~/.ros_menu > /dev/null
+    cd ~/.ros_menu
+    menu_tag=`git tag -l --contains HEAD`
+    menu_commit=`git rev-parse HEAD`
+    echo "$menu_tag $menu_commit"
+    popd > /dev/null
+}
+
+function ros_menu_upgrade()
+{
+    pushd ~/.ros_menu > /dev/null
+    echo -n "Current version: "
+    ros_menu_version
+    git fetch > /dev/null
+    git checkout $1 > /dev/null
+    echo -n "Updated version: "
+    ros_menu_version
+    popd > /dev/null
+}
+
 function ros_menu_env()
 {
     if [[ $ros_version == "1" ]]; then
