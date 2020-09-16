@@ -53,6 +53,16 @@ function ros_menu_upgrade()
     popd > /dev/null
 }
 
+function ros_menu_uninstall()
+{
+    echo -n "Do you want to remove Neuron Startup Menu? (y/N): "
+    read remove_menu
+    if [ "$remove_menu" '==' "y" ] || [ "$remove_menu" '==' "Y" ];
+    then
+        rm -rf ~/ros_menu ~/.ros_menu
+    fi
+}
+
 function ros_menu_env()
 {
     if [[ $ros_version == "1" ]]; then

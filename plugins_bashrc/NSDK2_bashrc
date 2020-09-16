@@ -26,12 +26,7 @@ funtion nsdk_uninstall()
 {
     sudo apt remove "neuron-lib*"
     sudo apt remove "neuron-sdk*"
-    echo -n "Do you also want to remove Neuron Startup Menu? (y/N): "
-    read remove_menu
-    if [ "$remove_menu" '==' "y" ] || [ "$remove_menu" '==' "Y" ];
-    then
-        rm -rf ~/ros_menu ~/.ros_menu
-    fi
+    ros_menu_uninstall
 }
 
 # # # # # # # # # # # # # # # #
