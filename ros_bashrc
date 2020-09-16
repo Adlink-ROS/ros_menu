@@ -7,10 +7,10 @@ unset ros_option
 unset ROS_DISTRO
 unset ROS_HOSTNAME
 
-# Get user's config
+# Get user's config #
 source ${HOME}/.ros_menu/config_bashrc
 
-# Enable Menu or not
+# Enable Menu or not #
 if [ "$menu_enable" != "y" ]; then
     return
 fi
@@ -22,11 +22,11 @@ if [ -z $ros_option ]; then
     echo "* Usage: To set ROS env to be auto-loaded,          *"
     echo "*        please assign ros_option in config_bashrc  *"
     echo "*****************************************************"
-    echo "1) ROS1 $ros1_distro Python2"
-    echo "2) ROS2 $ros2_distro Python3"
-    echo "3) ROS2-1 Bridge"
-    echo "4) Do nothing"
-    echo -n "Please choose an option 1-4: "
+    echo "1) ROS $ros1_distro"
+    echo "2) ROS 2 $ros2_distro"
+    echo "3) ROS 2 Bridge"
+    echo "n) Do nothing"
+    echo -n "Please choose an option: "
     read ros_option
 fi
 echo "----------------------------------------------"
