@@ -3,13 +3,11 @@
 # # # # # # # # # # # # # # # #
 
 # Neuron SDK + Eclipse Cyclone DDS #
-if [ -f "/opt/adlink/neuron-sdk/ros/$ROS_DISTRO/local_setup.$shell" ];
+if [ -f "/opt/adlink/neuron-sdk/ros/foxy/local_setup.$shell" ];
 then
-    source /opt/adlink/neuron-sdk/ros/$ROS_DISTRO/local_setup.$shell
-    if [ -f "/opt/adlink/ros/$ROS_DISTRO/local_setup.$shell" ]; then
-        source /opt/adlink/ros/$ROS_DISTRO/local_setup.$shell
-    fi
+    source /opt/adlink/neuron-sdk/ros/foxy/local_setup.$shell
     export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    export ADLINK_LICENSE=/opt/adlink/neuron-sdk/
     echo "Source Neuron SDK successfully"
 else
     echo "Neuron SDK is not installed. Please contact ADLINK."
@@ -26,8 +24,14 @@ function nsdk_version()
 
 funtion nsdk_uninstall()
 {
-    sudo apt policy "neuron-lib*"
-    sudo apt policy "neuron-sdk*"
+    sudo apt remove "neuron-lib*"
+    sudo apt remove "neuron-sdk*"
+    echo -n "Do you also want to remove Neuron Startup Menu? (y/N): "
+    read remove_menu
+    if [ "$remove_menu" '==' "y" ] || [ "$remove_menu" '==' "Y" ];
+    then
+        rm -rf ~/ros_menu ~/.ros_menu
+    fi
 }
 
 # # # # # # # # # # # # # # # #
