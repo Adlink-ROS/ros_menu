@@ -33,24 +33,24 @@ cd ros_menu
 * Usage: To set ROS env to be auto-loaded,          *
 *        please assign ros_option in config_bashrc  *
 *****************************************************
-1) ROS1 melodic Python2
-2) ROS2 dashing Python3
-3) ROS2-1 Bridge
+1) ROS melodic
+2) ROS 2 dashing
+3) ROS 2 Bridge
 4) Do nothing
-Please choose an option 1-4:
+Please choose an option:
 ```
 
 * Here is what the menu does for us:
 
-    - `ROS1 melodic Python2`:
+    - `ROS melodic`:
         * Setup ROS1 environment.
         * Setup your package environment which is in `~/catkin_ws`.
         * Set the ROS_IP and ROS_MASTER_IP, which is your host IP.
-    - `ROS2 dashing Python3`:
+    - `ROS 2 dashing`:
         * Setup ROS2 environment.
         * Setup your package environment which is in `~/ros2_ws`.
         * Load DDS settings and select which DDS you want to use.
-    - `ROS2-1 Bridge`:
+    - `ROS 2 Bridge`:
         * Do all the thing for ROS1 and ROS2.
         * Run ROS bridge automatically.
     - `Do nothing`:
