@@ -35,4 +35,4 @@ fi
 EOF
 fi
 
-echo "ROS Menu installed successfully"
+echo "Neuron Startup Menu installed successfully"

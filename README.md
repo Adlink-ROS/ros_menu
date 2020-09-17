@@ -12,18 +12,15 @@ sudo apt update
 sudo apt install -y git
 ```
 
-* Clone the repository
-
-```sh
-cd ~
-git clone https://github.com/Adlink-ROS/ros_menu.git
-```
-
 * Installation
 
-```sh
-cd ros_menu
-./install.sh
+```
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/master/scripts/setup.sh)"
+```
+
+* Optional: you can also choose which version you want directly.
+```
+sh -c "MENU_VERSION=<Your Version> $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/master/scripts/setup.sh)"
 ```
 
 * Next time you open the shell, the terminal will show the following menu.
