@@ -8,7 +8,8 @@ unset ROS_DISTRO
 unset ROS_HOSTNAME
 
 # Get user's config #
-source ${HOME}/.ros_menu/config_bashrc
+ros_menu_path=${HOME}/.ros_menu/
+source ${ros_menu_path}/config_bashrc
 
 # Enable Menu or not #
 if [ "$menu_enable" != "y" ]; then
@@ -33,24 +34,19 @@ echo "----------------------------------------------"
 
 function ros_menu_version()
 {
-    pushd ~/.ros_menu > /dev/null
-    cd ~/.ros_menu
-    menu_tag=`git tag -l --contains HEAD`
-    menu_commit=`git rev-parse HEAD`
+    menu_tag=`git -C ${ros_menu_path} tag -l --contains HEAD`
+    menu_commit=`git -C ${ros_menu_path} rev-parse HEAD`
     echo "$menu_tag $menu_commit"
-    popd > /dev/null
 }
 
 function ros_menu_upgrade()
 {
-    pushd ~/.ros_menu > /dev/null
     echo -n "Current version: "
     ros_menu_version
-    git fetch > /dev/null
-    git checkout $1 > /dev/null
+    git -C ${ros_menu_path} fetch > /dev/null
+    git -C ${ros_menu_path} checkout $1 > /dev/null
     echo -n "Updated version: "
     ros_menu_version
-    popd > /dev/null
 }
 
 function ros_menu_uninstall()
