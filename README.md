@@ -9,7 +9,7 @@ ADLINK provides Neuron Startup Menu to make your life easier.
 
 ```sh
 sudo apt update
-sudo apt install -y git
+sudo apt install -y git curl
 ```
 
 * Installation
@@ -75,32 +75,18 @@ The following is the config you can control.
 
 # Upgrade
 
-It's very easy to upgrade the menu.
-
-* Update the repository of ros_menu.
-
-```sh
-cd ros_menu
-git pull
-```
-
-* Select the ros_menu version you want.
+* It's very easy to upgrade the menu by typing `ros_menu_upgrade`.
+* Optional: You can also select which version you want.
 
 ```sh
-git checkout <new_version>
+ros_menu_upgrade <version>
 ```
 
 * Next time you open the terminal, it'll be new version.
 
 # Uninstall
 
-* If you don't want the ros_menu anymore, you can just remove these files.
-
-```
-rm -rf ~/ros_menu
-rm -rf ~/.ros_menu
-```
-
+* If you don't want the ros_menu anymore, you can just type `ros_menu_uninstall`.
 * Also remember to remove `source ~/.ros_bashrc` in your `~/.bashrc`.
 
 # Issues Report
