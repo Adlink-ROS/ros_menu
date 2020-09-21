@@ -3,6 +3,13 @@
 Setting ROS environment every time is an annoying job.
 ADLINK provides Neuron Startup Menu to make your life easier.
 
+# Support Platform
+
+* Ubuntu 18.04
+  - ROS 1 melodic / ROS 2 dashing
+* Ubuntu 20.04
+  - ROS 1 noetic / ROS 2 foxy
+
 # Install
 
 * Get Git tools if you haven't installed yet
