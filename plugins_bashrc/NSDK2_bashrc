@@ -22,7 +22,7 @@ function nsdk_version()
     apt policy "neuron-sdk*"
 }
 
-funtion nsdk_uninstall()
+function nsdk_uninstall()
 {
     sudo apt remove "neuron-lib*"
     sudo apt remove "neuron-sdk*"
