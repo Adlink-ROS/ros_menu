@@ -1,10 +1,12 @@
 #!/bin/bash
 
+if [[ $(grep 20.04 /etc/issue) ]]; then
+    # Install ROS dependencies (for Foxy on Ubuntu 20.04)
+    sudo apt install -y python3-rosdep
+else
     # Install ROS dependencies (for Dashing and Eloquent on Ubuntu 18.04)
     sudo apt install -y python-rosdep
-
-    # Install ROS dependencies (for Foxy on Ubuntu 20.04)
-    # sudo apt install -y python3-rosdep
+fi
 
     # Install Common Linux Tools
     sudo apt install -y \
