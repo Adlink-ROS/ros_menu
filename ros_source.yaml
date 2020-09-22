@@ -1,0 +1,37 @@
+#ROS Master URI
+Config:
+  menu_enable: true
+  ros_option: "menu"
+Menu:
+  ROS1_melodic:
+    ROS_version : 1
+    distro_name : melodic
+    ros1_path : /opt/ros/melodic
+    master_ip :   #set if master isn't on this computer
+    ros1_cmds:
+      - "source ${HOME}/catkin_ws/devel/setup.${shell}"
+    #  - "openvino_bashrc"
+    #  - "your_config"
+    
+  ROS2_dashing:
+    ROS_version : 2
+    distro_name : dashing
+    ros2_path : /opt/ros/dashing 
+    domain_id : 
+    ros2_cmds:
+      - "source ${HOME}/ros2_ws/install/local_setup.${shell}"
+      - "source_plugin dds_bashrc"
+    #  - "NSDK2_bashrc"
+    #  - "openvino_bashrc"
+    #  - "your_config"
+  ROS2-1_bridge:
+    ROS_version: bridge
+    ros1_version_name: melodic
+    ros2_version_name: dashing
+    ros1_path : /opt/ros/melodic
+    ros2_path : /opt/ros/dashing
+    master_ip :
+    domain_id :
+    bridge_cmds:
+      - "source_plugin dds_bashrc" 
+      - "ros2 run ros1_bridge dynamic_bridge --bridge-all-topics"
