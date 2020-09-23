@@ -3,10 +3,10 @@ Config:
   menu_enable: true
   ros_option: menu
 Menu:
-  ROS1_melodic:
+  ROS1_noetic:
     ROS_version : 1
-    distro_name : melodic
-    ros1_path : /opt/ros/melodic
+    distro_name : noetic
+    ros1_path : /opt/ros/noetic
     master_ip :   #set if master isn't on this computer
     ros1_cmds:
      # - "source ${HOME}/catkin_ws/devel/setup.${shell}"
@@ -15,8 +15,8 @@ Menu:
     
   ROS2_dashing:
     ROS_version : 2
-    distro_name : dashing
-    ros2_path : /opt/ros/dashing 
+    distro_name : foxy
+    ros2_path : /opt/ros/foxy 
     domain_id : 
     ros2_cmds:
     #  - "source ${HOME}/ros2_ws/install/local_setup.${shell}"
@@ -26,10 +26,10 @@ Menu:
     #  - "your_config"
   ROS2-1_bridge:
     ROS_version: bridge
-    ros1_version_name: melodic
-    ros2_version_name: eloquent
-    ros1_path : /opt/ros/melodic
-    ros2_path : /opt/ros/eloquent
+    ros1_version_name: noetic
+    ros2_version_name: foxy
+    ros1_path : /opt/ros/noetic
+    ros2_path : /opt/ros/foxy
     master_ip :
     domain_id :
     bridge_cmds:

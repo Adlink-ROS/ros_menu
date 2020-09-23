@@ -1,8 +1,13 @@
 #!/bin/bash
 
 shell=`echo $SHELL | awk -F '/' '{print $NF}'`
-ros1_distro=melodic
-ros2_distro=dashing
+if [[ $(grep 20.04 /etc/issue) ]]; then
+    ros1_distro=noetic
+    ros2_distro=foxy
+else
+    ros1_distro=melodic
+    ros2_distro=dashing
+fi
 
 echo -n "Do you want to install ROS automatically? (y/N): "
 read ros_install
