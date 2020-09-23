@@ -2,6 +2,7 @@
 Config:
   menu_enable: true
   ros_option: menu
+  default_ros_domain_id : 30
 Menu:
   ROS1_noetic:
     ROS_version : 1

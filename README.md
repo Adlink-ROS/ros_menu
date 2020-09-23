@@ -33,15 +33,15 @@ sh -c "MENU_VERSION=<Your Version> $(curl -fsSL https://raw.githubusercontent.co
 * Next time you open the shell, the terminal will show the following menu.
 
 ```
-************ Neuron Startup Menu for ROS ************
-* Usage: To set ROS env to be auto-loaded,          *
-*        please assign ros_option in config_bashrc  *
-*****************************************************
-1) ROS melodic
-2) ROS 2 dashing
-3) ROS 2 Bridge
-4) Do nothing
-Please choose an option:
+************ Neuron Startup Menu for ROS **************
+* Usage: To set ROS env to be auto-loaded.            *
+* Please assign ros_option in the YAML file at param/.*
+*******************************************************
+1) ROS1_melodic 
+2) ROS2_dashing 
+3) ROS2-1_bridge 
+4) Do nothing.
+Please choose an option: 
 ```
 
 * Here is what the menu does for us:
@@ -63,23 +63,35 @@ Please choose an option:
 # Configuration
 
 You can configure the menu in a very easy way.
-All you need to modify is in `~/.ros_menu/config_bashrc`.
+All you need to modify is in `~/.ros_menu/param/*.yaml`(*.yaml is based on which Ubuntu version you are using).
 The following is the config you can control.
 
 * Enable Menu:
-  - menu_enable: "y" to enable the menu, otherwise do nothing.
-* ROS distribution:
-  - Decide which ROS distribution you want to use.
-  - ros1_distro: ROS 1 version
-  - ros2_distro: ROS 2 version
-* Plugins:
-  - You can put your own plugin under `~/.ros_menu/plugins_bashrc/`. Neuron Startup Menu will load it automatically.
-  - ros1_plugins: Plugin for ROS1
-  - ros1_plugins: Plugin for ROS2
-* ROS Environmental Variables:
-  - ros_default_master_uri: Default config for ROS_MASTER_URI in ROS1.
-  - ros_default_domain_id: Default config for ROS_DOMAIN_ID in ROS2. 
-
+  - menu_enable: "true" to enable the menu, otherwise do nothing.
+* ROS option:
+  - ros_option: 'menu' to open the menu, you could also set a number and the menu will automatically set to this every time you ope the terminal. 
+* Here is some parameters you need to set if you want to create a new option for you menu: 
+  - ROS 1: 
+    - ROS_version: 1
+    - distro_name: the name of the ROS1 you are using
+    - ros1_path: the path where you ros is, may look like this: /opt/*
+    - master_ip: set if master isn't on current computer
+    - ros1_cmds: any command you want to run every time using ROS 1
+  - ROS 2:
+    - ROS_version: 2
+    - distro_name: the name of the ROS 2 you are using.
+    - ros2_path: the path where you ros is, may look like this: /opt/*
+    domain_id: $ROS_DOMAIN_ID
+    ros2_cmds: any command you want to run every time using ROS 1.  _Remarks: `source_plugin dds_bashrc` is necessary every time using ROS2_
+  - ROS bridge:
+    - ROS_version: bridge
+    - ros1_version_name: the name of the ROS 1 you are using.
+    - ros2_version_name: the name of the ROS 2 you are using.
+    - ros1_path: the path where you ros is, may look like this: /opt/*
+    - ros2_path: the path where you ros is, may look like this: /opt/*
+    - master_ip: set if master isn't on current computer
+    - domain_id: $ROS_DOMAIN_ID
+    - bridge_cmds: any command you want to run every time using ROS bridge. _Remarks: `source_plugin dds_bashrc` and `ros2 run ros1_bridge dynamic_bridge --bridge-all-topics` is necessary every time using ROS bridge_
 # Upgrade
 
 * It's very easy to upgrade the menu by typing `ros_menu_upgrade`.

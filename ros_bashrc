@@ -29,7 +29,12 @@ function source_plugin()
     fi
 }
 
-python3 ros_menu.py
+if [[ $(grep 20.04 /etc/issue) ]]; then
+    python3 ~/ros_menu/ros_menu.py ~/ros_menu/param/ros_menu_20.04.yaml
+else
+    python3 ~/ros_menu/ros_menu.py ~/ros_menu/param/ros_menu_18.04.yaml
+fi
+
 source /tmp/ros_source_file.txt
 
 # # # # # # # # # # # # # # # # # # # #

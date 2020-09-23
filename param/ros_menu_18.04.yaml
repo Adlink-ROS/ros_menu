@@ -2,6 +2,7 @@
 Config:
   menu_enable: true
   ros_option: menu
+  default_ros_domain_id : 30
 Menu:
   ROS1_melodic:
     ROS_version : 1
@@ -9,7 +10,7 @@ Menu:
     ros1_path : /opt/ros/melodic
     master_ip :   #set if master isn't on this computer
     ros1_cmds:
-     # - "source ${HOME}/catkin_ws/devel/setup.${shell}"
+    #  - "source ${HOME}/catkin_ws/devel/setup.${shell}"
     #  - "openvino_bashrc"
     #  - "your_config"
     
@@ -19,17 +20,17 @@ Menu:
     ros2_path : /opt/ros/dashing 
     domain_id : 
     ros2_cmds:
-    #  - "source ${HOME}/ros2_ws/install/local_setup.${shell}"
+   #  - "source ${HOME}/ros2_ws/install/local_setup.${shell}"
       - "source_plugin dds_bashrc"
-    #  - "NSDK2_bashrc"
-    #  - "openvino_bashrc"
-    #  - "your_config"
+   #  - "NSDK2_bashrc"
+   #  - "openvino_bashrc"
+   #  - "your_config"
   ROS2-1_bridge:
     ROS_version: bridge
     ros1_version_name: melodic
-    ros2_version_name: eloquent
+    ros2_version_name: dashing
     ros1_path : /opt/ros/melodic
-    ros2_path : /opt/ros/eloquent
+    ros2_path : /opt/ros/dashing
     master_ip :
     domain_id :
     bridge_cmds:

@@ -3,20 +3,17 @@ import os
 import sys 
 
 shell = os.popen("echo $SHELL | awk -F '/' '{print $NF}'").readlines()[0].rstrip("\n")
-if (os.system('grep -q 20.04 /etc/issue')>>8)==0:
-    f = open('param/ros_menu_20.04.yaml','r')
-else:
-    f = open('param/ros_menu_18.04.yaml','r')
+f = open('%s'%sys.argv[1],'r')
 source_file = yaml.load(f)
-if source_file['Config']['menu_enable'] == 'false':
+if (source_file['Config']['menu_enable'] != True):
     ros_source_file = open('/tmp/ros_source_file.txt','w')
     ros_source_file.write('')
     sys.exit(0)
 keys = list(source_file['Menu'])
-print ('************ Neuron Startup Menu for ROS ************' )
-print ('* Usage: To set ROS env to be auto-loaded,          *' )
-print ('*        please assign ros_option in config_bashrc  *' )
-print ('*****************************************************' )
+print ('************ Neuron Startup Menu for ROS **************' )
+print ('* Usage: To set ROS env to be auto-loaded.            *' )
+print ('* Please assign ros_option in the YAML file at param/.*' )
+print ('*******************************************************' )
 i = 1 
 for key in keys:
     print('%d) %s '%(i ,key))
@@ -48,8 +45,8 @@ def source_ros1():
     source_ros = 'source %s/setup.%s'%(source_file['Menu'][choose]['ros1_path'],shell)
     export_ip = 'export ROS_IP=%s' %current_ip
     export_ros_master_uri = 'export ROS_MASTER_URI=http://%s:11311' %ros_master_uri.rstrip("\n")
-    print('* ROS_IP=%s'%current_ip)
-    print('* ROS_MASTER_URI %s'%ros_master_uri)
+    print('* ROS_IP=%s'%current_ip.rstrip('\n'))
+    print('* ROS_MASTER_URI %s'%ros_master_uri.rstrip('\n'))
     print('------------------------------------------------------')
     ros1_cmds = source_ros + '\n' + export_ros_master_uri + '\n' + export_ip +'\n'
 
@@ -64,7 +61,7 @@ def source_ros1():
 def source_ros2():
     ros_domain_id = source_file['Menu'][choose]['domain_id']
     if (ros_domain_id is None):
-        ros_domain_id = 30
+        ros_domain_id = int(source_file['Config']['default_ros_domain_id'])
     source_ros = 'source %s/local_setup.%s'%(source_file['Menu'][choose]['ros2_path'],shell)
     source_colcon = 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.%s'%shell
     export_domain_id = 'export ROS_DOMAIN_ID=%d' %ros_domain_id
