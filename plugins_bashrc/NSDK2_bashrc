@@ -2,60 +2,32 @@
 # Start of ADLINK DDS Setting #
 # # # # # # # # # # # # # # # #
 
-# clear DDS env var #
-unset dds_vendor
+# Neuron SDK + Eclipse Cyclone DDS #
+if [ -f "/opt/adlink/neuron-sdk/ros/foxy/local_setup.$shell" ];
+then
+    source /opt/adlink/neuron-sdk/ros/foxy/local_setup.$shell
+    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
+    export ADLINK_LICENSE=/opt/adlink/neuron-sdk/
+    echo "Source Neuron SDK successfully"
+else
+    echo "Neuron SDK is not installed. Please contact ADLINK."
+fi
 
-function check_dds_installation()
+# Provide NSDK CLI #
+function nsdk_version()
 {
-    if [ $(ros2 pkg list | grep $1) ];
-    then
-        echo "Source $2 successfully!"
-    else
-        pkg_name="ros-$ROS_DISTRO-`echo $1 | sed 's/_/-/g'`"
-        echo "You need to install $pkg_name first."
-        echo "Installation command: sudo apt install $pkg_name"
-    fi
+    echo -n "Neuron Startup Menu version: "
+    ros_menu_version
+    apt policy '^neuron-library*'
+    apt policy '^neuron-sdk*'
 }
 
-# Prompt DDS Menu #
-if [ -z $dds_vendor ]; then
-    echo "**** Choose DDS you want to use ****"
-    echo "1) Neuron SDK + Eclipse Cyclone DDS"
-    echo "2) Eclipse Cyclone DDS"
-    echo "3) FastRTPS"
-    echo -n "Please choose an option 1-3: "
-    read dds_vendor
-fi
-
-if [ "$dds_vendor" '==' "1" ]; # Neuron SDK + Eclipse Cyclone DDS
-then
-
-    if [ -f "/opt/adlink/neuron-sdk/ros/$ROS_DISTRO/local_setup.$shell" ];
-    then
-        source /opt/adlink/neuron-sdk/ros/$ROS_DISTRO/local_setup.$shell
-        if [ -f "/opt/adlink/ros/$ROS_DISTRO/local_setup.$shell" ]; then
-            source /opt/adlink/ros/$ROS_DISTRO/local_setup.$shell
-        fi
-        export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-        echo "Source Neuron SDK successfully"
-    else
-        echo "Neuron SDK is not installed. Please contact ADLINK."
-    fi
-
-
-elif [ "$dds_vendor" '==' "2" ]; # Eclipse Cyclone DDS
-then
-
-    export RMW_IMPLEMENTATION=rmw_cyclonedds_cpp
-    check_dds_installation "rmw_cyclonedds_cpp" "Eclipse Cyclone DDS"
-
-elif [ "$dds_vendor" '==' "3" ]; # FastRTPS
-then
-
-    export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
-    check_dds_installation "rmw_fastrtps_cpp" "FastRTPS"
-
-fi
+function nsdk_uninstall()
+{
+    sudo apt remove '^neuron-library*'
+    sudo apt remove '^neuron-sdk*'
+    ros_menu_uninstall
+}
 
 # # # # # # # # # # # # # # # #
 # END of ADLINK DDS Settings  #

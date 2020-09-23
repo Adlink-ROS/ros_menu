@@ -1,6 +1,11 @@
 Product: Neuron Startup Menu
 ----------------------------
 
+v1.3.0:
+1. Rename ros_dotfiles to ros_menu.
+2. Prompt to install necessary ROS packages while installation.
+3. Support ros_menu_* commands.
+
 v1.2.0:
 1. Run ROS bridge automatically while choosing bridge.
 2. Rename CycloneDDS to Eclipse Cyclone DDS.
