@@ -18,14 +18,14 @@ function nsdk_version()
 {
     echo -n "Neuron Startup Menu version: "
     ros_menu_version
-    apt policy "neuron-lib*"
-    apt policy "neuron-sdk*"
+    apt policy '^neuron-library*'
+    apt policy '^neuron-sdk*'
 }
 
 function nsdk_uninstall()
 {
-    sudo apt remove "neuron-lib*"
-    sudo apt remove "neuron-sdk*"
+    sudo apt remove '^neuron-library*'
+    sudo apt remove '^neuron-sdk*'
     ros_menu_uninstall
 }
 
