@@ -4,7 +4,9 @@ import sys
 
 shell = os.popen("echo $SHELL | awk -F '/' '{print $NF}'").readlines()[0].rstrip("\n")
 f = open('%s'%sys.argv[1],'r')
-source_file = yaml.load(f, Loader=yaml.FullLoader)
+yaml.warnings({'YAMLLoadWarning': False})
+source_file = yaml.load(f)
+
 ros_source_file = open('/tmp/ros_source_file.txt','w')
 ros_source_file.write('')
 ros_source_file.close()
