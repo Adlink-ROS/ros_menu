@@ -4,10 +4,11 @@ import sys
 
 shell = os.popen("echo $SHELL | awk -F '/' '{print $NF}'").readlines()[0].rstrip("\n")
 f = open('%s'%sys.argv[1],'r')
-source_file = yaml.load(f)
+source_file = yaml.load(f, Loader=yaml.FullLoader)
+ros_source_file = open('/tmp/ros_source_file.txt','w')
+ros_source_file.write('')
+ros_source_file.close()
 if (source_file['Config']['menu_enable'] != True):
-    ros_source_file = open('/tmp/ros_source_file.txt','w')
-    ros_source_file.write('')
     sys.exit(0)
 keys = list(source_file['Menu'])
 print ('************ Neuron Startup Menu for ROS **************' )
@@ -37,8 +38,6 @@ else:
     print('------------------------------------------------------')
     if len(ros_option)==0 or ros_option=='0' or ros_option not in list(choose_dict) :
         print('Do nothing!')
-        ros_source_file = open('/tmp/ros_source_file.txt','w')
-        ros_source_file.write('')
         sys.exit(0)
 
 choose = choose_dict[ros_option]
@@ -106,3 +105,4 @@ if (source_file['Menu'][choose]['ROS_version']==2):
 if (source_file['Menu'][choose]['ROS_version']=='bridge'):
     ros_source_file = open('/tmp/ros_source_file.txt','w')
     ros_source_file.write(source_bridge())
+ros_source_file.close()

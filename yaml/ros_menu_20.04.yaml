@@ -12,7 +12,7 @@ Menu:
     ros1_cmds:
     # - "source ${HOME}/catkin_ws/devel/setup.${shell}"
     # - "source_plugin openvino_bashrc"
-  ROS 2 dashing:
+  ROS 2 foxy:
     option_num: 2
     ROS_version : 2
     distro_name : foxy
