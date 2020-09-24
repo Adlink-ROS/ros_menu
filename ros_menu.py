@@ -4,8 +4,10 @@ import sys
 
 shell = os.popen("echo $SHELL | awk -F '/' '{print $NF}'").readlines()[0].rstrip("\n")
 f = open('%s'%sys.argv[1],'r')
-yaml.warnings({'YAMLLoadWarning': False})
-source_file = yaml.load(f)
+if yaml.__version__ >= '5.1.0':
+    source_file = yaml.load(f, Loader = yaml.FullLoader)
+else:
+    source_file = yaml.load(f)
 
 ros_source_file = open('/tmp/ros_source_file.txt','w')
 ros_source_file.write('')
