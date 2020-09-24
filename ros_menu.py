@@ -12,28 +12,36 @@ if (source_file['Config']['menu_enable'] != True):
 keys = list(source_file['Menu'])
 print ('************ Neuron Startup Menu for ROS **************' )
 print ('* Usage: To set ROS env to be auto-loaded.            *' )
-print ('* Please assign ros_option in the YAML file at param/.*' )
+print ('* Please assign ros_option in the YAML file at yaml/. *' )
 print ('*******************************************************' )
 i = 1 
+print('0) Do nothing')
+choose_dict={}
 for key in keys:
-    print('%d) %s '%(i ,key))
-    i += 1
-print('%d) Do nothing.'%i)
+    if str(source_file['Menu'][key]['option_num']) in list(choose_dict):
+        raise SyntaxError('Some option numbers(option_num) in the YAML file are duplicated.')
+        sys.exit(0)
+    print('%s) %s '%(source_file['Menu'][key]['option_num'] ,key))
+    choose_dict['%s'%source_file['Menu'][key]['option_num']]=key
 
 if source_file['Config']['ros_option']!= 'menu':
-    ros_option = int(source_file['Config']['ros_option'])
+    ros_option = source_file['Config']['ros_option']
     print('Please choose an option: default=%s'%source_file['Config']['ros_option'])
     print('------------------------------------------------------')
 else:
-    ros_option = input('Please choose an option: ')
+    try:
+        ros_option = input('Please choose an option: ')
+    except KeyboardInterrupt:
+        ros_option=''
+        print('\n')
     print('------------------------------------------------------')
-    if len(ros_option)==0 or int (ros_option)==i:
+    if len(ros_option)==0 or ros_option=='0' or ros_option not in list(choose_dict) :
         print('Do nothing!')
         ros_source_file = open('/tmp/ros_source_file.txt','w')
         ros_source_file.write('')
         sys.exit(0)
 
-choose = keys[int(ros_option)-1]
+choose = choose_dict[ros_option]
 
 def source_ros1():
     current_ip = os.popen("hostname -I | awk '{print $1}'").readlines()[0]

@@ -7,15 +7,7 @@ unset ros_option
 unset ROS_DISTRO
 unset ROS_HOSTNAME
 
-# Get user's config #
-ros_menu_path=${HOME}/.ros_menu/
-source ${ros_menu_path}/config_bashrc
-
-# Enable Menu or not #
-if [ "$menu_enable" != "y" ]; then
-    return
-fi
-
+plugins_path="${HOME}/.ros_menu/plugins_bashrc"
 
 function source_plugin()
 {
@@ -30,9 +22,9 @@ function source_plugin()
 }
 
 if [[ $(grep 20.04 /etc/issue) ]]; then
-    python3 ~/ros_menu/ros_menu.py ~/ros_menu/param/ros_menu_20.04.yaml
+    python3 ~/ros_menu/ros_menu.py ~/ros_menu/yaml/ros_menu_20.04.yaml
 else
-    python3 ~/ros_menu/ros_menu.py ~/ros_menu/param/ros_menu_18.04.yaml
+    python3 ~/ros_menu/ros_menu.py ~/ros_menu/yaml/ros_menu_18.04.yaml
 fi
 
 source /tmp/ros_source_file.txt
