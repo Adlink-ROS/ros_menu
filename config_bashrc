@@ -30,7 +30,7 @@ ros1_plugins=(
 )
 ros2_plugins=(
     "${HOME}/ros2_ws/install/local_setup.$shell"
-    "dds_bashrc"
+    "dds_bashrc 1"
 #   "NSDK2_bashrc"
 #   "openvino_bashrc"
 #   "your_config"

@@ -2,8 +2,18 @@
 # Start of ADLINK DDS Setting #
 # # # # # # # # # # # # # # # #
 
-# clear DDS env var #
-unset dds_vendor
+# You can bring the following argument while source.
+# 0: Show Menu
+# 1: Eclipse Cyclone DDS
+# 2: OpenSplice
+# 3: FastRTPS
+
+if [ "$1" '==' "0"  ]; then
+    # clear DDS env var #
+    unset dds_vendor
+else
+    dds_vendor=$1
+fi
  
 function check_dds_installation()
 {
@@ -46,6 +56,38 @@ then
     check_dds_installation "rmw_fastrtps_cpp" "FastRTPS"
 
 fi
+
+# Setup the config file of Cyclone DDS
+function cyclone_config()
+{
+    if [[ ! -f $PWD/cyclonedds.xml ]]; then
+        echo "There is no cyclonedds.xml, so we create one."
+        cat > $PWD/cyclonedds.xml << EOF
+<?xml version="1.0" encoding="UTF-8" ?>
+<CycloneDDS xmlns="https://cdds.io/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://cdds.io/config https://raw.githubusercontent.com/eclipse-cyclonedds/cyclonedds/master/etc/cyclonedds.xsd">
+    <Domain id="any">
+        <General>
+            <NetworkInterfaceAddress>auto</NetworkInterfaceAddress>
+            <AllowMulticast>default</AllowMulticast>
+            <MaxMessageSize>65500B</MaxMessageSize>
+            <FragmentSize>4000B</FragmentSize>
+        </General>
+        <Internal>
+            <Watermarks>
+                <WhcHigh>500kB</WhcHigh>
+            </Watermarks>
+        </Internal>
+        <Tracing>
+            <Verbosity>config</Verbosity>
+            <OutputFile>stdout</OutputFile>
+        </Tracing>
+    </Domain>
+</CycloneDDS>
+EOF
+    fi
+    export CYCLONEDDS_URI=file://$PWD/cyclonedds.xml
+    echo "CYCLONEDDS_URI=$CYCLONEDDS_URI"
+}
 
 # # # # # # # # # # # # # # # #
 # END of ADLINK DDS Settings  #
