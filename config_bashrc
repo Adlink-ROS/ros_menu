@@ -24,12 +24,12 @@ fi
 ## You can use absolute path or relative path is under $plugins_path.
 plugins_path="${HOME}/.ros_menu/plugins_bashrc"
 ros1_plugins=(
-    "${HOME}/catkin_ws/devel/setup.$shell"
+#    "${HOME}/catkin_ws/devel/setup.$shell"
 #   "openvino_bashrc"
 #   "your_config"
 )
 ros2_plugins=(
-    "${HOME}/ros2_ws/install/local_setup.$shell"
+#    "${HOME}/ros2_ws/install/local_setup.$shell"
     "dds_bashrc 1"
 #   "NSDK2_bashrc"
 #   "openvino_bashrc"

@@ -124,6 +124,8 @@ function source_plugin()
     if [ -f $(echo $plugin | cut -d' ' -f 1) ]; then
         echo "source $plugin"
         eval "source $plugin"
+    else
+        echo "Error! No such file: $plugin"
     fi
 }
 
