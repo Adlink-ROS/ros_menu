@@ -31,17 +31,15 @@ print('0) Do nothing')
 choose_dict = {}
 for key in keys:
     if str(source_file['Menu'][key]['option_num']) in list(choose_dict):
-        raise SyntaxError(
-            'Some option numbers(option_num) in the YAML file are duplicated.')
+        raise SyntaxError('Some option numbers(option_num) in the YAML file are duplicated.')
         sys.exit(0)
     print('%s) %s ' % (source_file['Menu'][key]['option_num'], key))
     choose_dict['%s' % source_file['Menu'][key]['option_num']] = key
 
 # Choose Menu
 if source_file['Config']['ros_option'] != 'menu':
-    ros_option = source_file['Config']['ros_option']
-    print('Please choose an option: default=%s' %
-          source_file['Config']['ros_option'])
+    ros_option = str(source_file['Config']['ros_option'])
+    print('Please choose an option: default=%s' % source_file['Config']['ros_option'])
     print('------------------------------------------------------')
 else:
     try:
@@ -55,6 +53,14 @@ else:
         sys.exit(0)
 
 choose = choose_dict[ros_option]
+
+
+def read_cmds():
+    ret_cmds = ""
+    if (source_file['Menu'][choose]['cmds'] is not None):
+        for cmds in source_file['Menu'][choose]['cmds']:
+            ret_cmds += cmds + '\n'
+    return ret_cmds
 
 
 def source_ros1():
@@ -71,55 +77,34 @@ def source_ros1():
     print('* ROS_IP=%s' % current_ip.rstrip('\n'))
     print('* ROS_MASTER_URI %s' % ros_master_uri.rstrip('\n'))
     print('------------------------------------------------------')
-    ros1_cmds = source_ros + '\n' + export_ros_master_uri + '\n' + export_ip + '\n'
-
-    if (source_file['Menu'][choose]['ROS_version'] == 'bridge'):
-        return ros1_cmds
-    if (source_file['Menu'][choose]['ros1_cmds'] is None):
-        return ros1_cmds
-    for cmds in source_file['Menu'][choose]['ros1_cmds']:
-        ros1_cmds += cmds + '\n'
-    return ros1_cmds
+    return source_ros + '\n' + export_ros_master_uri + '\n' + export_ip + '\n'
 
 
 def source_ros2():
     ros_domain_id = source_file['Menu'][choose]['domain_id']
     if (ros_domain_id is None):
         ros_domain_id = int(source_file['Config']['default_ros_domain_id'])
-    source_ros = 'source %s/local_setup.%s' % (
-        source_file['Menu'][choose]['ros2_path'], shell)
+    source_ros = 'source %s/local_setup.%s' % (source_file['Menu'][choose]['ros2_path'], shell)
     source_colcon = 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.%s' % shell
     export_domain_id = 'export ROS_DOMAIN_ID=%d' % ros_domain_id
     print('* ROS_DOMAIN_ID = %d' % ros_domain_id)
     print('------------------------------------------------------')
-    ros2_cmds = source_colcon + '\n' + source_ros + '\n' + export_domain_id + '\n'
-
-    if (source_file['Menu'][choose]['ROS_version'] == 'bridge'):
-        return ros2_cmds
-    if (source_file['Menu'][choose]['ros2_cmds'] is None):
-        return ros2_cmds
-    for cmds in source_file['Menu'][choose]['ros2_cmds']:
-        ros2_cmds += cmds + '\n'
-    return ros2_cmds
+    return source_colcon + '\n' + source_ros + '\n' + export_domain_id + '\n'
 
 
-def source_bridge():
-    bridge_cmds = source_ros1() + source_ros2()
+def check_bridge():
     if ((os.system('ls %s/lib/ | grep -q ros1_bridge' % source_file['Menu'][choose]['ros2_path']) >> 8) == 1):
         print('You need to install ros1_bridge first.')
-        print('Installation command: sudo apt install ros-%s-ros1-bridge' %
-              source_file['Menu'][choose]['ros2_version_name'])
-        return ''
-    for cmds in source_file['Menu'][choose]['bridge_cmds']:
-        bridge_cmds += cmds + '\n'
-    return bridge_cmds
+        print('Installation command: sudo apt install ros-%s-ros1-bridge' % source_file['Menu'][choose]['ros2_version_name'])
+        return False
+    return True
 
 
 ros_source_file = open(output_file_name, 'w')
 if (source_file['Menu'][choose]['ROS_version'] == 1):
-    ros_source_file.write(source_ros1())
+    ros_source_file.write(source_ros1()+read_cmds())
 if (source_file['Menu'][choose]['ROS_version'] == 2):
-    ros_source_file.write(source_ros2())
-if (source_file['Menu'][choose]['ROS_version'] == 'bridge'):
-    ros_source_file.write(source_bridge())
+    ros_source_file.write(source_ros2()+read_cmds())
+if (source_file['Menu'][choose]['ROS_version'] == 'bridge' and check_bridge()):
+    ros_source_file.write(source_ros1()+source_ros2()+read_cmds())
 ros_source_file.close()
