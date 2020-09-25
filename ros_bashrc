@@ -66,11 +66,7 @@ function ros_menu_env()
     fi
 }
 
-if [[ $(grep 20.04 /etc/issue) ]]; then
-    python3 ~/ros_menu/ros_menu.py ~/ros_menu/yaml/ros_menu_20.04.yaml
-else
-    python3 ~/ros_menu/ros_menu.py ~/ros_menu/yaml/ros_menu_18.04.yaml
-fi
+python3 ~/ros_menu/ros_menu.py ~/ros_menu/config.yaml
 
 if [ -f /tmp/ros_source_file.txt ]; then
     source /tmp/ros_source_file.txt

@@ -4,9 +4,11 @@ shell=`echo $SHELL | awk -F '/' '{print $NF}'`
 if [[ $(grep 20.04 /etc/issue) ]]; then
     ros1_distro="noetic"
     ros2_distro="foxy"
+    config_file=./yaml/ros_menu_20.04.yaml
 else
     ros1_distro="melodic"
     ros2_distro="dashing"
+    config_file=./yaml/ros_menu_18.04.yaml
 fi
 
 echo -n "Do you want to install ROS automatically? (y/N): "
@@ -28,6 +30,10 @@ fi
 
 rm -f ~/.ros_menu
 ln -s `pwd` ~/.ros_menu
+if [ -z $1 ]; then
+    config_file=./yaml/$1
+fi
+cp $config_file config.yaml
 
 if ! grep -q ros_menu ~/.${shell}rc; then
     cat <<EOF >> ~/.${shell}rc

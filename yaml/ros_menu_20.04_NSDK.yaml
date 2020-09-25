@@ -3,32 +3,41 @@ Config:
   ros_option: menu
   default_ros_domain_id: 30
 Menu:
-  ROS 1 melodic:
+  ROS 1 noetic:
     option_num: 1
     ROS_version: 1
-    distro_name: melodic
-    ros1_path: /opt/ros/melodic
+    distro_name: noetic
+    ros1_path: /opt/ros/noetic
     master_ip: # set if roscore isn't on this computer
     cmds:
     # - source ${HOME}/catkin_ws/devel/setup.${shell}
     # - source_plugin openvino_bashrc
-  ROS 2 dashing:
+  ROS 2 foxy:
     option_num: 2
     ROS_version: 2
-    distro_name: dashing
-    ros2_path: /opt/ros/dashing 
+    distro_name: foxy
+    ros2_path: /opt/ros/foxy 
     domain_id: # set if you don't want to use default domain id
     cmds:
     # - source ${HOME}/ros2_ws/install/local_setup.${shell}
       - source_plugin dds_bashrc 1
     # - source_plugin openvino_bashrc
+  ROS 2 foxy Neuron SDK:
+    option_num: 2
+    ROS_version: 2
+    distro_name: foxy
+    ros2_path: /opt/ros/foxy 
+    domain_id: # set if you don't want to use default domain id
+    cmds:
+    # - source ${HOME}/ros2_ws/install/local_setup.${shell}
+      - source_plugin NSDK2_bashrc
   ROS 2 bridge:
     option_num: 3
     ROS_version: bridge
-    ros1_version_name: melodic
-    ros2_version_name: dashing
-    ros1_path: /opt/ros/melodic
-    ros2_path: /opt/ros/dashing
+    ros1_version_name: noetic
+    ros2_version_name: foxy
+    ros1_path: /opt/ros/noetic
+    ros2_path: /opt/ros/foxy
     master_ip:
     domain_id:
     cmds:

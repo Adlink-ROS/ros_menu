@@ -21,6 +21,7 @@ Menu:
     cmds:
     # - source ${HOME}/ros2_ws/install/local_setup.${shell}
       - source_plugin dds_bashrc 1
+    # - source_plugin NSDK2_bashrc
     # - source_plugin openvino_bashrc
   ROS 2 bridge:
     option_num: 3
