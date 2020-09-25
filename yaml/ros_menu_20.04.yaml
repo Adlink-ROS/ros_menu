@@ -10,8 +10,8 @@ Menu:
     ros1_path : /opt/ros/noetic
     master_ip : # set if roscore isn't on this computer
     ros1_cmds:
-    # - "source ${HOME}/catkin_ws/devel/setup.${shell}"
-    # - "source_plugin openvino_bashrc"
+    # - source ${HOME}/catkin_ws/devel/setup.${shell}
+    # - source_plugin openvino_bashrc
   ROS 2 foxy:
     option_num: 2
     ROS_version : 2
@@ -19,10 +19,10 @@ Menu:
     ros2_path : /opt/ros/foxy 
     domain_id : # set if you don't want to use default domain id
     ros2_cmds:
-    # - "source ${HOME}/ros2_ws/install/local_setup.${shell}"
-      - "source_plugin dds_bashrc"
-    # - "source_plugin NSDK2_bashrc"
-    # - "source_plugin openvino_bashrc"
+    # - source ${HOME}/ros2_ws/install/local_setup.${shell}
+      - source_plugin dds_bashrc 1
+    # - source_plugin NSDK2_bashrc
+    # - source_plugin openvino_bashrc
   ROS 2 bridge:
     option_num: 3
     ROS_version: bridge
@@ -33,5 +33,5 @@ Menu:
     master_ip :
     domain_id :
     bridge_cmds:
-      - "source_plugin dds_bashrc" 
-      - "ros2 run ros1_bridge dynamic_bridge --bridge-all-topics"
+      - source_plugin dds_bashrc
+      - ros2 run ros1_bridge dynamic_bridge --bridge-all-topics

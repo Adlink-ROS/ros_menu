@@ -15,9 +15,54 @@ function source_plugin()
     if [[ "$plugin" != /* ]]; then
         plugin="$plugins_path/$plugin"
     fi
-    if [ -f $plugin ]; then
-        echo "Loading $plugin"
-        source $plugin
+    if [ -f $(echo $plugin | cut -d' ' -f 1) ]; then
+        echo "source $plugin ${@:2}"
+        eval "source $plugin ${@:2}"
+    else
+        echo "Error! No such file: $plugin"
+    fi
+}
+
+function ros_menu_version()
+{
+    menu_tag=`git -C ${ros_menu_path} tag -l --contains HEAD`
+    menu_commit=`git -C ${ros_menu_path} rev-parse HEAD`
+    echo "$menu_tag $menu_commit"
+}
+
+function ros_menu_upgrade()
+{
+    echo -n "Current version: "
+    ros_menu_version
+    git -C ${ros_menu_path} fetch > /dev/null
+    git -C ${ros_menu_path} checkout $1 > /dev/null
+    echo -n "Updated version: "
+    ros_menu_version
+}
+
+function ros_menu_uninstall()
+{
+    echo -n "Do you want to remove Neuron Startup Menu? (y/N): "
+    read remove_menu
+    if [ "$remove_menu" '==' "y" ] || [ "$remove_menu" '==' "Y" ];
+    then
+        rm -rf ~/ros_menu ~/.ros_menu
+    fi
+}
+
+function ros_menu_env()
+{
+    if [[ $ros_version == "1" ]]; then
+        echo "* ROS_DISTRO=$ROS_DISTRO"
+        echo "* ROS_IP=$ROS_IP"
+        echo "* ROS_MASTER_URI=$ROS_MASTER_URI"
+    else
+        echo "* ROS_DISTRO=$ROS_DISTRO"
+        echo "* ROS_DOMAIN_ID=$ROS_DOMAIN_ID"
+        echo "* RMW_IMPLEMENTATION=$RMW_IMPLEMENTATION"
+        echo "* CYCLONEDDS_URI=$CYCLONEDDS_URI"
+        echo "* Workspace Layer:"
+        echo "  - $AMENT_PREFIX_PATH" | sed 's/:/\n  - /g'
     fi
 }
 
