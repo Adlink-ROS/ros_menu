@@ -72,7 +72,9 @@ else
     python3 ~/ros_menu/ros_menu.py ~/ros_menu/yaml/ros_menu_18.04.yaml
 fi
 
-source /tmp/ros_source_file.txt
+if [ -f /tmp/ros_source_file.txt ]; then
+    source /tmp/ros_source_file.txt
+fi
 
 # # # # # # # # # # # # # # # # # # # #
 # END of Neuron Startup Menu Settings #
