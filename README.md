@@ -38,8 +38,8 @@ sh -c "MENU_CONFIG=<Config Name> $(curl -fsSL https://raw.githubusercontent.com/
 
 ```
 ************ Neuron Startup Menu for ROS *************
-* Usage: To set ROS env to be auto-loaded.           *
-* Please assign ros_option in ros_menu/config.yaml   *
+* Usage: To set ROS env to be auto-loaded, please    *
+*        assign ros_option in ros_menu/config.yaml   *
 ******************************************************
 0) Do nothing
 1) ROS 1 melodic 
