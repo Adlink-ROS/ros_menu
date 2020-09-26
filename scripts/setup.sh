@@ -1,6 +1,7 @@
 #!/bin/sh
 
 echo "Installing Neuron Startup Menu..."
+
 if [ ! -d $HOME/ros_menu ]; then
     if [ -z $MENU_VERSION ]; then
         git clone https://github.com/Adlink-ROS/ros_menu.git $HOME/ros_menu
