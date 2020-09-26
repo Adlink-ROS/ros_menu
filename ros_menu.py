@@ -23,10 +23,10 @@ if (source_file['Config']['menu_enable'] != True):
 
 # Generate Menu
 keys = list(source_file['Menu'])
-print('************ Neuron Startup Menu for ROS **************')
-print('* Usage: To set ROS env to be auto-loaded.            *')
-print('* Please assign ros_option in the YAML file at yaml/. *')
-print('*******************************************************')
+print('************ Neuron Startup Menu for ROS *************')
+print('* Usage: To set ROS env to be auto-loaded.           *')
+print('* Please assign ros_option in ros_menu/config.yaml   *')
+print('******************************************************')
 print('0) Do nothing')
 choose_dict = {}
 for key in keys:
