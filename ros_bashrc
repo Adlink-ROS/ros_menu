@@ -7,30 +7,22 @@ unset ros_option
 unset ROS_DISTRO
 unset ROS_HOSTNAME
 
-# Get user's config #
-ros_menu_path=${HOME}/.ros_menu/
-source ${ros_menu_path}/config_bashrc
+shell=`echo $SHELL | awk -F '/' '{print $NF}'`
+plugins_path="${HOME}/.ros_menu/plugins_bashrc"
 
-# Enable Menu or not #
-if [ "$menu_enable" != "y" ]; then
-    return
-fi
-
-# If the ros version is not assigned, #
-# prompt user which version should be loaded. #
-if [ -z $ros_option ]; then
-    echo "************ Neuron Startup Menu for ROS ************"
-    echo "* Usage: To set ROS env to be auto-loaded,          *"
-    echo "*        please assign ros_option in config_bashrc  *"
-    echo "*****************************************************"
-    echo "1) ROS $ros1_distro"
-    echo "2) ROS 2 $ros2_distro"
-    echo "3) ROS 2 Bridge"
-    echo "n) Do nothing"
-    echo -n "Please choose an option: "
-    read ros_option
-fi
-echo "----------------------------------------------"
+function source_plugin()
+{
+    plugin=$1
+    if [[ "$plugin" != /* ]]; then
+        plugin="$plugins_path/$plugin"
+    fi
+    if [ -f $(echo $plugin | cut -d' ' -f 1) ]; then
+        echo "source $plugin ${@:2}"
+        eval "source $plugin ${@:2}"
+    else
+        echo "Error! No such file: $plugin"
+    fi
+}
 
 function ros_menu_version()
 {
@@ -75,92 +67,10 @@ function ros_menu_env()
     fi
 }
 
-function source_ros1()
-{
-    # Assign ros_version #
-    ros_version="1"
-    # Setup argument #
-    ros_path=$1
-    if [[ "$ros_path" != /* ]]; then
-        ros_path="/opt/ros/$ros_path"
-    fi
-    master_ip=$2
-    # Setup ROS1 environment #
-    source $ros_path/setup.$shell
-    # ROS_IP and ROS_MASTER_URI #
-    export ROS_IP=$current_ip
-    export ROS_MASTER_URI=http://$master_ip:11311
-    echo "* ROS_IP="$ROS_IP
-    echo "* ROS_MASTER_URI="$ROS_MASTER_URI
-    echo "----------------------------------------------"
+python3 ~/ros_menu/ros_menu.py ~/ros_menu/config.yaml
 
-}
-
-function source_ros2()
-{
-    # Assign ros_version #
-    ros_version="2"
-    # Setup argument #
-    ros_path=$1
-    if [[ "$ros_path" != /* ]]; then
-        ros_path="/opt/ros/$ros_path"
-    fi
-    ros_domain_id=$2
-    # Setup ROS2 environment #
-    source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell
-    source $ros_path/local_setup.$shell
-    # ROS DOMAIN ID #
-    export ROS_DOMAIN_ID=$ros_domain_id
-    echo "* ROS_DOMAIN_ID="$ROS_DOMAIN_ID
-    echo "----------------------------------------------"
-}
-
-function source_plugin()
-{
-    plugin=$1
-    if [[ "$plugin" != /* ]]; then
-        plugin="$plugins_path/$plugin"
-    fi
-    if [ -f $(echo $plugin | cut -d' ' -f 1) ]; then
-        echo "source $plugin"
-        eval "source $plugin"
-    else
-        echo "Error! No such file: $plugin"
-    fi
-}
-
-function source_plugin_list()
-{
-    plugin_list=("$@")
-    for i in "${plugin_list[@]}"; do
-        source_plugin "$i"
-    done
-}
-
-if [ "$ros_option" '==' "1" ];
-then
-    source_ros1 $ros1_distro $ros_default_master_uri
-    source_plugin_list "${ros1_plugins[@]}"
-elif [ "$ros_option" '==' "2" ];
-then
-    source_ros2 $ros2_distro $ros_default_domain_id
-    source_plugin_list "${ros2_plugins[@]}"
-elif [ "$ros_option" '==' "3" ];
-then
-    source_ros1 $ros1_distro $ros_default_master_uri
-    source_ros2 $ros2_distro $ros_default_domain_id
-    source_plugin "dds_bashrc"
-    if [ $(ros2 pkg list | grep ros1_bridge) ];
-    then
-        echo "Start to bridge all topics ..."
-        ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
-    else
-        echo "You need to install ros1_bridge first."
-        echo "Installation command: sudo apt install ros-$ROS_DISTRO-ros1-bridge"
-    fi
-else
-    # Do nothing #
-    echo "Don't do anything ..."
+if [ -f /tmp/ros_source_file.txt ]; then
+    source /tmp/ros_source_file.txt
 fi
 
 # # # # # # # # # # # # # # # # # # # #
