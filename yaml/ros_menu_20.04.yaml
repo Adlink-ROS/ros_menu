@@ -22,7 +22,7 @@ Menu:
     # - source ${HOME}/ros2_ws/install/local_setup.${shell}
       - source_plugin dds_bashrc 1
     # - source_plugin openvino_bashrc
-  ROS 2 bridge:
+  ROS2/ROS1_bridge:
     option_num: 3
     ROS_version: bridge
     ros1_version_name: noetic

@@ -41,15 +41,17 @@ sh -c "MENU_CONFIG=<Config Name> $(curl -fsSL https://raw.githubusercontent.com/
 * Usage: To set ROS env to be auto-loaded.            *
 * Please assign ros_option in the YAML file at param/.*
 *******************************************************
-1) ROS1_melodic 
-2) ROS2_dashing 
-3) ROS2-1_bridge 
-4) Do nothing.
+0) Do nothing
+1) ROS 1 melodic 
+2) ROS 2 dashing 
+3) ROS2/ROS1_bridge 
 Please choose an option: 
 ```
 
 * Here is what the menu does for us:
 
+    - `Do nothing`:
+        * Don't setup any environment.
     - `ROS melodic`:
         * Setup ROS1 environment.
         * Setup your package environment which is in `~/catkin_ws`.
@@ -58,11 +60,9 @@ Please choose an option:
         * Setup ROS2 environment.
         * Setup your package environment which is in `~/ros2_ws`.
         * Load DDS settings and select which DDS you want to use.
-    - `ROS 2 Bridge`:
+    - `ROS2/ROS1_bridge`:
         * Do all the thing for ROS1 and ROS2.
         * Run ROS bridge automatically.
-    - `Do nothing`:
-        * Don't setup any environment.
 
 # Configuration
 
@@ -74,7 +74,7 @@ The following is the config you can control.
   - menu_enable: "true" to enable the menu, otherwise do nothing.
 * ROS option:
   - ros_option: 'menu' to open the menu, you could also set a number and the menu will automatically set to this every time you ope the terminal. 
-* Here is some parameters you need to set if you want to create a new option for you menu: 
+* Here is some parameters you need to set if you want to create a new option for your menu: 
   - ROS 1: 
     - ROS_version: 1
     - distro_name: the name of the ROS1 you are using
@@ -87,7 +87,7 @@ The following is the config you can control.
     - ros2_path: the path where you ros is, may look like this: /opt/*
     domain_id: $ROS_DOMAIN_ID
     ros2_cmds: any command you want to run every time using ROS 1.  _Remarks: `source_plugin dds_bashrc` is necessary every time using ROS2_
-  - ROS bridge:
+  - ROS2/ROS1_bridge:
     - ROS_version: bridge
     - ros1_version_name: the name of the ROS 1 you are using.
     - ros2_version_name: the name of the ROS 2 you are using.

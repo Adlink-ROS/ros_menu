@@ -31,7 +31,7 @@ Menu:
     cmds:
     # - source ${HOME}/ros2_ws/install/local_setup.${shell}
       - source_plugin NSDK2_bashrc
-  ROS 2 bridge:
+  ROS2/ROS1_bridge:
     option_num: 4
     ROS_version: bridge
     ros1_version_name: noetic
