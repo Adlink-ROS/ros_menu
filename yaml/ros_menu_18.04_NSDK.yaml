@@ -41,5 +41,5 @@ Menu:
     master_ip:
     domain_id:
     cmds:
-      - source_plugin dds_bashrc
+      - source_plugin dds_bashrc 1
       - ros2 run ros1_bridge dynamic_bridge --bridge-all-topics
