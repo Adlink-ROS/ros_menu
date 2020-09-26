@@ -30,7 +30,7 @@ fi
 
 rm -f ~/.ros_menu
 ln -s `pwd` ~/.ros_menu
-if [ -z $1 ]; then
+if [[ -n $1 ]]; then
     config_file=./yaml/$1
 fi
 cp $config_file config.yaml

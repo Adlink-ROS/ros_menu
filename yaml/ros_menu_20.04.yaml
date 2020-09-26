@@ -16,7 +16,7 @@ Menu:
     option_num: 2
     ROS_version: 2
     distro_name: foxy
-    ros2_path: /opt/ros/foxy 
+    ros2_path: /opt/ros/foxy
     domain_id: # set if you don't want to use default domain id
     cmds:
     # - source ${HOME}/ros2_ws/install/local_setup.${shell}

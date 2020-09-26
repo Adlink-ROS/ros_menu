@@ -16,23 +16,23 @@ Menu:
     option_num: 2
     ROS_version: 2
     distro_name: foxy
-    ros2_path: /opt/ros/foxy 
+    ros2_path: /opt/ros/foxy
     domain_id: # set if you don't want to use default domain id
     cmds:
     # - source ${HOME}/ros2_ws/install/local_setup.${shell}
       - source_plugin dds_bashrc 1
     # - source_plugin openvino_bashrc
   ROS 2 foxy Neuron SDK:
-    option_num: 2
+    option_num: 3
     ROS_version: 2
     distro_name: foxy
-    ros2_path: /opt/ros/foxy 
+    ros2_path: /opt/ros/foxy
     domain_id: # set if you don't want to use default domain id
     cmds:
     # - source ${HOME}/ros2_ws/install/local_setup.${shell}
       - source_plugin NSDK2_bashrc
   ROS 2 bridge:
-    option_num: 3
+    option_num: 4
     ROS_version: bridge
     ros1_version_name: noetic
     ros2_version_name: foxy
