@@ -25,9 +25,13 @@ sudo apt install -y git curl
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/master/scripts/setup.sh)"
 ```
 
-* Optional: you can also choose which version you want directly.
+* Optional: you can add variables while downloading ros_menu.
+
 ```
+# Select which version you want.
 sh -c "MENU_VERSION=<Your Version> $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/master/scripts/setup.sh)"
+# Select which config you want.
+sh -c "MENU_CONFIG=<Config Name> $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/master/scripts/setup.sh)"
 ```
 
 * Next time you open the shell, the terminal will show the following menu.
