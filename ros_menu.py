@@ -15,9 +15,6 @@ else:
     source_file = yaml.load(f)
 f.close()
 
-if os.path.exists(output_file_name):
-    os.remove(output_file_name)
-
 if (source_file['Config']['menu_enable'] != True):
     sys.exit(0)
 
