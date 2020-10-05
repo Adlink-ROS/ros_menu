@@ -68,10 +68,10 @@ You can configure the menu in a very easy way.
 All you need to modify is in `~/.ros_menu/config.yaml`.
 The following is the config you can control.
 
-* Enable Menu:
-  - menu_enable: "true" to enable the menu, otherwise do nothing.
+* Enable menu:
+  - menu_enable: "true" to enable the menu. "false" to disable the menu.
 * ROS option:
-  - ros_option: 'menu' to open the menu, you could also set a number and the menu will automatically set to this every time you ope the terminal. 
+  - ros_option: 'menu' to open the menu, you could also set a number and the menu will automatically set to this every time you open the terminal. 
 * Here are some parameters you need to set if you want to create a new option for your menu: 
   - ROS 1: 
     - ROS_version: 1
