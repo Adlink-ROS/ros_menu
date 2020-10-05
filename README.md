@@ -54,7 +54,7 @@ Please choose an option:
         * Does not setup any environment.
     - `ROS melodic`:
         * Sets up the ROS 1 environment.
-        * Sets the ROS_IP and ROS_MASTER_IP, which is your host IP.
+        * Sets the ROS_IP and ROS_MASTER_URI, which is your host IP.
     - `ROS 2 dashing`:
         * Sets up the ROS 2 environment.
         * Loads DDS settings and select the DDS you want to use.
