@@ -51,16 +51,16 @@ Please choose an option:
 * Here is what the menu does for us:
 
     - `Do nothing`:
-        * Don't setup any environment.
+        * Does not setup any environment.
     - `ROS melodic`:
-        * Setup ROS 1 environment.
-        * Set the ROS_IP and ROS_MASTER_IP, which is your host IP.
+        * Sets up the ROS 1 environment.
+        * Sets the ROS_IP and ROS_MASTER_IP, which is your host IP.
     - `ROS 2 dashing`:
-        * Setup ROS 2 environment.
-        * Load DDS settings and select which DDS you want to use.
+        * Sets up the ROS 2 environment.
+        * Loads DDS settings and select the DDS you want to use.
     - `ROS2/ROS1_bridge`:
-        * Do all the thing for ROS 1 and ROS 2.
-        * Run ROS bridge automatically.
+        * Sets up the ROS Bridge environment.
+        * Runs ROS Bridge automatically.
 
 # Configuration
 
