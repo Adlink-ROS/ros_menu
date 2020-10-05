@@ -54,11 +54,9 @@ Please choose an option:
         * Don't setup any environment.
     - `ROS melodic`:
         * Setup ROS 1 environment.
-        * Setup your package environment which is in `~/catkin_ws`.
         * Set the ROS_IP and ROS_MASTER_IP, which is your host IP.
     - `ROS 2 dashing`:
         * Setup ROS 2 environment.
-        * Setup your package environment which is in `~/ros2_ws`.
         * Load DDS settings and select which DDS you want to use.
     - `ROS2/ROS1_bridge`:
         * Do all the thing for ROS 1 and ROS 2.
