@@ -75,25 +75,25 @@ The following is the config you can control.
 * Here are some parameters you need to set if you want to create a new option for your menu: 
   - ROS 1: 
     - ROS_version: 1
-    - distro_name: the name of the ROS 1 you are using
-    - ros1_path: the path where you ros is, may look like this: /opt/*
-    - master_ip: set if master isn't on current computer
-    - ros1_cmds: any command you want to run every time using ROS 1
+    - distro_name: the name of the ROS 1 you are using.
+    - ros1_path: the path where the ROS 1 is.
+    - master_ip: set the IP address of the master if master isn't on current computer.
+    - cmds: source your ROS 1 workspace here.
   - ROS 2:
     - ROS_version: 2
     - distro_name: the name of the ROS 2 you are using.
-    - ros2_path: the path where you ros is, may look like this: /opt/*
-    domain_id: $ROS_DOMAIN_ID
-    ros2_cmds: any command you want to run every time using ROS 1.  _Remarks: `source_plugin dds_bashrc` is necessary every time using ROS 2_
+    - ros2_path: the path where the ROS 2 is.
+    - domain_id: use $ROS_DOMAIN_ID as default domain ID for DDS communication.
+    - cmds: source your ROS 2 workspace here.  _Remarks: `source_plugin dds_bashrc` is necessary every time using ROS 2_
   - ROS2/ROS1_bridge:
     - ROS_version: bridge
     - ros1_version_name: the name of the ROS 1 you are using.
     - ros2_version_name: the name of the ROS 2 you are using.
-    - ros1_path: the path where you ros is, may look like this: /opt/*
-    - ros2_path: the path where you ros is, may look like this: /opt/*
-    - master_ip: set if master isn't on current computer
-    - domain_id: $ROS_DOMAIN_ID
-    - bridge_cmds: any command you want to run every time using ROS bridge. _Remarks: `source_plugin dds_bashrc` and `ros2 run ros1_bridge dynamic_bridge --bridge-all-topics` is necessary every time using ROS bridge_
+    - ros1_path: the path where the ROS 1 is.
+    - ros2_path: the path where the ROS 2 is.
+    - master_ip: set the IP address of the master if master isn't on current computer.
+    - domain_id: use $ROS_DOMAIN_ID as default domain ID for DDS communication.
+    - cmds: any command you want to run every time using ROS bridge. _Remarks: `source_plugin dds_bashrc` and `ros2 run ros1_bridge dynamic_bridge --bridge-all-topics` is necessary every time using ROS bridge_
 # Upgrade
 
 * It's very easy to upgrade the menu by typing `ros_menu_upgrade`.
