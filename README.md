@@ -83,7 +83,7 @@ The following is the config you can control.
     - ROS_version: 2
     - distro_name: the name of the ROS 2 you are using.
     - ros2_path: the path where the ROS 2 is.
-    - domain_id: use $ROS_DOMAIN_ID as default domain ID for DDS communication.
+    - domain_id: set the Domain ID for DDS communication. Keep empty to use `$default_ros_domain_id(30)`
     - cmds: source your ROS 2 workspace here.  _Remarks: `source_plugin dds_bashrc` is necessary every time using ROS 2_
   - ROS2/ROS1_bridge:
     - ROS_version: bridge
@@ -92,7 +92,7 @@ The following is the config you can control.
     - ros1_path: the path where the ROS 1 is.
     - ros2_path: the path where the ROS 2 is.
     - master_ip: set the IP address of the master if master isn't on current computer.
-    - domain_id: use $ROS_DOMAIN_ID as default domain ID for DDS communication.
+    - domain_id: set the Domain ID for DDS communication. Keep empty to use `$default_ros_domain_id(30)`
     - cmds: any command you want to run every time using ROS bridge. _Remarks: `source_plugin dds_bashrc` and `ros2 run ros1_bridge dynamic_bridge --bridge-all-topics` is necessary every time using ROS bridge_
 # Upgrade
 
