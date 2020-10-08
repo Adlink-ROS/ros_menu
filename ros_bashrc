@@ -8,7 +8,8 @@ unset ROS_DISTRO
 unset ROS_HOSTNAME
 
 shell=`echo $SHELL | awk -F '/' '{print $NF}'`
-plugins_path="${HOME}/.ros_menu/plugins_bashrc"
+ros_menu_path="${HOME}/.ros_menu"
+plugins_path="${ros_menu_path}/plugins_bashrc"
 
 function source_plugin()
 {
