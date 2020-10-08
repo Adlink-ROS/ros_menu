@@ -1,6 +1,10 @@
 Product: Neuron Startup Menu
 ----------------------------
 
+v1.4.0:
+1. Use Cyclone DDS as default DDS implementation.
+2. Support using YAML to generate menu.
+
 v1.3.0:
 1. Rename ros_dotfiles to ros_menu.
 2. Prompt to install necessary ROS packages while installation.
