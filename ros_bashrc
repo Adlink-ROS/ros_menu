@@ -70,10 +70,24 @@ function ros_menu_env()
 function ros_menu_disable()
 {
      sed -i '/menu_enable/s/true/false/g' ~/ros_menu/config.yaml
+     echo "To enable ros_menu please use ro_menu_enable"
 }
 function ros_menu_enable()
 {
      sed -i '/menu_enable/s/false/true/g' ~/ros_menu/config.yaml
+}
+function ros_menu_help()
+{
+    echo -e "To load ROS env to be automatically, please assign ros_option in ros_menu/config.yaml"
+    echo "Usage: (Run the following function in the command line.)"
+    echo -e "\tros_menu_help         -> usage details"
+    echo -e "\tros_menu_version      -> show the version of ros_menu you are using"
+    echo -e "\tros_menu_upgrade      -> upgrade the ros_menu"
+    echo -e "\tros_menu_uninstall    -> uninstall the ros_menu"
+    echo -e "\tros_menu_env          -> show the environment details of ROS"
+    echo -e "\tros_menu_disable      -> disable the ros_menu"
+    echo -e "\tros_menu_enable       -> enable the ros_menu"
+    echo "For more using details please refer to file ros_menu/README.md."
 }
 python3 ~/ros_menu/ros_menu.py ~/ros_menu/config.yaml
 
