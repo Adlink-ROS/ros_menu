@@ -38,14 +38,15 @@ sh -c "MENU_CONFIG=<Config Name> $(curl -fsSL https://raw.githubusercontent.com/
 
 ```
 ************ Neuron Startup Menu for ROS *************
-* Usage: To set ROS env to be auto-loaded, please    *
-*        assign ros_option in ros_menu/config.yaml   *
+* Usage: Please select the following options to load *
+*        ROS environment automatically.              *
 ******************************************************
 0) Do nothing
-1) ROS 1 melodic 
+1) ROS 1 melodic
 2) ROS 2 dashing 
 3) ROS2/ROS1_bridge 
-Please choose an option: 
+h) Help
+Please choose an option:
 ```
 
 * Here is what the menu does for us:
@@ -61,6 +62,9 @@ Please choose an option:
     - `ROS2/ROS1_bridge`:
         * Sets up the ROS Bridge environment.
         * Runs ROS Bridge automatically.
+    - `help`:
+        * Show using details of the ROS menu.
+        * You can type `h` or `H` or `help` when choosing the option
 
 # Configuration
 
@@ -74,18 +78,21 @@ The following is the config you can control.
   - ros_option: 'menu' to open the menu, you could also set a number and the menu will automatically set to this every time you open the terminal. 
 * Here are some parameters you need to set if you want to create a new option for your menu: 
   - ROS 1: 
+    - option_num: give the option name to this option, avoid using specific characters(e.g:help,H,h,0) or duplicate option name 
     - ROS_version: 1
     - distro_name: the name of the ROS 1 you are using.
     - ros1_path: the path where the ROS 1 is.
     - master_ip: set the IP address of the master if master isn't on current computer.
     - cmds: source your ROS 1 workspace here.
   - ROS 2:
+    - option_num: give the option name to this option, avoid using specific characters(e.g:help,H,h,0) or duplicate option name 
     - ROS_version: 2
     - distro_name: the name of the ROS 2 you are using.
     - ros2_path: the path where the ROS 2 is.
     - domain_id: set the Domain ID for DDS communication. Keep empty to use `$default_ros_domain_id(30)`
     - cmds: source your ROS 2 workspace here.  _Remarks: `source_plugin dds_bashrc` is necessary every time using ROS 2_
   - ROS2/ROS1_bridge:
+    - option_num: give the option name to this option, avoid using specific characters(e.g:help,H,h,0) or duplicate option name 
     - ROS_version: bridge
     - ros1_version_name: the name of the ROS 1 you are using.
     - ros2_version_name: the name of the ROS 2 you are using.
@@ -104,6 +111,17 @@ ros_menu_upgrade <version>
 ```
 
 * Next time you open the terminal, it'll be new version.
+
+# Disable/Enable the menu
+* You could disable/enable the ros_menu by typing `ros_menu_disable` / `ros_menu_enable`
+
+```sh
+#Disable ros_menu
+ros_menu_disable 
+#Enable ros_menu
+ros_menu_enable
+```
+
 
 # Uninstall
 

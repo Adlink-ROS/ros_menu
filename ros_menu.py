@@ -21,8 +21,8 @@ if (source_file['Config']['menu_enable'] != True):
 # Generate Menu
 keys = list(source_file['Menu'])
 print('************ Neuron Startup Menu for ROS *************')
-print('* Usage: To set ROS env to be auto-loaded, please    *')
-print('*        assign ros_option in ros_menu/config.yaml   *')
+print('* Usage: Please select the following options to load *')
+print('*        ROS environment automatically.              *')
 print('******************************************************')
 print('0) Do nothing')
 choose_dict = {}
@@ -32,7 +32,7 @@ for key in keys:
         sys.exit(0)
     print('%s) %s ' % (source_file['Menu'][key]['option_num'], key))
     choose_dict['%s' % source_file['Menu'][key]['option_num']] = key
-
+print('h) Help')
 # Choose Menu
 if source_file['Config']['ros_option'] != 'menu':
     ros_option = str(source_file['Config']['ros_option'])
@@ -45,6 +45,13 @@ else:
         ros_option = ''
         print('')
     print('------------------------------------------------------')
+    if ros_option == 'H' or ros_option == 'h' or ros_option == 'help':
+        print('Do nothing!')
+        print('------------------------------------------------------')
+        ros_source_file = open(output_file_name, 'w')
+        ros_source_file.write('ros_menu_help')
+        ros_source_file.close()
+        sys.exit(0)
     if len(ros_option) == 0 or ros_option == '0' or ros_option not in list(choose_dict):
         print('Do nothing!')
         sys.exit(0)
