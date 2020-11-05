@@ -32,13 +32,16 @@ fi
 
 # Install ROS menu and config file
 if [ -f ~/ros_menu/config.yaml ]; then
-    echo -n "File config.yaml exits! Do you want to over write it? (y/N): "
+    echo  "The Neuron Startup Menu was already installed!"
+    echo -n "Do you want to reinstall? (Your setting in the file config.yaml would be over write.) (y/N): "
     read over_write
 else
     over_write = "y"
 fi
-if [ "$over_write" '==' "y" ] || [ "$over_write" '==' "Y" ]; 
-then
+if ! [ "$over_write" '==' "y" ] || [ "$over_write" '==' "Y" ]; then
+    echo "Skip installing Neuron Startup Menu!"
+    exit
+fi
 rm -f ~/.ros_menu
 ln -s `pwd` ~/.ros_menu
 if [[ -n $1 ]]; then
@@ -46,15 +49,15 @@ if [[ -n $1 ]]; then
 fi
 cp $config_file config.yaml
 if ! grep -q ros_menu ~/.${shell}rc; then
-cat <<- EOF>> ~/.${shell}rc
-# Neuron Startup Menu 
-ros_bashrc_path=~/.ros_menu/ros_bashrc
-if [ -f \$ros_bashrc_path ]; then
-    source \$ros_bashrc_path
-fi
-# End of Neuron Startup Menu #
+cat << EOF>> ~/.${shell}rc
+    # Neuron Startup Menu #
+    ros_bashrc_path=~/.ros_menu/ros_bashrc
+    if [ -f \$ros_bashrc_path ]; then
+        source \$ros_bashrc_path
+    fi
+    # End of Neuron Startup Menu #
 EOF
 fi
-fi
+
 
 echo "Neuron Startup Menu installed successfully"
