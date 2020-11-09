@@ -36,7 +36,7 @@ if [ -f ~/ros_menu/config.yaml ]; then
     echo -n "Do you want to reinstall? (Your setting in the file config.yaml would be over written.) (y/N): "
     read over_write
 else
-    over_write = "y"
+    over_write="y"
 fi
 if ! [ "$over_write" '==' "y" ] || [ "$over_write" '==' "Y" ]; then
     echo "Skip installing Neuron Startup Menu!"
