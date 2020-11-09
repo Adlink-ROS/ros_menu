@@ -53,11 +53,10 @@ if ! grep -q ros_menu ~/.${shell}rc; then
 # Neuron Startup Menu #
 ros_bashrc_path=~/.ros_menu/ros_bashrc
 if [ -f \$ros_bashrc_path ]; then
-   source \$ros_bashrc_path
+    source \$ros_bashrc_path
 fi
 # End of Neuron Startup Menu #
 EOF
 fi
-
 
 echo "Neuron Startup Menu installed successfully"

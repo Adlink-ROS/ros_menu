@@ -1,6 +1,10 @@
 Product: Neuron Startup Menu
 ----------------------------
 
+v1.5.0:
+1. Add help option for ros_menu.
+2. Able to enable/disable ros_menu by CLI.
+
 v1.4.0:
 1. Use Cyclone DDS as default DDS implementation.
 2. Support using YAML to generate menu.
