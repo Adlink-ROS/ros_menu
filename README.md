@@ -68,14 +68,15 @@ Please choose an option:
 
 # Configuration
 
-You can configure the menu in a very easy way.
-All you need to modify is in `~/.ros_menu/config.yaml`.
-The following is the config you can control.
+You can configure the menu easily by modify ~/ros_menu/config.yaml.
+The following are the options you can control.
 
 * Enable menu:
-  - menu_enable: "true" to enable the menu. "false" to disable the menu.
+  - menu_enable: "true" to enable the menu, “false” or otherwise do nothing.
 * ROS option:
-  - ros_option: 'menu' to open the menu, you could also set a number and the menu will automatically set to this every time you open the terminal. 
+  - ros_option: “menu” to show the whole menu, or any option_num you set to choose the option automatically.
+* ROS domian id:
+  - default_ros_domain_id: set if you want to have the same domain ID for every ROS 2 version, otherwise the domain ID will be set to 30.
 * Here are some parameters you need to set if you want to create a new option for your menu: 
   - ROS 1: 
     - option_num: give the option name to this option, avoid using specific characters(e.g:help,H,h,0) or duplicate option name 
@@ -101,6 +102,7 @@ The following is the config you can control.
     - master_ip: set the IP address of the master if master isn't on current computer.
     - domain_id: set the Domain ID for DDS communication. Keep empty to use `$default_ros_domain_id(30)`
     - cmds: any command you want to run every time using ROS bridge. _Remarks: `source_plugin dds_bashrc` and `ros2 run ros1_bridge dynamic_bridge --bridge-all-topics` is necessary every time using ROS bridge_
+
 # Upgrade
 
 * It's very easy to upgrade the menu by typing `ros_menu_upgrade`.
@@ -113,6 +115,7 @@ ros_menu_upgrade <version>
 * Next time you open the terminal, it'll be new version.
 
 # Disable/Enable the menu
+
 * You could disable/enable the ros_menu by typing `ros_menu_disable` / `ros_menu_enable`
 
 ```sh
@@ -121,7 +124,6 @@ ros_menu_disable
 #Enable ros_menu
 ros_menu_enable
 ```
-
 
 # Uninstall
 
