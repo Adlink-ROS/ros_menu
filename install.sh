@@ -38,7 +38,7 @@ if [ -f ~/ros_menu/config.yaml ]; then
 else
     over_write="y"
 fi
-if ! [ "$over_write" '==' "y" ] || [ "$over_write" '==' "Y" ]; then
+if [ ! "$over_write" '==' "y" ] && [ ! "$over_write" '==' "Y" ]; then
     echo "Skip installing Neuron Startup Menu!"
     exit
 fi
