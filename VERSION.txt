@@ -1,6 +1,9 @@
 Product: Neuron Startup Menu
 ----------------------------
 
+v1.5.1:
+1. Always prompt to install ROS while installing ros_menu.
+
 v1.5.0:
 1. Add help option for ros_menu.
 2. Able to enable/disable ros_menu by CLI.
