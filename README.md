@@ -3,6 +3,16 @@
 Setting ROS environment every time is an annoying job.
 ADLINK provides Neuron Startup Menu to make your life easier.
 
+Neuron Startup Menu offers these features:
+1. Install ROS 1, ROS2, and Cyclone DDS for you automatically.
+
+    ![](readme_resource/ros_auto_install.png)    
+
+2. Prompt ROS menu whenever you opening a new terminal.
+
+    ![](readme_resource/ros_menu.png)
+
+
 # Support Platform
 
 * Ubuntu 18.04
