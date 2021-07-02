@@ -2,14 +2,14 @@
 
 # Platform detection
 shell=`echo $SHELL | awk -F '/' '{print $NF}'`
-if [[ $(grep 20.04 /etc/issue) ]]; then
-    ros1_distro="noetic"
-    ros2_distro="foxy"
-    config_file=./yaml/ros_menu_20.04.yaml
-else
+if [[ $(grep 18.04 /etc/issue) ]]; then
     ros1_distro="melodic"
     ros2_distro="dashing"
     config_file=./yaml/ros_menu_18.04.yaml
+else
+    ros1_distro="noetic"
+    ros2_distro="foxy"
+    config_file=./yaml/ros_menu_20.04.yaml
 fi
 
 # ROS environment installation
