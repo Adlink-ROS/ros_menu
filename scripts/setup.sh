@@ -12,4 +12,3 @@ fi
 cd $HOME/ros_menu
 ./install.sh $MENU_CONFIG
 cd - > /dev/null
-    
