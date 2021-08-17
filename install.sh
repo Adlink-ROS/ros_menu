@@ -30,6 +30,18 @@ else
     echo "Skip installing ROS"
 fi
 
+if [ "$ros2_distro" '==' "foxy" ]; then
+    # OpenVINO environment installation
+    echo -n "Do you want to install OpenVINO automatically? (y/N): "
+    read openvino_install
+    if [ "$openvino_install" '==' "y" ] || [ "$openvino_install" '==' "Y" ];
+    then
+        ./scripts/install_openvino.sh
+    else
+        echo "Skip installing OpenVINO"
+    fi
+fi
+
 # Install ROS menu and config file
 if [ -f ~/ros_menu/config.yaml ]; then
     echo  "The Neuron Startup Menu was already installed!"
