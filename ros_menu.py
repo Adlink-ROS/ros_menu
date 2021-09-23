@@ -68,7 +68,7 @@ def read_cmds():
 
 
 def source_ros1():
-    current_ip = os.popen("hostname -I | awk '{print $1}'").readlines()[0]
+    current_ip = os.popen("hostname -I | awk '{print $1}'").read().split('\n')[0]
     if (len(current_ip) == 0):
         current_ip = '127.0.0.1'
     ros_master_uri = source_file['Menu'][choose]['master_ip']
