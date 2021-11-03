@@ -30,9 +30,9 @@ else
     echo "Skip installing ROS"
 fi
 
+# OpenVINO environment installation (Only for Intel platform and ROS 2 foxy)
 if [ "$ros2_distro" '==' "foxy" ] && [[ $(grep Intel /proc/cpuinfo  | grep 'vendor_id'| uniq) ]];
 then
-    # OpenVINO environment installation
     echo -n -e "Do you want to install Intel RealSense SDK and OpenVINO automatically?\nNote that if you choose yes, it means you agree to the Intel software license.\nInstall or not? (y/N): "
     read openvino_install
     if [ "$openvino_install" '==' "y" ] || [ "$openvino_install" '==' "Y" ];

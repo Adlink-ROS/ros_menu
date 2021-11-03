@@ -1,6 +1,10 @@
 Product: Neuron Startup Menu
 ----------------------------
 
+v1.5.2:
+1. Fix ROS 1 apt key issue.
+2. Support OpenVINO installation in Intel platform.
+
 v1.5.1:
 1. Always prompt to install ROS while installing ros_menu.
 
