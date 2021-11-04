@@ -4,8 +4,6 @@ import sys
 
 # Common variables
 output_file_name = "/tmp/ros_source_file.txt"
-shell = os.popen(
-    "echo $SHELL | awk -F '/' '{print $NF}'").readlines()[0].rstrip("\n")
 
 # Read YAML file.
 f = open('%s' % sys.argv[1], 'r')
@@ -74,8 +72,7 @@ def source_ros1():
     ros_master_uri = source_file['Menu'][choose]['master_ip']
     if (ros_master_uri is None):
         ros_master_uri = current_ip
-    source_ros = 'source %s/setup.%s' % (
-        source_file['Menu'][choose]['ros1_path'], shell)
+    source_ros = 'source %s/setup.$shell' % source_file['Menu'][choose]['ros1_path']
     export_ip = 'export ROS_IP=%s' % current_ip
     export_ros_master_uri = 'export ROS_MASTER_URI=http://%s:11311' % ros_master_uri.rstrip("\n")
     print('* ROS_IP=%s' % current_ip.rstrip('\n'))
@@ -88,8 +85,8 @@ def source_ros2():
     ros_domain_id = source_file['Menu'][choose]['domain_id']
     if (ros_domain_id is None):
         ros_domain_id = int(source_file['Config']['default_ros_domain_id'])
-    source_ros = 'source %s/local_setup.%s' % (source_file['Menu'][choose]['ros2_path'], shell)
-    source_colcon = 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.%s' % shell
+    source_ros = 'source %s/local_setup.$shell' % source_file['Menu'][choose]['ros2_path']
+    source_colcon = 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell'
     export_domain_id = 'export ROS_DOMAIN_ID=%d' % ros_domain_id
     print('* ROS_DOMAIN_ID = %d' % ros_domain_id)
     print('------------------------------------------------------')
@@ -105,6 +102,7 @@ def check_bridge():
 
 
 ros_source_file = open(output_file_name, 'w')
+ros_source_file.write("shell=`cat /proc/$$/cmdline | tr -d '\\0'`\n")
 if (source_file['Menu'][choose]['ROS_version'] == 1):
     ros_source_file.write(source_ros1()+read_cmds())
 if (source_file['Menu'][choose]['ROS_version'] == 2):
