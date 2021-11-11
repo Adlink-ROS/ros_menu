@@ -79,6 +79,13 @@ function ros_menu_enable()
      sed -i '/menu_enable/s/false/true/g' ~/ros_menu/config.yaml
 }
 
+function ros_menu_clean_docker()
+{
+    # Make sure the command only available outside the docker
+    docker rm -f rosmenu_ubuntu2004_container
+    docker rmi rosmenu_ubuntu2004
+}
+
 function ros_menu_help()
 {
     echo -e "To load ROS env to be automatically, please assign ros_option in ros_menu/config.yaml"
@@ -93,11 +100,16 @@ function ros_menu_help()
     echo "For more using details please refer to file ros_menu/README.md."
 }
 
-python3 ~/ros_menu/ros_menu.py ~/ros_menu/config.yaml
-
-if [ -f /tmp/ros_source_file.txt ]; then
-    source /tmp/ros_source_file.txt
-    rm -rf /tmp/ros_source_file.txt
+if [ ! -f /.dockerenv ]; then
+    python3 ~/ros_menu/ros_menu.py ~/ros_menu/config.yaml
+    if [ -f /tmp/host_sourcefile.txt ]; then
+        source /tmp/host_sourcefile.txt
+        rm -rf /tmp/host_sourcefile.txt
+    fi
+else
+    if [ -f /container_sourcefile.txt ]; then
+        source /container_sourcefile.txt
+    fi
 fi
 
 # # # # # # # # # # # # # # # # # # # #

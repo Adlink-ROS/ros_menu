@@ -3,7 +3,8 @@ import os
 import sys
 
 # Common variables
-output_file_name = "/tmp/ros_source_file.txt"
+host_sourcefilename = "/tmp/host_sourcefile.txt"
+container_sourcefilename = "/tmp/container_sourcefile.txt"
 
 # Read YAML file.
 f = open('%s' % sys.argv[1], 'r')
@@ -46,7 +47,7 @@ else:
     if ros_option == 'H' or ros_option == 'h' or ros_option == 'help':
         print('Do nothing!')
         print('------------------------------------------------------')
-        ros_source_file = open(output_file_name, 'w')
+        ros_source_file = open(host_sourcefilename, 'w')
         ros_source_file.write('ros_menu_help')
         ros_source_file.close()
         sys.exit(0)
@@ -101,12 +102,22 @@ def check_bridge():
     return True
 
 
-ros_source_file = open(output_file_name, 'w')
-ros_source_file.write("shell=`cat /proc/$$/cmdline | tr -d '\\0'`\n")
-if (source_file['Menu'][choose]['ROS_version'] == 1):
-    ros_source_file.write(source_ros1()+read_cmds())
-if (source_file['Menu'][choose]['ROS_version'] == 2):
-    ros_source_file.write(source_ros2()+read_cmds())
-if (source_file['Menu'][choose]['ROS_version'] == 'bridge' and check_bridge()):
-    ros_source_file.write(source_ros1()+source_ros2()+read_cmds())
-ros_source_file.close()
+def create_ros_sourcefile(source_file, filename):
+    ros_source_file = open(filename, 'w')
+    ros_source_file.write("shell=`cat /proc/$$/cmdline | tr -d '\\0'`\n")
+    if (source_file['Menu'][choose]['ROS_version'] == 1):
+        ros_source_file.write(source_ros1()+read_cmds())
+    if (source_file['Menu'][choose]['ROS_version'] == 2):
+        ros_source_file.write(source_ros2()+read_cmds())
+    if (source_file['Menu'][choose]['ROS_version'] == 'bridge' and check_bridge()):
+        ros_source_file.write(source_ros1()+source_ros2()+read_cmds())
+    ros_source_file.close()
+
+
+if ( 'container' in source_file['Menu'][choose] ):
+    create_ros_sourcefile(source_file, container_sourcefilename)
+    # TODO: Able to select which kind of image container will use.
+    with open(host_sourcefilename, "w") as f:
+        f.write("~/ros_menu/scripts/docker_run.sh")
+else:
+    create_ros_sourcefile(source_file, host_sourcefilename)
