@@ -70,13 +70,13 @@ function ros_menu_env()
 
 function ros_menu_disable()
 {
-     sed -i '/menu_enable/s/true/false/g' ~/ros_menu/config.yaml
-     echo "To enable ros_menu please use ro_menu_enable"
+    sed -i '/menu_enable/s/true/false/g' ~/ros_menu/config.yaml
+    echo "To enable ros_menu please use ro_menu_enable"
 }
 
 function ros_menu_enable()
 {
-     sed -i '/menu_enable/s/false/true/g' ~/ros_menu/config.yaml
+    sed -i '/menu_enable/s/false/true/g' ~/ros_menu/config.yaml
 }
 
 function ros_menu_clean_docker()
