@@ -95,12 +95,12 @@ def source_ros2():
 
 
 def check_bridge():
-    # TODO: This should be written into shell script.
-    if ((os.system('ls %s/lib/ | grep -q ros1_bridge' % source_file['Menu'][choose]['ros2_path']) >> 8) == 1):
-        print('You need to install ros1_bridge first.')
-        print('Installation command: sudo apt install ros-%s-ros1-bridge' % source_file['Menu'][choose]['ros2_version_name'])
-        return False
-    return True
+    ret_string  = "if [ ! -d %s/lib/ros1_bridge ]; then\n" % source_file['Menu'][choose]['ros2_path']
+    ret_string += "  echo 'You need to install ros1_bridge first.'\n"
+    ret_string += "  echo 'Installation command: sudo apt install ros-%s-ros1-bridge'\n" % source_file['Menu'][choose]['ros2_version_name']
+    ret_string += "  exit 1\n"
+    ret_string += "fi\n"
+    return ret_string
 
 
 def create_ros_sourcefile(source_file, filename):
@@ -110,8 +110,8 @@ def create_ros_sourcefile(source_file, filename):
         ros_source_file.write(source_ros1()+read_cmds())
     if (source_file['Menu'][choose]['ROS_version'] == 2):
         ros_source_file.write(source_ros2()+read_cmds())
-    if (source_file['Menu'][choose]['ROS_version'] == 'bridge' and check_bridge()):
-        ros_source_file.write(source_ros1()+source_ros2()+read_cmds())
+    if (source_file['Menu'][choose]['ROS_version'] == 'bridge'):
+        ros_source_file.write(source_ros1()+source_ros2()+check_bridge()+read_cmds())
     ros_source_file.close()
 
 
