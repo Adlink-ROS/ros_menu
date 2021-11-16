@@ -81,9 +81,12 @@ function ros_menu_enable()
 
 function ros_menu_clean_docker()
 {
-    # Make sure the command only available outside the docker
-    docker rm -f rosmenu_ubuntu2004_container
-    docker rmi rosmenu_ubuntu2004
+    if [ ! -f ./dockerenv ]; then
+        docker rm -f rosmenu_ubuntu2004_container
+        docker rmi rosmenu_ubuntu2004
+    else
+        echo "The command is only available in host, not in container."
+    fi
 }
 
 function ros_menu_help()
@@ -97,6 +100,7 @@ function ros_menu_help()
     echo -e "\tros_menu_env               -> show the environment details of ROS"
     echo -e "\tros_menu_disable           -> disable the ros_menu"
     echo -e "\tros_menu_enable            -> enable the ros_menu"
+    echo -e "\tros_menu_clean_docker      -> remove image and container"
     echo "For more using details please refer to file ros_menu/README.md."
 }
 
