@@ -95,6 +95,7 @@ def source_ros2():
 
 
 def check_bridge():
+    # TODO: This should be written into shell script.
     if ((os.system('ls %s/lib/ | grep -q ros1_bridge' % source_file['Menu'][choose]['ros2_path']) >> 8) == 1):
         print('You need to install ros1_bridge first.')
         print('Installation command: sudo apt install ros-%s-ros1-bridge' % source_file['Menu'][choose]['ros2_version_name'])
