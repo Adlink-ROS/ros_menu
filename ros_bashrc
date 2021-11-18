@@ -7,7 +7,7 @@ unset ros_option
 unset ROS_DISTRO
 unset ROS_HOSTNAME
 
-shell=`cat /proc/$$/cmdline | tr -d '\0'`
+shell=`cat /proc/$$/cmdline | tr -d '\0' | tr -d '-'`
 ros_menu_path="${HOME}/.ros_menu"
 plugins_path="${ros_menu_path}/plugins_bashrc"
 
