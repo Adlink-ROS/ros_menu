@@ -111,8 +111,9 @@ if [ ! -f /.dockerenv ]; then
         source /tmp/host_sourcefile.txt
     fi
 else
-    if [ -f /container_sourcefile.txt ]; then
-        source /container_sourcefile.txt
+    # Each docker container should has the following file
+    if [ -f /container_sourcefile_$ROS_OPTION.txt ]; then
+        source /container_sourcefile_$ROS_OPTION.txt
     fi
 fi
 

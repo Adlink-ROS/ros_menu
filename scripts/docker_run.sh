@@ -69,6 +69,6 @@ else
     fi
 fi
 
-# TODO: We might have some conflicts since different menu options share the same container_sourcefile.txt name
-docker cp /tmp/container_sourcefile.txt $container_name:/
-docker exec -it $container_name bash
+# Use $ROS_OPTION to select the environment in docker container
+docker cp /tmp/container_sourcefile_$ROS_OPTION.txt $container_name:/
+docker exec -it $container_name bash -c "export ROS_OPTION=$ROS_OPTION;bash"

@@ -4,7 +4,7 @@ import sys
 
 # Common variables
 host_sourcefilename = "/tmp/host_sourcefile.txt"
-container_sourcefilename = "/tmp/container_sourcefile.txt"
+container_sourcefilename = "/tmp/container_sourcefile_%s.txt"
 
 # Read YAML file.
 f = open('%s' % sys.argv[1], 'r')
@@ -116,9 +116,11 @@ def create_ros_sourcefile(source_file, filename):
 
 
 if ( 'container' in source_file['Menu'][choose] ):
+    container_sourcefilename = container_sourcefilename % ros_option
     create_ros_sourcefile(source_file, container_sourcefilename)
     # TODO: Able to select which kind of image container will use.
     with open(host_sourcefilename, "w") as f:
-        f.write("~/ros_menu/scripts/docker_run.sh")
+        # Use $ROS_OPTION to select the environment in docker container
+        f.write("ROS_OPTION=%s ~/ros_menu/scripts/docker_run.sh" % ros_option)
 else:
     create_ros_sourcefile(source_file, host_sourcefilename)
