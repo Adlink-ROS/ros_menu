@@ -16,6 +16,7 @@ if [ ! "$(docker images -q $image_name)" ]; then
     read build_docker
     if [ "$build_docker" '==' "y" ] || [ "$build_docker" '==' "Y" ];
     then
+        # TODO: It takes too long time to build the docker image. Maybe put it on Dockerhub.
         pushd ~/ros_menu/scripts
         docker build -t $image_name -f ../Dockerfile/$dockerfile_name .
         popd
@@ -28,9 +29,11 @@ fi
 xhost +local:docker
 if [ ! "$(docker ps -aq -f name=$container_name)" ]; then
     echo "Run docker container since the container not exists"
+    # --group-add "video" is necessary: https://forums.developer.nvidia.com/t/nvidia-docker-seems-unable-to-use-gpu-as-non-root-user/80276/4
     docker run --detach \
                --user "$(id --user):sudo" \
                --group-add "$(id --group)" \
+               --group-add "video" \
                --hostname "$(hostname)" \
                --env "USER=$(whoami)" \
                --env "DISPLAY=$DISPLAY" \

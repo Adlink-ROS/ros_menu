@@ -104,3 +104,5 @@ COPY install_dep.sh /tmp
 RUN /tmp/install_dep.sh
 
 CMD ["/bin/bash"]
+
+# TODO: image size is about 7.14 G, too large for nvidia jetson.
