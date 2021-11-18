@@ -119,9 +119,9 @@ def create_ros_sourcefile(filename):
 if ( 'container' in source_file['Menu'][choose] ):
     container_sourcefilename = container_sourcefilename % ros_option
     create_ros_sourcefile(container_sourcefilename)
-    # TODO: Able to select which kind of image container will use.
     with open(host_sourcefilename, "w") as f:
         # Use $ROS_OPTION to select the environment in docker container
-        f.write("ROS_OPTION=%s ~/ros_menu/scripts/docker_run.sh" % ros_option)
+        # Use $CONTAINER to select which container to use
+        f.write("ROS_OPTION=%s CONTAINER=%s ~/ros_menu/scripts/docker_run.sh" % (ros_option, source_file['Menu'][choose]['container']))
 else:
     create_ros_sourcefile(host_sourcefilename)

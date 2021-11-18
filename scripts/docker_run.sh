@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 
-# TODO: The following variables should be arguments.
-image_name=rosmenu_ubuntu2004
-dockerfile_name=Dockerfile_ubuntu2004
-container_name=rosmenu_ubuntu2004_container
+dockerfile_name=Dockerfile_${CONTAINER}
+image_name=rosmenu_${CONTAINER}
+container_name=rosmenu_${CONTAINER}_container
 
 # If the host is nvidia, use another container
 if [[ ! $(grep Intel /proc/cpuinfo  | grep 'vendor_id'| uniq) ]]; then
