@@ -12,7 +12,7 @@ else
     config_file=./yaml/ros_menu_20.04.yaml
 fi
 
-if [ $USE_CONTAINER '==' "True" ] || [ $USE_CONTAINER '==' "TRUE" ]
+if [ "$USE_CONTAINER" '==' "True" ] || [ "$USE_CONTAINER" '==' "TRUE" ]
 then
     echo "We won't install ROS / ROS 2 in your host since you use container instead."
     echo "The container will be installed in the first time you run it."
