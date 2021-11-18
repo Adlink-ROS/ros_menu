@@ -5,6 +5,11 @@ image_name=rosmenu_ubuntu2004
 dockerfile_name=Dockerfile_ubuntu2004
 container_name=rosmenu_ubuntu2004_container
 
+# If the host is nvidia, use another container
+if [[ ! $(grep Intel /proc/cpuinfo  | grep 'vendor_id'| uniq) ]]; then
+    dockerfile_name=$dockerfile_name"_nvidia"
+fi
+
 if [ ! "$(docker images -q $image_name)" ]; then
     echo "The docker image doesn't exist. It'll take some time to build docker image."
     echo -n "Do you really want to build docker image? (y/N): "
@@ -12,7 +17,7 @@ if [ ! "$(docker images -q $image_name)" ]; then
     if [ "$build_docker" '==' "y" ] || [ "$build_docker" '==' "Y" ];
     then
         pushd ~/ros_menu/scripts
-        docker build -t $image_name -f $dockerfile_name .
+        docker build -t $image_name -f ../Dockerfile/$dockerfile_name .
         popd
     else
         echo "Exit without creating docker image."
@@ -61,5 +66,6 @@ else
     fi
 fi
 
+# TODO: We might have some conflicts since different menu options share the same container_sourcefile.txt name
 docker cp /tmp/container_sourcefile.txt $container_name:/
 docker exec -it $container_name bash

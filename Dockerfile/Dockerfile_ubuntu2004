@@ -10,9 +10,9 @@ RUN DEBIAN_FRONTEND="noninteractive" TZ="Asia/Taipei" apt-get -qqy install tzdat
 RUN DEBIAN_FRONTEND=noninteractive apt-get -y install keyboard-configuration
 
 # Install necessary packages
-COPY ./install_noetic.sh /tmp
+COPY install_noetic.sh /tmp
 RUN /tmp/install_noetic.sh
-COPY ./install_foxy.sh /tmp
+COPY install_foxy.sh /tmp
 RUN /tmp/install_foxy.sh
-COPY ./install_dep.sh /tmp
+COPY install_dep.sh /tmp
 RUN /tmp/install_dep.sh

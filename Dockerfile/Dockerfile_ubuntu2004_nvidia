@@ -1,0 +1,106 @@
+FROM ubuntu:20.04
+
+ENV DEBIAN_FRONTEND="noninteractive"
+ENV TZ="Asia/Taipei"
+
+RUN apt-get update && apt-get install -y --no-install-recommends gnupg2 ca-certificates curl
+
+RUN curl -s https://repo.download.nvidia.com/jetson/jetson-ota-public.asc | apt-key add -
+
+ARG CUDA=10.2
+ARG RELEASE=r32.6
+
+RUN echo "deb https://repo.download.nvidia.com/jetson/common $RELEASE main" >> /etc/apt/sources.list
+
+RUN CUDAPKG=$(echo $CUDA | sed 's/\./-/'); \
+    apt-get update && apt-get install -y --no-install-recommends \
+	cuda-libraries-$CUDAPKG \
+	cuda-nvtx-$CUDAPKG \
+	cuda-libraries-dev-$CUDAPKG \
+	cuda-minimal-build-$CUDAPKG \
+	cuda-license-$CUDAPKG \
+	cuda-command-line-tools-$CUDAPKG && \
+	ln -s /usr/local/cuda-$CUDA /usr/local/cuda
+
+RUN apt-get update && apt-get install -qq -y --no-install-recommends \
+    bc \
+    bzip2 \
+    can-utils \
+    freeglut3-dev \
+    gstreamer1.0-alsa \
+    gstreamer1.0-libav \
+    gstreamer1.0-plugins-bad \
+    gstreamer1.0-plugins-base \
+    gstreamer1.0-plugins-good \
+    gstreamer1.0-plugins-ugly \
+    gstreamer1.0-tools \
+    i2c-tools \
+    iw \
+    kbd \
+    language-pack-en-base \
+    libcanberra-gtk3-module \
+    libgles2 \
+    libglu1-mesa-dev \
+    libglvnd-dev \
+    libgtk-3-0 \
+    libpython2.7 \
+    libudev1 \
+    libvulkan1 \
+    libzmq5 \
+    mtd-utils \
+    parted \
+    pciutils \
+    python \
+    python-pexpect \
+    python3-distutils \
+    sox \
+    udev \
+    vulkan-utils \
+    wget \
+    wireless-tools wpasupplicant
+
+RUN echo "/usr/lib/aarch64-linux-gnu/tegra" >> /etc/ld.so.conf.d/nvidia-tegra.conf && \
+    echo "/usr/lib/aarch64-linux-gnu/tegra-egl" >> /etc/ld.so.conf.d/nvidia-tegra.conf
+
+RUN rm /usr/share/glvnd/egl_vendor.d/50_mesa.json
+RUN mkdir -p /usr/share/glvnd/egl_vendor.d/ && echo '\
+{\
+    "file_format_version" : "1.0.0",\
+    "ICD" : {\
+        "library_path" : "libEGL_nvidia.so.0"\
+    }\
+}' > /usr/share/glvnd/egl_vendor.d/10_nvidia.json
+
+RUN mkdir -p /usr/share/egl/egl_external_platform.d/ && echo '\
+{\
+    "file_format_version" : "1.0.0",\
+    "ICD" : {\
+        "library_path" : "libnvidia-egl-wayland.so.1"\
+    }\
+}' > /usr/share/egl/egl_external_platform.d/nvidia_wayland.json
+
+RUN echo "/usr/local/cuda-$CUDA/targets/aarch64-linux/lib" >> /etc/ld.so.conf.d/nvidia.conf
+
+ENV PATH /usr/local/cuda-$CUDA/bin:/usr/local/cuda/bin:${PATH}
+ENV LD_LIBRARY_PATH /usr/local/cuda-$CUDA/targets/aarch64-linux/lib:${LD_LIBRARY_PATH}
+
+RUN ldconfig
+
+ENV NVIDIA_VISIBLE_DEVICES all
+ENV NVIDIA_DRIVER_CAPABILITIES all
+
+RUN apt-get update && \
+    apt-get install -y apt-utils sudo git curl python3 vim locales
+
+RUN DEBIAN_FRONTEND="noninteractive" TZ="Asia/Taipei" apt-get -qqy install tzdata
+RUN DEBIAN_FRONTEND=noninteractive apt-get -y install keyboard-configuration
+
+# Install necessary packages
+COPY install_noetic.sh /tmp
+RUN /tmp/install_noetic.sh
+COPY install_foxy.sh /tmp
+RUN /tmp/install_foxy.sh
+COPY install_dep.sh /tmp
+RUN /tmp/install_dep.sh
+
+CMD ["/bin/bash"]
