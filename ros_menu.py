@@ -103,7 +103,7 @@ def check_bridge():
     return ret_string
 
 
-def create_ros_sourcefile(source_file, filename):
+def create_ros_sourcefile(filename):
     ros_source_file = open(filename, 'w')
     ros_source_file.write("shell=`cat /proc/$$/cmdline | tr -d '\\0' | tr -d '-'`\n")
     ros_source_file.write("PS1=\"(%s) $PS1\"\n" % choose)
@@ -118,10 +118,10 @@ def create_ros_sourcefile(source_file, filename):
 
 if ( 'container' in source_file['Menu'][choose] ):
     container_sourcefilename = container_sourcefilename % ros_option
-    create_ros_sourcefile(source_file, container_sourcefilename)
+    create_ros_sourcefile(container_sourcefilename)
     # TODO: Able to select which kind of image container will use.
     with open(host_sourcefilename, "w") as f:
         # Use $ROS_OPTION to select the environment in docker container
         f.write("ROS_OPTION=%s ~/ros_menu/scripts/docker_run.sh" % ros_option)
 else:
-    create_ros_sourcefile(source_file, host_sourcefilename)
+    create_ros_sourcefile(host_sourcefilename)
