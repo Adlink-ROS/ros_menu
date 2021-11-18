@@ -29,7 +29,10 @@ fi
 xhost +local:docker
 if [ ! "$(docker ps -aq -f name=$container_name)" ]; then
     echo "Run docker container since the container not exists"
-    # --group-add "video" is necessary: https://forums.developer.nvidia.com/t/nvidia-docker-seems-unable-to-use-gpu-as-non-root-user/80276/4
+    # Note:
+    # * --group-add "video" is necessary: https://forums.developer.nvidia.com/t/nvidia-docker-seems-unable-to-use-gpu-as-non-root-user/80276/4
+    # * Don't pass /tmp into container: tmux in host and container will conflict since they share /tmp/tmux-1000
+    #   - Also note the limitation of tmux. Different options for the same container can't use tmux independently.
     docker run --detach \
                --user "$(id --user):sudo" \
                --group-add "$(id --group)" \
@@ -53,7 +56,6 @@ if [ ! "$(docker ps -aq -f name=$container_name)" ]; then
                --volume /usr/local/share/ca-certificates:/usr/local/share/ca-certificates:ro \
                --volume /dev:/dev \
                --volume /lib/modules:/lib/modules \
-               --volume /tmp:/tmp:rw \
                --volume /etc/shadow:/etc/shadow:ro \
                --volume /etc/sudoers:/etc/sudoers:ro \
                --workdir "${HOME}" \
