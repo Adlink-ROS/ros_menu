@@ -106,6 +106,7 @@ def check_bridge():
 def create_ros_sourcefile(source_file, filename):
     ros_source_file = open(filename, 'w')
     ros_source_file.write("shell=`cat /proc/$$/cmdline | tr -d '\\0' | tr -d '-'`\n")
+    ros_source_file.write("PS1=\"(%s) $PS1\"\n" % choose)
     if (source_file['Menu'][choose]['ROS_version'] == 1):
         ros_source_file.write(source_ros1()+read_cmds())
     if (source_file['Menu'][choose]['ROS_version'] == 2):
