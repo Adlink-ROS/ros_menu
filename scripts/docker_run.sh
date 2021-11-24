@@ -30,7 +30,7 @@ if [ ! "$(docker ps -aq -f name=$container_name)" ]; then
     #   - Also note the limitation of tmux. Different options for the same container can't use tmux independently.
     DOCKER_PLATFORM_ARGS=()
     if [[ ! $(grep Intel /proc/cpuinfo  | grep 'vendor_id'| uniq) ]]; then
-        DOCKER_PLATFORM_ARGS+=("--group-add \"video\"")
+        DOCKER_PLATFORM_ARGS+=("--group-add video")
         DOCKER_PLATFORM_ARGS+=("--volume /opt/nvidia:/opt/nvidia")
         DOCKER_PLATFORM_ARGS+=("--volume /usr/bin/tegrastats:/usr/bin/tegrastats")
         DOCKER_PLATFORM_ARGS+=("--volume /usr/share/vpi1:/usr/share/vpi1")
