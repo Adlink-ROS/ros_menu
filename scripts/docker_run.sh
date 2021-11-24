@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-image_name=adlinkrmt/rosmenu_${CONTAINER}_intel
 container_name=rosmenu_${CONTAINER}_container
-
-# If the host is nvidia, use another container
+# Use different image based on your architecture
 if [[ ! $(grep Intel /proc/cpuinfo  | grep 'vendor_id'| uniq) ]]; then
-    image_name=adlinkrmt/rosmenu_${CONTAINER}_intel_r32.6
+    image_name=adlinkrmt/rosmenu_${CONTAINER}_nv_r32.6
+else
+    image_name=adlinkrmt/rosmenu_${CONTAINER}_intel
 fi
 
 if [ ! "$(docker images -q $image_name)" ]; then
@@ -28,10 +28,20 @@ if [ ! "$(docker ps -aq -f name=$container_name)" ]; then
     # * --group-add "video" is necessary: https://forums.developer.nvidia.com/t/nvidia-docker-seems-unable-to-use-gpu-as-non-root-user/80276/4
     # * Don't pass /tmp into container: tmux in host and container will conflict since they share /tmp/tmux-1000
     #   - Also note the limitation of tmux. Different options for the same container can't use tmux independently.
+    DOCKER_PLATFORM_ARGS=()
+    if [[ ! $(grep Intel /proc/cpuinfo  | grep 'vendor_id'| uniq) ]]; then
+        DOCKER_PLATFORM_ARGS+=("--group-add \"video\"")
+        DOCKER_PLATFORM_ARGS+=("--volume /opt/nvidia:/opt/nvidia")
+        DOCKER_PLATFORM_ARGS+=("--volume /usr/bin/tegrastats:/usr/bin/tegrastats")
+        DOCKER_PLATFORM_ARGS+=("--volume /usr/share/vpi1:/usr/share/vpi1")
+        DOCKER_PLATFORM_ARGS+=("--volume /usr/lib/aarch64-linux-gnu/tegra:/usr/lib/aarch64-linux-gnu/tegra")
+        DOCKER_PLATFORM_ARGS+=("--volume /usr/local/cuda-10.2/targets/aarch64-linux/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib")
+        DOCKER_PLATFORM_ARGS+=("--volume /usr/lib/aarch64-linux-gnu/tegra-egl:/usr/lib/aarch64-linux-gnu/tegra-egl")
+        DOCKER_PLATFORM_ARGS+=("--volume /usr/lib/aarch64-linux-gnu/libcudnn.so.8.2.1:/usr/lib/aarch64-linux-gnu/libcudnn.so.8.2.1")
+    fi
     docker run --detach \
                --user "$(id --user):sudo" \
                --group-add "$(id --group)" \
-               --group-add "video" \
                --hostname "$(hostname)" \
                --env "USER=$(whoami)" \
                --env "DISPLAY=$DISPLAY" \
@@ -53,6 +63,7 @@ if [ ! "$(docker ps -aq -f name=$container_name)" ]; then
                --volume /lib/modules:/lib/modules \
                --volume /etc/shadow:/etc/shadow:ro \
                --volume /etc/sudoers:/etc/sudoers:ro \
+               ${DOCKER_PLATFORM_ARGS[@]} \
                --workdir "${HOME}" \
                --name $container_name \
                $image_name \
