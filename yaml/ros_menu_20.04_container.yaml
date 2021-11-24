@@ -9,7 +9,7 @@ Menu:
     distro_name: noetic
     ros1_path: /opt/ros/noetic
     master_ip: # set if roscore isn't on this computer
-    container: ubuntu2004
+    container: ubuntu20.04
     cmds:
     # - source ${HOME}/catkin_ws/devel/setup.${shell}
     # - source_plugin openvino_bashrc
@@ -19,7 +19,7 @@ Menu:
     distro_name: foxy
     ros2_path: /opt/ros/foxy
     domain_id: # set if you don't want to use default domain id
-    container: ubuntu2004
+    container: ubuntu20.04
     cmds:
     # - source ${HOME}/ros2_ws/install/local_setup.${shell}
       - source_plugin dds_bashrc 1
@@ -33,7 +33,7 @@ Menu:
     ros2_path: /opt/ros/foxy
     master_ip:
     domain_id:
-    container: ubuntu2004
+    container: ubuntu20.04
     cmds:
       - source_plugin dds_bashrc 1
       - ros2 run ros1_bridge dynamic_bridge --bridge-all-topics

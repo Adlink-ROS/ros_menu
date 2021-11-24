@@ -1,26 +1,22 @@
 #!/usr/bin/env bash
 
-dockerfile_name=Dockerfile_${CONTAINER}
-image_name=rosmenu_${CONTAINER}
+image_name=adlinkrmt/rosmenu_${CONTAINER}_intel
 container_name=rosmenu_${CONTAINER}_container
 
 # If the host is nvidia, use another container
 if [[ ! $(grep Intel /proc/cpuinfo  | grep 'vendor_id'| uniq) ]]; then
-    dockerfile_name=$dockerfile_name"_nvidia"
+    image_name=adlinkrmt/rosmenu_${CONTAINER}_intel_r32.6
 fi
 
 if [ ! "$(docker images -q $image_name)" ]; then
-    echo "The docker image doesn't exist. It'll take some time to build docker image."
-    echo -n "Do you really want to build docker image? (y/N): "
-    read build_docker
-    if [ "$build_docker" '==' "y" ] || [ "$build_docker" '==' "Y" ];
+    echo "The docker image doesn't exist. It'll take some time to pull docker image."
+    echo -n "Do you really want to pull docker image? (y/N): "
+    read pull_docker
+    if [ "$pull_docker" '==' "y" ] || [ "$pull_docker" '==' "Y" ];
     then
-        # TODO: It takes too long time to build the docker image. Maybe put it on Dockerhub.
-        pushd ~/ros_menu/scripts
-        docker build -t $image_name -f ../Dockerfile/$dockerfile_name .
-        popd
+        docker pull $image_name
     else
-        echo "Exit without creating docker image."
+        echo "Exit without getting docker image."
         exit 0
     fi
 fi
