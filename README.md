@@ -43,7 +43,7 @@ sh -c "MENU_VERSION=<Your Version> $(curl -fsSL https://raw.githubusercontent.co
 # Select which config you want.
 sh -c "MENU_CONFIG=<Config Name> $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/main/scripts/setup.sh)"
 # Install with docker
-sh -c "MENU_VERSION=support_docker MENU_CONFIG=ros_menu_20.04_container.yaml USE_CONTAINER=True $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/support_docker/scripts/setup.sh)"
+sh -c "MENU_CONFIG=ros_menu_20.04_container.yaml USE_CONTAINER=True $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/support_docker/scripts/setup.sh)"
 ```
 
 * Next time you open the shell, the terminal will show the following menu.
