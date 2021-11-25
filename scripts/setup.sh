@@ -10,5 +10,5 @@ if [ ! -d $HOME/ros_menu ]; then
     fi
 fi
 cd $HOME/ros_menu
-./install.sh $MENU_CONFIG
+USE_CONTAINER=$USE_CONTAINER ./install.sh $MENU_CONFIG
 cd - > /dev/null

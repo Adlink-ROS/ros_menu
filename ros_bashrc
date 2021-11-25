@@ -7,7 +7,7 @@ unset ros_option
 unset ROS_DISTRO
 unset ROS_HOSTNAME
 
-shell=`echo $SHELL | awk -F '/' '{print $NF}'`
+shell=`cat /proc/$$/cmdline | tr -d '\0' | tr -d '-'`
 ros_menu_path="${HOME}/.ros_menu"
 plugins_path="${ros_menu_path}/plugins_bashrc"
 
@@ -70,13 +70,32 @@ function ros_menu_env()
 
 function ros_menu_disable()
 {
-     sed -i '/menu_enable/s/true/false/g' ~/ros_menu/config.yaml
-     echo "To enable ros_menu please use ro_menu_enable"
+    sed -i '/menu_enable/s/true/false/g' ~/ros_menu/config.yaml
+    echo "To enable ros_menu please use ro_menu_enable"
 }
 
 function ros_menu_enable()
 {
-     sed -i '/menu_enable/s/false/true/g' ~/ros_menu/config.yaml
+    sed -i '/menu_enable/s/false/true/g' ~/ros_menu/config.yaml
+}
+
+function ros_menu_clean_docker()
+{
+    if [ ! -f ./dockerenv ]; then
+        container_id=$(docker ps --filter="name=rosmenu*" -q)
+        if [[ $container_id ]]; then
+            echo "Remove the rosmenu container..."
+            docker rm -f $container_id
+        fi
+        image_id=$(docker images --filter=reference="adlinkrmt/rosmenu*" -q)
+        if [[ $image_id ]]; then
+            echo "Remove the rosmenu image..."
+            docker rmi $image_id
+        fi
+        echo "The rosmenu container and image have already been removed successfully."
+    else
+        echo "The command is only available in host, not in container."
+    fi
 }
 
 function ros_menu_help()
@@ -90,14 +109,21 @@ function ros_menu_help()
     echo -e "\tros_menu_env               -> show the environment details of ROS"
     echo -e "\tros_menu_disable           -> disable the ros_menu"
     echo -e "\tros_menu_enable            -> enable the ros_menu"
+    echo -e "\tros_menu_clean_docker      -> remove image and container"
     echo "For more using details please refer to file ros_menu/README.md."
 }
 
-python3 ~/ros_menu/ros_menu.py ~/ros_menu/config.yaml
-
-if [ -f /tmp/ros_source_file.txt ]; then
-    source /tmp/ros_source_file.txt
-    rm -rf /tmp/ros_source_file.txt
+if [ ! -f /.dockerenv ]; then
+    rm -rf /tmp/host_sourcefile.txt
+    python3 ~/ros_menu/ros_menu.py ~/ros_menu/config.yaml
+    if [ -f /tmp/host_sourcefile.txt ]; then
+        source /tmp/host_sourcefile.txt
+    fi
+else
+    # Each docker container should has the following file
+    if [ -f /container_sourcefile_$ROS_OPTION.txt ]; then
+        source /container_sourcefile_$ROS_OPTION.txt
+    fi
 fi
 
 # # # # # # # # # # # # # # # # # # # #

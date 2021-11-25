@@ -12,34 +12,39 @@ else
     config_file=./yaml/ros_menu_20.04.yaml
 fi
 
-# ROS environment installation
-echo -n "Do you want to install ROS automatically? (y/N): "
-read ros_install
-if [ "$ros_install" '==' "y" ] || [ "$ros_install" '==' "Y" ];
+if [ "$USE_CONTAINER" '==' "True" ] || [ "$USE_CONTAINER" '==' "TRUE" ]
 then
-    # Install ROS 1
-    ./scripts/install_${ros1_distro}.sh
-
-    # Install ROS 2
-    ./scripts/install_${ros2_distro}.sh
-
-    # Install ROS dependencies and related packages
-    ./scripts/install_dep.sh
-
+    echo "We won't install ROS / ROS 2 in your host since you use container instead."
+    echo "The container will be installed in the first time you run it."
 else
-    echo "Skip installing ROS"
-fi
-
-# OpenVINO environment installation (Only for Intel platform and ROS 2 foxy)
-if [ "$ros2_distro" '==' "foxy" ] && [[ $(grep Intel /proc/cpuinfo  | grep 'vendor_id'| uniq) ]];
-then
-    echo -n -e "Do you want to install Intel RealSense SDK and OpenVINO automatically?\nNote that if you choose yes, it means you agree to the Intel software license.\nInstall or not? (y/N): "
-    read openvino_install
-    if [ "$openvino_install" '==' "y" ] || [ "$openvino_install" '==' "Y" ];
+    # ROS environment installation
+    echo -n "Do you want to install ROS automatically? (y/N): "
+    read ros_install
+    if [ "$ros_install" '==' "y" ] || [ "$ros_install" '==' "Y" ];
     then
-        ./scripts/install_openvino.sh
+        # Install ROS 1
+        ./scripts/install_${ros1_distro}.sh
+
+        # Install ROS 2
+        ./scripts/install_${ros2_distro}.sh
+
+        # Install ROS dependencies and related packages
+        ./scripts/install_dep.sh
     else
-        echo "Skip installing OpenVINO"
+        echo "Skip installing ROS"
+    fi
+
+    # OpenVINO environment installation (Only for Intel platform and ROS 2 foxy)
+    if [ "$ros2_distro" '==' "foxy" ] && [[ $(grep Intel /proc/cpuinfo  | grep 'vendor_id'| uniq) ]];
+    then
+        echo -n -e "Do you want to install Intel RealSense SDK and OpenVINO automatically?\nNote that if you choose yes, it means you agree to the Intel software license.\nInstall or not? (y/N): "
+        read openvino_install
+        if [ "$openvino_install" '==' "y" ] || [ "$openvino_install" '==' "Y" ];
+        then
+            ./scripts/install_openvino.sh
+        else
+            echo "Skip installing OpenVINO"
+        fi
     fi
 fi
 
