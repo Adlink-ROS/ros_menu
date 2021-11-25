@@ -43,7 +43,7 @@ sh -c "MENU_VERSION=<Your Version> $(curl -fsSL https://raw.githubusercontent.co
 # Select which config you want.
 sh -c "MENU_CONFIG=<Config Name> $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/main/scripts/setup.sh)"
 # Install with docker
-sh -c "MENU_CONFIG=ros_menu_20.04_container.yaml USE_CONTAINER=True $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/support_docker/scripts/setup.sh)"
+sh -c "MENU_CONFIG=ros_menu_20.04_container.yaml USE_CONTAINER=True $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/main/scripts/setup.sh)"
 ```
 
 * Next time you open the shell, the terminal will show the following menu.
@@ -54,8 +54,8 @@ sh -c "MENU_CONFIG=ros_menu_20.04_container.yaml USE_CONTAINER=True $(curl -fsSL
 *        ROS environment automatically.              *
 ******************************************************
 0) Do nothing
-1) ROS 1 melodic
-2) ROS 2 dashing 
+1) ROS 1 noetic 
+2) ROS 2 foxy 
 3) ROS2/ROS1_bridge 
 h) Help
 Please choose an option:
@@ -65,16 +65,16 @@ Please choose an option:
 
     - `Do nothing`:
         * Does not setup any environment.
-    - `ROS melodic`:
+    - `ROS noetic`:
         * Sets up the ROS 1 environment.
         * Sets the ROS_IP and ROS_MASTER_URI, which is your host IP.
-    - `ROS 2 dashing`:
+    - `ROS 2 foxy`:
         * Sets up the ROS 2 environment.
         * Loads DDS settings and select the DDS you want to use.
     - `ROS2/ROS1_bridge`:
         * Sets up the ROS Bridge environment.
         * Runs ROS Bridge automatically.
-    - `help`:
+    - `Help`:
         * Show using details of the ROS menu.
         * You can type `h` or `H` or `help` when choosing the option
 
@@ -96,6 +96,7 @@ The following are the options you can control.
     - distro_name: the name of the ROS 1 you are using.
     - ros1_path: the path where the ROS 1 is.
     - master_ip: set the IP address of the master if master isn't on current computer.
+    - container: if the option is set, then ros_menu will run container for ROS environment.
     - cmds: source your ROS 1 workspace here.
   - ROS 2:
     - option_num: give the option name to this option, avoid using specific characters(e.g:help,H,h,0) or duplicate option name 
@@ -103,6 +104,7 @@ The following are the options you can control.
     - distro_name: the name of the ROS 2 you are using.
     - ros2_path: the path where the ROS 2 is.
     - domain_id: set the Domain ID for DDS communication. Keep empty to use `$default_ros_domain_id(30)`
+    - container: if the option is set, then ros_menu will run container for ROS environment.
     - cmds: source your ROS 2 workspace here.  _Remarks: `source_plugin dds_bashrc` is necessary every time using ROS 2_
   - ROS2/ROS1_bridge:
     - option_num: give the option name to this option, avoid using specific characters(e.g:help,H,h,0) or duplicate option name 
@@ -113,6 +115,7 @@ The following are the options you can control.
     - ros2_path: the path where the ROS 2 is.
     - master_ip: set the IP address of the master if master isn't on current computer.
     - domain_id: set the Domain ID for DDS communication. Keep empty to use `$default_ros_domain_id(30)`
+    - container: if the option is set, then ros_menu will run container for ROS environment.
     - cmds: any command you want to run every time using ROS bridge. _Remarks: `source_plugin dds_bashrc` and `ros2 run ros1_bridge dynamic_bridge --bridge-all-topics` is necessary every time using ROS bridge_
 
 # Upgrade
