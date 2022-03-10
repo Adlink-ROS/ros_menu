@@ -60,6 +60,7 @@ if [ ! "$(docker ps -aq -f name=$container_name)" ]; then
                --volume /etc/group:/etc/group:ro \
                --volume /usr/local/share/ca-certificates:/usr/local/share/ca-certificates:ro \
                --volume /dev:/dev \
+               --volume /sys:/sys \
                --volume /lib/modules:/lib/modules \
                --volume /etc/shadow:/etc/shadow:ro \
                --volume /etc/sudoers:/etc/sudoers:ro \
