@@ -24,29 +24,42 @@ Neuron Startup Menu offers these features:
 
 * Get Git tools if you haven't installed yet
 
-```sh
+```bash
 sudo apt update
 sudo apt install -y git curl
 ```
 
-* Installation
+* There are two ways to install: install in native host / container
 
-```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/master/scripts/setup.sh)"
-```
+  - native host:
 
-* Optional: you can add variables while downloading ros_menu.
+    ```bash
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/master/scripts/setup.sh)"
+    ```
+  
+  - container
 
-```
+    ```bash
+    # Add docker privilege to current user
+    sudo groupadd docker
+    sudo gpasswd -a $USER docker
+    reboot
+    # After reboot
+    sh -c "MENU_CONFIG=ros_menu_20.04_container.yaml USE_CONTAINER=True $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/main/scripts/setup.sh)"
+    ```
+
+* (Optional) you can add variables while downloading ros_menu.
+
+```bash
 # Select which version you want.
 sh -c "MENU_VERSION=<Your Version> $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/main/scripts/setup.sh)"
 # Select which config you want.
 sh -c "MENU_CONFIG=<Config Name> $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/main/scripts/setup.sh)"
-# Install with docker
-sh -c "MENU_CONFIG=ros_menu_20.04_container.yaml USE_CONTAINER=True $(curl -fsSL https://raw.githubusercontent.com/Adlink-ROS/ros_menu/main/scripts/setup.sh)"
 ```
 
-* Next time you open the shell, the terminal will show the following menu.
+# Usage
+
+* While you open a new terminal, it'll show the following menu.
 
 ```
 ************ Neuron Startup Menu for ROS *************
