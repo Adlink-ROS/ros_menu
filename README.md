@@ -41,6 +41,7 @@ sudo apt install -y git curl
 
     ```bash
     # Add docker privilege to current user
+    sudo apt install docker.io
     sudo groupadd docker
     sudo gpasswd -a $USER docker
     reboot
