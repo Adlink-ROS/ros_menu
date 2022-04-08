@@ -3,9 +3,9 @@
 container_name=rosmenu_${CONTAINER}_container
 # Use different image based on your architecture
 if [[ ! $(grep Intel /proc/cpuinfo  | grep 'vendor_id'| uniq) ]]; then
-    image_name=adlinkrmt/rosmenu_${CONTAINER}_nv_r32.6
+    image_name=ghcr.io/adlink-ros/rosmenu_${CONTAINER}_nv_r32.6
 else
-    image_name=adlinkrmt/rosmenu_${CONTAINER}_intel
+    image_name=ghcr.io/adlink-ros/rosmenu_${CONTAINER}_intel
 fi
 
 if [ ! "$(docker images -q $image_name)" ]; then
