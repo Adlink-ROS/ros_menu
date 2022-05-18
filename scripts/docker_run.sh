@@ -38,6 +38,9 @@ if [ ! "$(docker ps -aq -f name=$container_name)" ]; then
         DOCKER_PLATFORM_ARGS+=("--volume /usr/local/cuda-10.2/targets/aarch64-linux/lib:/usr/local/cuda-10.2/targets/aarch64-linux/lib")
         DOCKER_PLATFORM_ARGS+=("--volume /usr/lib/aarch64-linux-gnu/tegra-egl:/usr/lib/aarch64-linux-gnu/tegra-egl")
         DOCKER_PLATFORM_ARGS+=("--volume /usr/lib/aarch64-linux-gnu/libcudnn.so.8.2.1:/usr/lib/aarch64-linux-gnu/libcudnn.so.8.2.1")
+        DOCKER_PLATFORM_ARGS+=("--volume /usr/sbin/nvargus-daemon:/usr/sbin/nvargus-daemon")
+        DOCKER_PLATFORM_ARGS+=("--volume /usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstnvarguscamerasrc.so:/usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstnvarguscamerasrc.so")
+        DOCKER_PLATFORM_ARGS+=("--volume /usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstnvvidconv.so:/usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstnvvidconv.so")
     fi
     docker run --detach \
                --user "$(id --user):sudo" \
