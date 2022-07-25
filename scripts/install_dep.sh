@@ -1,7 +1,9 @@
 #!/bin/bash
 
-if [[ $(grep 20.04 /etc/issue) ]]; then
-    # Install ROS dependencies (for Foxy on Ubuntu 20.04)
+ubuntu_version=`lsb_release -r | cut -f2`
+is_after_ubuntu18=`echo "$ubuntu_version > 18.04" | bc`
+if [[ $is_after_ubuntu18 -eq 1 ]]; then
+    # Install ROS dependencies (for ROS 2 on Ubuntu 20.04 and later)
     sudo apt install -y python3-rosdep
 else
     # Install ROS dependencies (for Dashing and Eloquent on Ubuntu 18.04)

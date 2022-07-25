@@ -2,14 +2,23 @@
 
 # Platform detection
 shell=`echo $SHELL | awk -F '/' '{print $NF}'`
-if [[ $(grep 18.04 /etc/issue) ]]; then
+ubuntu_version=`lsb_release -r | cut -f2`
+if [[ $ubuntu_version == 18.04 ]]; then
     ros1_distro="melodic"
     ros2_distro="dashing"
     config_file=./yaml/ros_menu_18.04.yaml
-else
+elif [[ $ubuntu_version == 20.04 ]]; then
     ros1_distro="noetic"
     ros2_distro="foxy"
     config_file=./yaml/ros_menu_20.04.yaml
+elif [[ $ubuntu_version == 22.04 ]]; then
+    # no ros1 distro anymore
+    ros1_distro="none"
+    ros2_distro="humble"
+    config_file=./yaml/ros_menu_22.04.yaml
+else
+    echo "Sorry, we don't support Ubuntu $ubuntu_version."
+    exit
 fi
 
 if [ "$USE_CONTAINER" '==' "True" ] || [ "$USE_CONTAINER" '==' "TRUE" ]
@@ -23,7 +32,9 @@ else
     if [ "$ros_install" '==' "y" ] || [ "$ros_install" '==' "Y" ];
     then
         # Install ROS 1
-        ./scripts/install_${ros1_distro}.sh
+	if [[ -f ./scripts/install_${ros1_distro}.sh ]]; then
+	        ./scripts/install_${ros1_distro}.sh
+	fi
 
         # Install ROS 2
         ./scripts/install_${ros2_distro}.sh
