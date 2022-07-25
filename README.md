@@ -19,7 +19,9 @@ Neuron Startup Menu offers these features:
   - ROS 1 melodic / ROS 2 dashing
 * Ubuntu 20.04
   - ROS 1 noetic / ROS 2 foxy
-
+* Ubuntu 22.04
+  - ROS 2 humble
+  
 # Install
 
 * Get Git tools if you haven't installed yet
