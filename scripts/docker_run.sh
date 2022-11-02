@@ -42,6 +42,8 @@ if [ ! "$(docker ps -aq -f name=$container_name)" ]; then
         DOCKER_PLATFORM_ARGS+=("--volume /usr/sbin/nvargus-daemon:/usr/sbin/nvargus-daemon")
         DOCKER_PLATFORM_ARGS+=("--volume /usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstnvarguscamerasrc.so:/usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstnvarguscamerasrc.so")
         DOCKER_PLATFORM_ARGS+=("--volume /usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstnvvidconv.so:/usr/lib/aarch64-linux-gnu/gstreamer-1.0/libgstnvvidconv.so")
+	DOCKER_PLATFORM_ARGS+=("--volume /usr/src/jetson_multimedia_api:/usr/src/jetson_multimedia_api")
+	DOCKER_PLATFORM_ARGS+=("--volume /var/nvidia:/var/nvidia")
     fi
     docker run --detach \
                --user "$(id --user):sudo" \
