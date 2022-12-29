@@ -3,8 +3,8 @@ import os
 import sys
 
 # Common variables
-host_sourcefilename = "/tmp/host_sourcefile.txt"
-container_sourcefilename = "/tmp/container_sourcefile_%s.txt"
+host_sourcefilename = '/tmp/host_sourcefile.txt'
+container_sourcefilename = '/tmp/container_sourcefile_%s.txt'
 
 # Read YAML file.
 f = open('%s' % sys.argv[1], 'r')
@@ -14,7 +14,7 @@ else:
     source_file = yaml.load(f)
 f.close()
 
-if (source_file["Config"]["menu_enable"] is not True):
+if source_file["Config"]["menu_enable"] is not True:
     sys.exit(0)
 
 # Generate Menu
@@ -60,7 +60,7 @@ choose = choose_dict[ros_option]
 
 def read_cmds():
     ret_cmds = ""
-    if (source_file['Menu'][choose]['cmds'] is not None):
+    if source_file['Menu'][choose]['cmds'] is not None:
         for cmds in source_file['Menu'][choose]['cmds']:
             ret_cmds += cmds + '\n'
     return ret_cmds
@@ -68,10 +68,10 @@ def read_cmds():
 
 def source_ros1():
     current_ip = os.popen("hostname -I | awk '{print $1}'").read().split('\n')[0]
-    if (len(current_ip) == 0):
+    if len(current_ip) == 0:
         current_ip = '127.0.0.1'
     ros_master_uri = source_file['Menu'][choose]['master_ip']
-    if (ros_master_uri is None):
+    if ros_master_uri is None:
         ros_master_uri = current_ip
     source_ros = 'source %s/setup.$shell' % source_file['Menu'][choose]['ros1_path']
     export_ip = 'export ROS_IP=%s' % current_ip
@@ -85,7 +85,7 @@ def source_ros1():
 
 def source_ros2():
     ros_domain_id = source_file['Menu'][choose]['domain_id']
-    if (ros_domain_id is None):
+    if ros_domain_id is None:
         ros_domain_id = int(source_file['Config']['default_ros_domain_id'])
     source_ros = 'source %s/local_setup.$shell' \
                                     % source_file['Menu'][choose]['ros2_path']
@@ -123,13 +123,13 @@ def create_ros_sourcefile(filename):
     ros_source_file.close()
 
 
-if ( 'container' in source_file['Menu'][choose] ):
+if 'container' in source_file['Menu'][choose]:
     container_sourcefilename = container_sourcefilename % ros_option
     create_ros_sourcefile(container_sourcefilename)
     with open(host_sourcefilename, "w") as f:
         # Use $ROS_OPTION to select the environment in docker container
         # Use $CONTAINER to select which container to use
-        f.write("ROS_OPTION=%s CONTAINER=%s ~/ros_menu/scripts/docker_run.sh"
+        f.write('ROS_OPTION=%s CONTAINER=%s ~/ros_menu/scripts/docker_run.sh'
                     % (ros_option, source_file['Menu'][choose]['container']))
 else:
     create_ros_sourcefile(host_sourcefilename)
