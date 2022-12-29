@@ -104,7 +104,6 @@ def check_bridge():
     ret_string += "  echo 'Installation command:" + \
                   " sudo apt install ros-%s-ros1-bridge'\n" \
                      % source_file['Menu'][choose]['ros2_version_name']
-    ret_string += "  exit 1\n"
     ret_string += "fi\n"
     return ret_string
 
