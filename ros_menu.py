@@ -14,7 +14,7 @@ else:
     source_file = yaml.load(f)
 f.close()
 
-if (source_file['Config']['menu_enable'] != True):
+if (source_file["Config"]["menu_enable"] is not True):
     sys.exit(0)
 
 # Generate Menu
@@ -27,8 +27,8 @@ print('0) Do nothing')
 choose_dict = {}
 for key in keys:
     if str(source_file['Menu'][key]['option_num']) in list(choose_dict):
-        raise SyntaxError('Some option numbers(option_num) in the YAML file are duplicated.')
-        sys.exit(0)
+        raise SyntaxError(
+            'Some option numbers(option_num) in the YAML file are duplicated.')
     print('%s) %s ' % (source_file['Menu'][key]['option_num'], key))
     choose_dict['%s' % source_file['Menu'][key]['option_num']] = key
 print('h) Help')
@@ -75,7 +75,8 @@ def source_ros1():
         ros_master_uri = current_ip
     source_ros = 'source %s/setup.$shell' % source_file['Menu'][choose]['ros1_path']
     export_ip = 'export ROS_IP=%s' % current_ip
-    export_ros_master_uri = 'export ROS_MASTER_URI=http://%s:11311' % ros_master_uri.rstrip("\n")
+    export_ros_master_uri = 'export ROS_MASTER_URI=http://%s:11311' \
+                                                     % ros_master_uri.rstrip("\n")
     print('* ROS_IP=%s' % current_ip.rstrip('\n'))
     print('* ROS_MASTER_URI %s' % ros_master_uri.rstrip('\n'))
     print('------------------------------------------------------')
@@ -86,8 +87,10 @@ def source_ros2():
     ros_domain_id = source_file['Menu'][choose]['domain_id']
     if (ros_domain_id is None):
         ros_domain_id = int(source_file['Config']['default_ros_domain_id'])
-    source_ros = 'source %s/local_setup.$shell' % source_file['Menu'][choose]['ros2_path']
-    source_colcon = 'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell'
+    source_ros = 'source %s/local_setup.$shell' \
+                                    % source_file['Menu'][choose]['ros2_path']
+    source_colcon = \
+            'source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.$shell'
     export_domain_id = 'export ROS_DOMAIN_ID=%d' % ros_domain_id
     print('* ROS_DOMAIN_ID = %d' % ros_domain_id)
     print('------------------------------------------------------')
@@ -95,9 +98,12 @@ def source_ros2():
 
 
 def check_bridge():
-    ret_string  = "if [ ! -d %s/lib/ros1_bridge ]; then\n" % source_file['Menu'][choose]['ros2_path']
+    ret_string  = "if [ ! -d %s/lib/ros1_bridge ]; then\n" \
+                                     % source_file['Menu'][choose]['ros2_path']
     ret_string += "  echo 'You need to install ros1_bridge first.'\n"
-    ret_string += "  echo 'Installation command: sudo apt install ros-%s-ros1-bridge'\n" % source_file['Menu'][choose]['ros2_version_name']
+    ret_string += "  echo 'Installation command:" + \
+                  " sudo apt install ros-%s-ros1-bridge'\n" \
+                     % source_file['Menu'][choose]['ros2_version_name']
     ret_string += "  exit 1\n"
     ret_string += "fi\n"
     return ret_string
@@ -105,7 +111,8 @@ def check_bridge():
 
 def create_ros_sourcefile(filename):
     ros_source_file = open(filename, 'w')
-    ros_source_file.write("shell=`echo $SHELL | awk -F '/' '{print $NF}' |  sed 's/\/bin\///g' `\n")
+    ros_source_file.write(
+        "shell=`echo $SHELL | awk -F '/' '{print $NF}' |  sed 's/\/bin\///g' `\n")
     ros_source_file.write("PS1=\"(%s) $PS1\"\n" % choose)
     if (source_file['Menu'][choose]['ROS_version'] == 1):
         ros_source_file.write(source_ros1()+read_cmds())
@@ -122,6 +129,7 @@ if ( 'container' in source_file['Menu'][choose] ):
     with open(host_sourcefilename, "w") as f:
         # Use $ROS_OPTION to select the environment in docker container
         # Use $CONTAINER to select which container to use
-        f.write("ROS_OPTION=%s CONTAINER=%s ~/ros_menu/scripts/docker_run.sh" % (ros_option, source_file['Menu'][choose]['container']))
+        f.write("ROS_OPTION=%s CONTAINER=%s ~/ros_menu/scripts/docker_run.sh"
+                    % (ros_option, source_file['Menu'][choose]['container']))
 else:
     create_ros_sourcefile(host_sourcefilename)
